@@ -1,11 +1,13 @@
 import { supabase } from "./supabase"
-import { useEffect, useState } from 'react'
 
 export default async function handler(req, res) {
 
+  req = '*'
   const { data, error } = await supabase
   .from('cat_profile')
-  .select('*')
+  .select(req)
+
+  data.id=data.id+1
   console.log("finish CatProfile")
   res.status(200).json(data)
 
