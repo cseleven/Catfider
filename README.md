@@ -18,6 +18,7 @@ npm install @supabase/supabase-js
 
 ## run 1st
 
+- ใส่ .env.local ใน Catfider-Front/frontend
 ```bash
 cd frontend
 npm install
