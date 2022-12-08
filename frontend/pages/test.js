@@ -19,6 +19,7 @@ export default function Test() {
     try {
       setLoading(true)
       const response = await fetch("/api/getCatProfile").then(console.log("hello"));
+      // แแ
       const data = await response.json();
       console.log("response : " + JSON.stringify(data));
       setCat(data);
@@ -45,7 +46,7 @@ export default function Test() {
 
           <main className={styles.main}>
             <h1 className={styles.title}>
-              Welcome to <a href="https://nextjs.org">Next.js! </a> {loading ? 'Loading ...' : cat[0].name}
+              Welcome to <a href="https://nextjs.org">Next.js! </a> {loading ? 'Loading ...' : cat[0].name} 
             </h1>
 
             <p className={styles.description}>
