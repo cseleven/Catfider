@@ -45,7 +45,7 @@ export default function Test() {
 
           <main className={styles.main}>
             <h1 className={styles.title}>
-              Welcome to <a href="https://nextjs.org">Next.js! </a> {loading ? 'Loading ...' : cat[0].name}
+              Welcome to <a href="https://nextjs.org">Next.js! </a> {loading ? 'Loading ...' : cat[0].cat_name}
             </h1>
 
             <p className={styles.description}>
