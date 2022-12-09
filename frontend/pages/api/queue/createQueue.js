@@ -2,31 +2,34 @@ import { supabase } from "../supabase"
 
 export default async function handler(req, res) {
 
-  //select data from database 
-  req = 2 
-  const { data, error } = await supabase
-  .from('cat_profile')
-  .select()
-  //where
-  .eq('cat_id', req)
-  /*.insert([
-    {
-      cat_id: req,
-      user_id: 1,
-      create_date: Date.now(),
-      update_date: Date.now(),
-      queue_date: req,
-      status:false
-    }
-  ])*/
-  //.select(req)
+  //call parameter from body
+  //"queue_date": "2022-12-09T07:36:58.793+00:00"
+  const {cat_id, shelter_id, user_id} = req.body
 
-  //logic for return data
-  //data.cat_id = data.cat_id+1
-  //console.log("id : ",data.cat_id)
-  console.log("Create Queue")
+  //insert data
+  const { er } = await supabase.from('queue').insert([
+    {
+      cat_id: cat_id,
+      shelter_id: shelter_id,
+      create_date: new Date(),
+      update_date: new Date(),
+      //queue_date: queue_date, should unique
+      queue_date: new Date(),
+      status: false,
+      user_id: user_id
+    }
+  ])
+  //check error
+  if (er) throw er
+  console.log("Insert Data Success!")
+
+  //query data 
+  const { data, error } = await supabase.from('queue').select()
+  if (error) throw error
+  console.log("Query Data Success!")
+  console.log(data)  
   res.status(200).json(data)
-  
 }
 
 
+  
