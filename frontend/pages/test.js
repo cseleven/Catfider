@@ -18,7 +18,7 @@ export default function Test() {
   const fetchCat = async (param, callback) => {
     try {
       setLoading(true)
-      const response = await fetch("/api/getCatProfile").then(console.log("hello"));
+      const response = await fetch("/api/cat/searchCat").then(console.log("hello"));
       // แแ
       const data = await response.json();
       console.log("response : " + JSON.stringify(data));
@@ -46,11 +46,7 @@ export default function Test() {
 
           <main className={styles.main}>
             <h1 className={styles.title}>
-<<<<<<< HEAD
-              Welcome to <a href="https://nextjs.org">Next.js! </a> {loading ? 'Loading ...' : cat[0].name} 
-=======
               Welcome to <a href="https://nextjs.org">Next.js! </a> {loading ? 'Loading ...' : cat[0].cat_name}
->>>>>>> e0f56f713cb43d08de1c63e5dd924dc1c751e4c3
             </h1>
 
             <p className={styles.description}>
