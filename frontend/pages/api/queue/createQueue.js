@@ -6,9 +6,12 @@ export default async function handler(req, res) {
   //"queue_date": "2022-12-09T07:36:58.793+00:00"
   const {cat_id, shelter_id, user_id} = req.body
 
-  //insert data
+  //check if queue date already exist
+  //check user_id
+  //insert user_id noes not exist 
   const { er } = await supabase.from('queue').insert([
     {
+      queue_id: 2,
       cat_id: cat_id,
       shelter_id: shelter_id,
       create_date: new Date(),
@@ -27,8 +30,10 @@ export default async function handler(req, res) {
   const { data, error } = await supabase.from('queue').select()
   if (error) throw error
   console.log("Query Data Success!")
+
+  //print data
   console.log(data)  
-  res.status(200).json(data)
+  res.status(200).json("Insert Data Success!")
 }
 
 

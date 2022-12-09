@@ -21,8 +21,8 @@ function Queue() {
     try {
       setLoading(true)
       //call page/api/queue/apiname
-      const response = await fetch("/api/queue/createQueue").then(console.log("welcome to create queue"))
-      const data = await response.json()
+      const createQueue = await fetch("/api/queue/createQueue").then(console.log("welcome to create queue"))
+      const data = await createQueue.json()
       console.log("response : " + JSON.stringify(data))
       setCat(data)
     } finally {
