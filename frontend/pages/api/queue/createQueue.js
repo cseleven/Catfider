@@ -11,7 +11,6 @@ export default async function handler(req, res) {
   //insert user_id noes not exist 
   const { er } = await supabase.from('queue').insert([
     {
-      queue_id: 2,
       cat_id: cat_id,
       shelter_id: shelter_id,
       create_date: new Date(),
