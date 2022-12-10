@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
     let query = supabase
         .from('cat_profile')
-        .select()
+        .select('cat_id, cat_name, sex, breed, color, cat_picture, detail, shelter_id, from:shelter_id(shelter_name)')
         /* select ตามที่โชว์
         .select('cat_id, cat_name, sex, breed, color, cat_picture, detail, shelter_id')
         */
