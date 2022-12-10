@@ -7,7 +7,6 @@ export default async function handler(req, res) {
   .from('cat_profile')
   .select(req)
 
-  data.id=data.id+1
   console.log("finish CatProfile")
   res.status(200).json(data)
 
