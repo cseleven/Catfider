@@ -39,7 +39,8 @@ export default async function handler(req, res) {
   console.log("Insert Data Success!")
 
   //query data 
-  const { data, error } = await supabase.from('cat_profile').select()
+  const { data, error } = await supabase.from('cat_profile')
+  .select('*')
   if (error) throw error
   console.log("Query Data Success!")
 
