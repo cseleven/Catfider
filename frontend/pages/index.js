@@ -6,6 +6,7 @@ import vectorHome from '../public/index/vector-home.png'
 import group1 from '../public/index/group-1.png'
 import Homecard from '../components/homecard'
 import { useEffect, useState } from 'react'
+import Loading from '../components/loading'
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
@@ -19,7 +20,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {loading ? (
-        <div>loading</div>
+        <Loading/>
       ):(
         <div class="container">
 
