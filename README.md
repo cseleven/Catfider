@@ -10,6 +10,8 @@
 npm install @headlessui/react@latest
 npm i @heroicons/react
 npm install @supabase/supabase-js
+npm install @supabase/auth-helpers-react @supabase/auth-helpers-nextjs
+npm install @supabase/auth-ui-react
 ```
 
 ## Learn
@@ -19,6 +21,7 @@ npm install @supabase/supabase-js
 ## run 1st
 
 - ใส่ .env.local ใน Catfider-Front/frontend
+
 ```bash
 cd frontend
 npm install
