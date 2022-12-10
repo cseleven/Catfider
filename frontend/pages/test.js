@@ -1,30 +1,43 @@
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSession, useUser } from '@supabase/auth-helpers-react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
 
 export default function Test() {
+  const user = useUser()
   const session = useSession()
   const [loading, setLoading] = useState(true)
   const [cat, setCat] = useState(null)
+  const [id, setId] = useState(0)
 
   useEffect(() => {
+    console.log("user : " + JSON.stringify(user));
     fetchCat("x", function() {
           console.log("cat : " + cat);
         });
+    if(user){
+      console.log("role : " + user.user_metadata.role);
+      setId(user.user_metadata.role);
+      if(id==1){
+        console.log("role user");
+      }else if(id==2){
+        console.log("role shelter");
+      }
+    }
   }, [session])
 
   const fetchCat = async (param, callback) => {
+    let data = [{ 'cat_id': 0 ,'cat_name': 'loading' }];
     try {
       setLoading(true)
-      const response = await fetch("/api/getCatProfile").then(console.log("hello"));
-      const data = await response.json();
+      let response = await fetch("/api/getCatProfile").then(console.log("hello"));
+      data = await response.json();
       console.log("response : " + JSON.stringify(data));
       setCat(data);
     } finally {
       setLoading(false)
-      console.log("cat : " + cat);
+      console.log("cat : " + id);
       callback();
     }
   };
@@ -35,7 +48,7 @@ export default function Test() {
         <h1 className={styles.title}>
           Pleace login
         </h1>
-      ) : (
+      ) : ( 
         <div>
           <Head>
             <title>Create Next App</title>
@@ -48,10 +61,15 @@ export default function Test() {
               Welcome to <a href="https://nextjs.org">Next.js! </a> {loading ? 'Loading ...' : cat[0].cat_name}
             </h1>
 
+            {id==1 ?(<p className={styles.description}>
+              Get started by user{' '}
+              <code className={styles.code}>pages/index.js</code>
+            </p>):(
             <p className={styles.description}>
               Get started by editing{' '}
               <code className={styles.code}>pages/index.js</code>
-            </p>
+            </p>)
+            }
 
             <div className={styles.grid}>
               <a href="https://nextjs.org/docs" className={styles.card}>

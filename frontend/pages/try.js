@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import profilePic from '../public/index/cat.png'
 import tickSquare from '../public/index/tick-square.png'
@@ -13,11 +12,6 @@ export default function Home() {
   
   return (
     <div class="container">
-      <Head>
-        <title>Cat Finder</title>
-        <meta name="description" content="create by eleven" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       {loading ? (
         <div>loading</div>
       ):(
