@@ -3,10 +3,16 @@ import { supabase } from "../supabase"
 export default async function handler(req, res) {
 
   //call parameter from body
-  const {cat_id, shelter_id, user_id, queue_date} = req.body
+  const {cat_id, user_id, queue_date} = req.body
+
+  //query data
+  const {data , error} = await supabase.from('cat_profile').select().eq('cat_id', cat_id)
+
+  const shelterID = data?.map(({shelter_id}) => ({ shelter_id }))
   
   //check user_id exist
   var userID = await checkUserId(user_id)
+
   if (!userID) {
     // if user_id does not exist
     console.log("User ID not found!")
@@ -15,6 +21,7 @@ export default async function handler(req, res) {
     //check if queue date already exist
     console.log("User ID found!")
     var queueDate = await checkQueueDate(queue_date)
+
     if (!queueDate) {
       // if queue_date exist
       console.log("Queue Date already exist!")
@@ -25,11 +32,11 @@ export default async function handler(req, res) {
       const { error } = await supabase.from('queue').insert([
         {
           cat_id: cat_id,
-          shelter_id: shelter_id,
+          shelter_id: shelterID,
           create_date: new Date(),
           update_date: new Date(),
           queue_date: queue_date,
-          status: false,
+          queue_status: false,
           user_id: user_id,
         }
       ])
@@ -54,7 +61,6 @@ async function checkUserId(user_id, response) {
   }
 
   //print result
-  console.log(data)
   return response
 }
 
@@ -85,7 +91,6 @@ async function checkQueueDate(queue_date, response) {
   }
 
   //print result
-  console.log(response)
   return response
 }
 

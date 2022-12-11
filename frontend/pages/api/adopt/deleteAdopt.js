@@ -3,14 +3,14 @@ import { supabase } from "../supabase"
 export default async function handler(req, res) {
 
   //call parameter from body
-  const {queue_id, user_id, shelter_id} = req.body
+  const {adopt_id, user_id, shelter_id} = req.body
 
   //check if queue id exist 
-  var queueID = await checkQueueId(queue_id)
-  if (queueID) {
+  var adoptID = await checkAdoptId(adopt_id)
+  if (adoptID) {
 
     //query
-    var query = supabase.from('queue').delete().eq('queue_id', queue_id)
+    var query = supabase.from('adopt').delete().eq('adopt_id', adopt_id)
     
     //check if user_id input
     if (user_id != null) {
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
       query = query.eq('user_id', user_id)
       const { data, error } = await query
       console.log(data)
-      res.status(200).json("Delete Queue Success!")
+      res.status(200).json("Delete Adopt Success!")
     } 
 
     //check if shelter_id input
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
       query = query.eq('shelter_id', shelter_id)
       const { data, error } = await query
       console.log(data)
-      res.status(200).json("Delete Queue Success!")
+      res.status(200).json("Delete Adopt Success!")
     }
 
     //no user_id and shelter input
@@ -41,9 +41,9 @@ export default async function handler(req, res) {
 }
 
 //check queue_id exist
-async function checkQueueId(queue_id, response) {
+async function checkAdoptId(adopt_id, response) {
   //query
-  const { data, error } = await supabase.from('queue').select().eq('queue_id', queue_id)
+  const { data, error } = await supabase.from('adopt').select().eq('adopt_id', adopt_id)
   if ( data == "" ) {
     //queue_id does not exist
     response = false

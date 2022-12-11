@@ -3,28 +3,28 @@ import { supabase } from "../supabase"
 export default async function handler(req, res) {
 
   //call parameter from body
-  const {queue_id, user_id, shelter_id} = req.body
+  const {adopt_id, user_id, shelter_id} = req.body
 
   //query data 
-  var query = supabase.from('queue').select()
+  var query = supabase.from('adopt').select()
   if (user_id != null) {
     query = query.eq('user_id', user_id)
     if (queue_id != null) {
-      query = query.eq('queue_id', queue_id)
+      query = query.eq('adopt_id', adopt_id)
     }
   }
 
   //query data 
   if (shelter_id != null) {
     query = query.eq('shelter_id', shelter_id)
-    if (queue_id != null) {
-      query = query.eq('queue_id', queue_id)
+    if (adopt_id != null) {
+      query = query.eq('adopt_id', adopt_id)
     }
   }
 
   //query data 
   if (user_id == null & shelter_id == null) {
-    query = query.eq('queue_id', queue_id)
+    query = query.eq('adopt_id', adopt_id)
   }
 
   //print data
@@ -33,13 +33,3 @@ export default async function handler(req, res) {
   res.status(200).json(data)
 }
 
- //store data to local variable 
-  /*const query = data?.map(({queue_id, cat_id, shelter_id, user_id}) => ({
-    queue_id,
-    cat_id,
-    shelter_id,
-    user_id,
-  }))
-  console.log("data : ", query)
-  console.log("Query Data Success!")*/
-  
