@@ -13,14 +13,14 @@ export default function HomecardCatprofile({ imgcat, statuscat, namecat, detail,
 
                 <p class="text-[20px] text-salmon front-normal px-6 pt-2">{namecat}</p>
                 <p class="text-[12px] text-gray-500 front-normal px-6 pt-2">{detail}</p>
-                <div class="flex items-stretch font-normal">
-                    <div class="w-[74px] h-[28px] bg-light-salmon rounded-[32px] mx-6 mt-3">
-                        <p class="text-[12px] text-gray-600 font-medium text-center pt-1 ">{tagbreed}</p>
+                <div class="flex space-x-4 justify-center font-normal">
+                    <div class="px-5 h-[28px] bg-light-salmon rounded-[32px] mt-3">
+                        <p class="text-[12px] text-gray-600 font-medium text-center pt-1">{tagbreed}</p>
                     </div>
-                    <div class="w-[74px] h-[28px] bg-light-salmon rounded-[32px] mx-6 mt-3">
+                    <div class="px-5 h-[28px] bg-light-salmon rounded-[32px] mt-3">
                         <p class="text-[12px] text-gray-600 font-medium text-center pt-1 ">{tagcolor}</p>
                     </div>
-                    <div class="w-[74px] h-[28px] bg-light-salmon rounded-[32px] mx-6 mt-3">
+                    <div class="px-5 h-[28px] bg-light-salmon rounded-[32px] mt-3">
                         <p class="text-[12px] text-gray-600 font-medium text-center pt-1 ">{tagsex}</p>
                     </div>
                 </div>

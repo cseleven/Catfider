@@ -18,6 +18,7 @@ import catProfileAdopt6 from '../public/index/cat-profile-adopt6.png'
 import Homecard from '../components/homecard'
 import HomecardCatprofile from '../components/homecardcatprofile.js'
 import { useEffect, useState } from 'react'
+import Loading from '../components/loading'
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
@@ -31,8 +32,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {loading ? (
-        <div>loading</div>
-      ) : (
+        <Loading/>
+      ):(
         <div class="container">
 
           {/*section 1*/}
