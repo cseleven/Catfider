@@ -2,10 +2,11 @@ import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import Account from '../components/account'
 
-const SignIn = () => {
+const LogIn = () => {
   const session = useSession()
   const supabase = useSupabaseClient()
 
+  //น่าจะทำใหม่แบบเขียนเอง
   return (
     <div class="grid h-screen place-items-center">
       {!session ? (
@@ -29,4 +30,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default LogIn

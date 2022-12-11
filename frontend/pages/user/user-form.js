@@ -1,8 +1,12 @@
-function AddCat() {
-    return (
+import Signin from '../../components/sigin'
+
+export default function UserForm() {
+  //โฟนบอกอาจลบทิ้ง?
+  return (
     <div class="h-screen">
-        <div class="container mx-auto h-[20rem]">
-            <p class="text-[48px] font-normal pt-[7rem]">ลงทะเบียนแมว</p>
+        <div class="w-screen h-[20rem]">
+            <p class="text-[48px] font-normal text-center pt-[7rem]">สมัครสมาชิก</p>
+            <p class="text-[20px] font-normal text-center pt-2">สำหรับผู้รับอุปการะ</p>
         </div>
         <form action="#" method="POST">
             <div class="bg-gray-200">
@@ -74,5 +78,3 @@ function AddCat() {
     </div>
   )
 }
-  
-export default AddCat
