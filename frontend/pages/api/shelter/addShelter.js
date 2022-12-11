@@ -11,9 +11,17 @@ export default async function handler(req, res) {
         contact_phone, login_id
     } = req.body
 
-    const { er } = await supabase
-    .from('shelter_profile')
-    .insert([
+    var userID = await checkUserId(user_id)
+    if (!userID) {
+        // if user_id does not exist
+        console.log("User ID not found!")
+        res.status(400).json("User ID not found!")
+    } else {
+        //check if queue date already exist
+        console.log("User ID found!")
+            const { er } = await supabase
+            .from('shelter_profile')
+            .insert([
         {
             shelter_id: shelter_id,
             shelter_name: shelter_name, 
@@ -32,16 +40,11 @@ export default async function handler(req, res) {
             login_id: login_id
             
         }])
-        .select()
-    //check error
-    if (er) throw er
-    console.log("Insert Data Success!")
+            //check error
+        if (er) throw er
+        console.log("Insert Data Success!")
+    }
 
-    //query data 
-    const { data, error } = await supabase.from('shelter_profile')
-        .select('*')
-    if (error) throw error
-    console.log("Query Data Success!")
+    }
 
-}
 
