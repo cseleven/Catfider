@@ -25,7 +25,7 @@ export default async function handler(req, res) {
 }
 
 
-async function checkShelterId(queue_id, response) {
+async function checkShelterId(shelter_id, response) {
     //query
     const { data, error } = await supabase.from('shelter_profile').select().eq('shelter_id', shelter_id)
     if (data == "") {
