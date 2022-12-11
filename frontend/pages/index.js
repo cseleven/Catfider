@@ -15,7 +15,6 @@ import catProfileAdopt3 from '../public/index/cat-profile-adopt3.png'
 import catProfileAdopt4 from '../public/index/cat-profile-adopt4.png'
 import catProfileAdopt5 from '../public/index/cat-profile-adopt5.png'
 import catProfileAdopt6 from '../public/index/cat-profile-adopt6.png'
-import vectrLocation from '../public/index/vector-location.png'
 import Homecard from '../components/homecard'
 import HomecardCatprofile from '../components/homecardcatprofile.js'
 import { useEffect, useState } from 'react'
@@ -89,16 +88,14 @@ export default function Home() {
 
           {/*section 3*/}
           <div class="w-screen h-[43rem]">
-            <div class="w-[20px] h-[24px] bg-gray-400 opacity-75 ml-[100px]" />
             <div class="flex front-normal px-[100px]">
-              <p class="text-[36px] text-gray-600">น้องแมวหาบ้าน</p>
+              <p class="text-[36px] text-gray-600 pt-[24px]">น้องแมวหาบ้าน</p>
               <p class="text-[24px] text-black mt-3 ml-[940px]">ค้นหาแมว</p>
               <Image class="w-[16px] h-[9.99px] mt-7 ml-[12px]" src={vectorArrow} placeholder="blur" />
             </div>
-            <div class="w-[20px] h-[24px] bg-gray-400 opacity-75 mx-[100px]" />
-            <div class="w-[1325px] h-[0.5px] bg-gray-200 opacity-75 mx-[100px]" />
-            <div class="w-[20px] h-[24px] bg-gray-400 opacity-75 mx-[100px]" />
-            <div class="flex space-x-40 place-content-center mt-7">
+            <div class="w-[1325px] h-[0.5px] bg-gray-200 opacity-75 mx-[100px] mt-[24px]" />
+            <div class="w-[20px] h-[24px] opacity-75 mt-[24px]" />
+            <div class="flex space-x-40 place-content-center">
               <HomecardCatprofile imgcat={catProfile1} statuscat="ว่าง" namecat="มะลิ (#1210)" detail="แม่มะลิ แมวจรพันธุ์ไทย สีขาวดำ นิสัยเป็นมิตร ใจดีกับแมวเด็ก..." tagbreed="พันธุ์ไทย" tagcolor="ขาวดำ" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
               <HomecardCatprofile imgcat={catProfile2} statuscat="ว่าง" namecat="มูมู่ (#1222)" detail="มูมู่ แมวจรพันธุ์ไทย สามสี ขี้อาย ชอบมุดเล่นในกล่อง... " tagbreed="พันธุ์ไทย" tagcolor="สามสี" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
               <HomecardCatprofile imgcat={catProfile3} statuscat="ว่าง" namecat="ต๋า (#1237)" detail="ต๋า แมวจรพันธุ์ไทย แมวส้ม นิสัยเป็นมิตร ซนมาก ร่าเริง... " tagbreed="พันธุ์ไทย" tagcolor="ส้ม" tagsex="เพศผู้" fund="มูลนิธิบ้านรักแมว" />
@@ -189,7 +186,6 @@ export default function Home() {
               <p class="pl-[100px] pt-[70px]">Help</p>
               <p class="pl-[100px] pt-[70px]">Contact</p>
             </div>
-
           </div>
 
           {/*img backgroud*/}

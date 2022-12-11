@@ -3,7 +3,7 @@ import vectorLocation from '../public/index/vector-location.png'
 
 export default function HomecardCatprofile({ imgcat, statuscat, namecat, detail, tagbreed, tagcolor, tagsex, fund}) {
     return (
-        <div>
+        <div class="cursor-pointer">
 
             <div class="rounded-t-lg box-border shadow-md shadow-gray-300 w-[297px] h-[415.08px] bg-white">
                 <Image class="" src={imgcat} placeholder="blur" />

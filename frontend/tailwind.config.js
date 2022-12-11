@@ -13,7 +13,8 @@ module.exports = {
         "iris": "#5D5FEF",
         "bright-salmon": "#FFCFCA",
         "white-salmon": "#FFF2F0",
-        "white-light":"#DEE2E6"
+        "white-light": "#DEE2E6",
+        "error": "#EF4444"
       },
     },
   },
