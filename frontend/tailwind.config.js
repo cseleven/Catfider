@@ -11,6 +11,9 @@ module.exports = {
         "salmon": "#FA8072",
         "light-salmon": "#FDEFED",
         "iris": "#5D5FEF",
+        "bright-salmon": "#FFCFCA",
+        "bright-light-salmon": "#FA8072",
+        "white-salmon": "#FFF2F0"
       },
     },
   },
