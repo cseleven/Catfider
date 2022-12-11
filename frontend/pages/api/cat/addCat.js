@@ -2,6 +2,8 @@ import { supabase } from "../supabase"
 
 export default async function handler(req, res) {
 
+  //add edit delete
+  
   //call parameter from body
   //"queue_date": "2022-12-09T07:36:58.793+00:00"
   const {   

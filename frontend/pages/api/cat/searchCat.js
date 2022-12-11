@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 
 export default async function handler(req, res) {
 
-    const { cat_id, cat_name, sex, breed, color, sterile, vaccine, age, status, shelter_id} = req.body
+    const { cat_id, cat_name, sex, breed, color, 
+            sterile, vaccine, age, status, shelter_id } = req.body
 
     let query = supabase
         .from('cat_profile')
@@ -11,7 +12,6 @@ export default async function handler(req, res) {
         /* select ตามที่โชว์
         .select('cat_id, cat_name, sex, breed, color, cat_picture, detail, shelter_id')
         */
-       //.select('cat_id, cat_name,sex, breed, color, detail, shelter_id, shelter_profile!inner(*)')
         
         if(cat_id) { query = query.eq('cat_id', cat_id)}
         if (sex) { query = query.eq('sex', sex) }
