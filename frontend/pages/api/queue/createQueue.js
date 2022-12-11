@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     // if user_id does not exist
     console.log("User ID not found!")
     res.status(400).json("User ID not found!")
-  }else {
+  } else {
     //check if queue date already exist
     console.log("User ID found!")
     var queueDate = await checkQueueDate(queue_date)
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       // if queue_date exist
       console.log("Queue Date already exist!")
       res.status(400).json("Queue Date already exist!")
-    }else {
+    } else {
       // if queue date does not exist then insert data
       console.log("Queue Date not exist!")
       const { error } = await supabase.from('queue').insert([
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
           user_id: user_id,
         }
       ])
-      
+
       //print data
       console.log("Insert Data Success!")
       res.status(200).json("Insert Data Success!")
@@ -46,8 +46,10 @@ async function checkUserId(user_id, response) {
   //query
   const { data, error } = await supabase.from('user_profile').select().eq('user_id', user_id)
   if ( data == "" ) {
+    //user_id does not exist
     response = false
   } else {
+    //user_id exist
     response = true
   }
 
@@ -62,7 +64,7 @@ async function checkQueueDate(queue_date, response) {
   const date = new Date(queue_date).toISOString().split('T')[0]
   console.log("date input : ", date)
 
-  //query
+  //query and mapping variable
   const { data, error } = await supabase.from('queue').select('*')
   const query = data?.map(({queue_date}) => ({
     queue_date,
