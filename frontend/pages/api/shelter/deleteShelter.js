@@ -5,10 +5,10 @@ export default async function handler(req, res) {
     //call parameter from body
     const { shelter_id } = req.body
 
-    //check if queue id exist 
+    //check if shelter id exist 
     var shelterID = await checkShelterId(shelter_id)
     if (shelterID) {
-        //check if user_id != null
+        //check if shelter_id != null
         if (shelter_id != null) {
             //delete
             const { data, er } = await supabase.from('shelter_profile')
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
 
     } else {
-        //queue_id does not exist
+        //shelter_id does not exist
         res.status(400).json("SHELTER ID not found!")
     }
 }
