@@ -13,14 +13,16 @@ export default async function handler(req, res) {
             age,
   } = req.body
 
-  //check shelter id
-  var shelterID = await checkShelterId(shelter_id)
-  if (!shelterID) {
-    console.log("Shelter ID not found!")
-    res.status(200).json("Shelter ID not found!")
-  } else {
-    console.log("Shelter ID Found!")
-    res.status(200).json("Shelter ID Found!")
+//check shelter id from session 
+
+  // //check shelter id
+  // var shelterID = await checkShelterId(shelter_id)
+  // if (!shelterID) {
+  //   console.log("Shelter ID not found!")
+  //   res.status(200).json("Shelter ID not found!")
+  // } else {
+  //   console.log("Shelter ID Found!")
+  //   res.status(200).json("Shelter ID Found!")
   const { data, er } = await supabase
       .from('cat_profile')
       .insert([{
@@ -48,8 +50,9 @@ export default async function handler(req, res) {
     //print data
     console.log(data)
     res.status(200).json("Insert Data Success!")
+    res.status(200).json(data)
 
-  }
+  
 
 }
 

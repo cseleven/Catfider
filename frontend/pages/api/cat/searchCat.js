@@ -2,6 +2,7 @@ import { supabase } from "../supabase"
 import { useEffect, useState } from 'react'
 
 export default async function handler(req, res) {
+    // + ทำให้รับได้ว่าจะเอามากี่ตัว กี่ตัว กี่หน้า + เอาออกมาเป็น array
 
     const { cat_id, cat_name, sex, breed, color, 
             sterile, vaccine, age, status, shelter_id } = req.body
