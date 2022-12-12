@@ -9,8 +9,7 @@ export default async function handler(req, res) {
   const {   
             shelter_id, cat_id, cat_name, sex, 
             breed, color, sterile, vaccine, 
-            detail, cat_picture, status, adopt_form_id,
-            age,
+            detail, cat_picture, status, age,
   } = req.body
 
   //check shelter id
@@ -20,13 +19,9 @@ export default async function handler(req, res) {
     res.status(200).json("Shelter ID not found!")
   } else {
     console.log("Shelter ID Found!")
-    res.status(200).json("Shelter ID Found!")
-  const { data, er } = await supabase
-      .from('cat_profile')
+    const { er } = await supabase.from('cat_profile')
       .insert([{
-      //cat_id: 11,
       shelter_id: shelter_id,
-      cat_id: cat_id,
       cat_name: cat_name,
       create_date: new Date(),
       update_date: new Date(),
@@ -38,15 +33,10 @@ export default async function handler(req, res) {
       detail: detail,
       cat_picture: cat_picture,
       status: status,
-      adopt_form_id: adopt_form_id,
       age: age,
-      }
-    ])
-    //check error
-    if (er) throw er
+    }])
 
     //print data
-    console.log(data)
     res.status(200).json("Insert Data Success!")
 
   }
