@@ -4,7 +4,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 const navigation = [
   { name: "หน้าแรก", href: ["/", "/", "/"], current: true },
@@ -18,10 +18,11 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const session = useSession()
+  const session = useSession();
   const router = useRouter();
-  const [id, setId] = useState(0)
-  const supabase = useSupabaseClient()
+  const pathname = usePathname();
+  const [id, setId] = useState(0);
+  const supabase = useSupabaseClient();
 
   useEffect(() => {
     if(session){
@@ -33,9 +34,20 @@ export default function Navbar() {
         console.log("role shelter");
       }
     }
+    checkPath();
   }, [session])
 
-  const logOut=()=>{
+  const checkPath = () => {
+    for(var i=0;i<navigation.length;i++){
+      if(pathname==navigation[i].href[id]){
+        navigation[i].current=true;
+      }else{
+        navigation[i].current=false;
+      }
+    }
+  }
+
+  const logOut = () => {
     router.push('/');
     setId(0);
     supabase.auth.signOut();
