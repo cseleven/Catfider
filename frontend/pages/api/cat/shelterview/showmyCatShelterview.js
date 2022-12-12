@@ -1,4 +1,4 @@
-import { supabase } from "../supabase"
+import { supabase } from "../../supabase"
 import { useEffect, useState } from 'react'
 
 export default async function handler(req, res) {
