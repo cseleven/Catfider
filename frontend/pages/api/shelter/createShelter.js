@@ -17,19 +17,19 @@ export default async function handler(req, res) {
             .insert([
             {
                 user_id: user_id,
-                shelter_name: null, 
-                website_url: null,
-                detail: null, 
-                email: null, 
-                phone_number: null, 
-                address: null,
-                location_url: null, 
-                profile_picture: null, 
-                cover_picture: null,
-                contact_firstname: null, 
-                contact_lastname: null, 
-                contact_email: null,
-                contact_phone: null, 
+                // shelter_name: null, 
+                // website_url: null,
+                // detail: null, 
+                // email: null, 
+                // phone_number: null, 
+                // address: null,
+                // location_url: null, 
+                // profile_picture: null, 
+                // cover_picture: null,
+                // contact_firstname: null, 
+                // contact_lastname: null, 
+                // contact_email: null,
+                // contact_phone: null, 
             
         }])
         //print data

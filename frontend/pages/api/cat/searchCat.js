@@ -2,14 +2,14 @@ import { supabase } from "../supabase"
 import { useEffect, useState } from 'react'
 
 export default async function handler(req, res) {
-    // + ทำให้รับได้ว่าจะเอามา 9 ตัว กี่หน้า + เอาออกมาเป็น array
+    //filtering cat 
 
-    const { cat_id, cat_name, sex, breed, color, 
+    const { cat_id, sex, breed, color, 
             sterile, vaccine, age, status, shelter_id } = req.body
 
     let query = supabase
         .from('cat_profile')
-        .select('cat_id, cat_name, sex, breed, color, cat_picture, detail, shelter_id, from:shelter_id(shelter_name)')
+        .select('cat_id, sex, breed, color, cat_picture, detail, shelter_id, from:shelter_id(shelter_name)')
         /* select ตามที่โชว์
         .select('cat_id, cat_name, sex, breed, color, cat_picture, detail, shelter_id')
         */
@@ -19,7 +19,6 @@ export default async function handler(req, res) {
         if (breed) { query = query.eq('breed', breed) }
         if (color) { query = query.eq('color', color) }
         if (sterile) { query = query.eq('sterile', sterile) }
-        if (cat_name) { query = query.eq('cat_name', cat_name) }
         if (vaccine) { query = query.eq('vaccine', vaccine) }
         if (age) { query = query.eq('age', age) }
         if (status) { query = query.eq('status', status) }
