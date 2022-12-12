@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 export default function CatProfile() {
   const router = useRouter();
   return (
-    <div class="container h-screen mx-auto">
+    <div class="container h-[87vh] mx-auto">
       <nav class="flex" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">

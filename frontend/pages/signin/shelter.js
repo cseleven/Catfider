@@ -7,7 +7,7 @@ export default function SignInShelter() {
   const supabase = useSupabaseClient()
 
   return (
-    <div class="h-screen">
+    <div class="h-[87vh]">
         <div>
             <div class="w-screen h-[20rem]">
                 <p class="text-[48px] font-normal text-center pt-[7rem]">สมัครสมาชิก</p>

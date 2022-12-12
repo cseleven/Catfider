@@ -1,6 +1,6 @@
 function AddCat() {
     return (
-    <div class="h-screen">
+    <div class="h-[87vh]">
         <div class="container mx-auto h-[20rem]">
             <p class="text-[48px] font-normal pt-[7rem]">ลงทะเบียนแมว</p>
         </div>

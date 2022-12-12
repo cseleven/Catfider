@@ -10,7 +10,9 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
       <Layout>
-        <Component {...pageProps} />
+        <div class="min-h-[87vh]">
+          <Component {...pageProps} />
+        </div>
       </Layout>
     </SessionContextProvider>
   );
