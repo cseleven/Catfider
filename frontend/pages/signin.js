@@ -7,11 +7,23 @@ const SignIn = () => {
   const supabase = useSupabaseClient()
 
   return (
-    <div className="container" style={{ padding: '50px 0 100px 0' }}>
+    <div class="grid h-screen place-items-center">
       {!session ? (
-        <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} theme="dark" />
+        <div class="h-64 w-80 -mt-24">
+          <Auth supabaseClient={supabase} appearance={{
+            theme: ThemeSupa,
+            variables: {
+              default: {
+                colors: {
+                  brand: '#FA8072',
+                  brandAccent: '#FA8072',
+                }
+              },
+            },
+          }} />
+        </div>
       ) : (
-        <Account session={session} />
+        <h1>เข้าสู่ระบบแล้ว</h1>
       )}
     </div>
   )
