@@ -23,7 +23,17 @@ export default function Fetch(){
     };
 
     const postExample = async () => {
-        let data = [{ 'cat_id': 0 ,'cat_name': 'loading' }];
+        var raw = JSON.stringify({
+            "username": this.username,
+            "password": this.password
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            body: raw,
+            redirect: 'follow'
+        };
+
         try {
             setLoading(true);
             let response = await fetch("/api/postexample");
@@ -44,7 +54,7 @@ export default function Fetch(){
             <p class="text-[48px] font-normal text-center pt-[7rem]">ตัวอย่างฟอร์ม</p>
             <p class="text-[20px] text-iris font-normal text-center pt-2">สำหรับผู้รับอุปการะ</p>
         </div>
-        <form action="#" method="POST">
+        <form action="/api/postexample" method="post">
             <div class="bg-gray-200">
                 <div class="container mx-auto flex justify-around">
                     <div class="w-1/3 pt-9">
@@ -57,6 +67,8 @@ export default function Fetch(){
                                 <label class="block">
                                     <span class="font-inter text-gray-700">{topic.topic1}</span>
                                     <input
+                                        name="email"
+                                        id="email"
                                         type="text"
                                         class="
                                             mt-1
@@ -73,7 +85,9 @@ export default function Fetch(){
                                 <label class="block">
                                     <span class="font-inter text-gray-700">{topic.topic2}</span>
                                     <input
-                                        type="text"
+                                        name="password"
+                                        id="password"
+                                        type="password"
                                         class="
                                             mt-1
                                             block
@@ -89,7 +103,9 @@ export default function Fetch(){
                                 <label class="block">
                                     <span class="font-inter text-gray-700">{topic.topic3}</span>
                                     <input
-                                        type="text"
+                                        name="confirm_password"
+                                        id="confirm_password"
+                                        type="password"
                                         class="
                                             mt-1
                                             block
