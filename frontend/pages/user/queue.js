@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -42,6 +43,16 @@ function Queue() {
       <h6>อายุ (สัปดาห์) : {loading ? 'loading...': cat[0].age}</h6>
     </main>
   )
+=======
+
+Queue.getInitialProps = async ({ query }) => {
+  const {color} = query
+  return {color}
+>>>>>>> 123287418d1f3c4dfe7dea03a4ef1311d463d79c
 }
-  
-export default Queue
+
+export default function Queue({color}) {
+    return (
+      <h2>จองคิวแมว {color}</h2>
+    )
+}

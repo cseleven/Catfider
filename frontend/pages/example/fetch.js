@@ -1,35 +1,48 @@
-function AddCat() {
-  //setup 
-  const session = useSession()
-  const [loading, setLoading] = useState(true)
-  const [cat, setCat] = useState(null)
+import { useEffect, useState } from 'react'
+import Loading from '../../components/loading';
 
-  useEffect(() => {
-    fetchCat("x", function() {
-          console.log("cat : " + cat)
-        })
-  }, [session])
+export default function Fetch(){
 
-  //fetch data
-  const fetchCat = async (param, callback) => {
-    try {
-      setLoading(true)
-      //call page/api/queue/apiname
-      const addcat = await fetch("/api/cat/addCat").then(console.log("welcome to add cat"))
-      const data = await addcat.json()
-      console.log("response : " + JSON.stringify(data))
-      setCat(data)
-    } finally {
-      setLoading(false)
-      console.log("cat : " + cat)
-      callback()
-    }
-  }
- 
-    return (
-    <div class="h-[87vh]">
-        <div class="container mx-auto h-[20rem]">
-            <p class="text-[48px] font-normal pt-[7rem]">ลงทะเบียนแมว</p>
+    const [loading,setLoading]=useState(true);
+    const [topic,setTopic]=useState(null);
+
+    useEffect(() => {
+       fetchExample()
+    }, [])
+
+    const fetchExample = async () => {
+        try {
+            setLoading(true)
+            let response = await fetch("/api/getexample");
+            let data = await response.json();
+            console.log("response : " + JSON.stringify(data));
+            setTopic(data);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const postExample = async () => {
+        let data = [{ 'cat_id': 0 ,'cat_name': 'loading' }];
+        try {
+            setLoading(true);
+            let response = await fetch("/api/postexample");
+            data = await response.json();
+            console.log("response : " + JSON.stringify(data));
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return(
+        <div class="h-[87vh]">
+        {loading ? (
+        <Loading/>
+      ):(
+        <div>
+        <div class="w-screen h-[20rem]">
+            <p class="text-[48px] font-normal text-center pt-[7rem]">ตัวอย่างฟอร์ม</p>
+            <p class="text-[20px] text-iris font-normal text-center pt-2">สำหรับผู้รับอุปการะ</p>
         </div>
         <form action="#" method="POST">
             <div class="bg-gray-200">
@@ -42,7 +55,7 @@ function AddCat() {
                         <div class="p-7 max-w-lg">
                             <div class="grid grid-cols-1 gap-6 pb-5">
                                 <label class="block">
-                                    <span class="font-inter text-gray-700">Email address</span>
+                                    <span class="font-inter text-gray-700">{topic.topic1}</span>
                                     <input
                                         type="text"
                                         class="
@@ -58,7 +71,7 @@ function AddCat() {
                                     />
                                 </label>
                                 <label class="block">
-                                    <span class="font-inter text-gray-700">Password</span>
+                                    <span class="font-inter text-gray-700">{topic.topic2}</span>
                                     <input
                                         type="text"
                                         class="
@@ -74,7 +87,7 @@ function AddCat() {
                                     />
                                 </label>
                                 <label class="block">
-                                    <span class="font-inter text-gray-700">Confirm Password</span>
+                                    <span class="font-inter text-gray-700">{topic.topic3}</span>
                                     <input
                                         type="text"
                                         class="
@@ -98,8 +111,8 @@ function AddCat() {
                 <button class="rounded-[4px] bg-iris text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">ถัดไป</button>
             </div>
         </form>
+        </div>
+      )}
     </div>
-  )
+    )
 }
-  
-export default AddCat

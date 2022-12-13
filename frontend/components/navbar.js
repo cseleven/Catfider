@@ -2,12 +2,15 @@ import Link from 'next/link';
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useEffect, useState } from 'react'
+import { useRouter, usePathname } from 'next/navigation';
 
 const navigation = [
-  { name: "หน้าแรก", href: "/", current: true },
-  { name: "ค้นหาแมว", href: "/all-cat", current: false },
-  { name: "แมวของฉัน", href: "/my-cat", current: false },
+  { name: "หน้าแรก", href: ["/", "/", "/"], current: true },
+  { name: "ค้นหาแมว", href: ["/all-cat","/all-cat","/all-cat"], current: false },
+  { name: "แมวของฉัน", href: ["/signin/login","/user/my-cat","/shelter/my-cat"], current: false },
+  { name: "ลิ้งค์ในเว็บ", href: ["/list","/list","/list"], current: false },
 ];
 
 function classNames(...classes) {
@@ -15,8 +18,40 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const session = useSession();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [id, setId] = useState(0);
+  const supabase = useSupabaseClient();
 
-  const supabase = useSupabaseClient()
+  useEffect(() => {
+    if(session){
+      console.log("role : " + session.user.user_metadata.role);
+      setId(session.user.user_metadata.role);
+      if(id==1){
+        console.log("role user");
+      }else if(id==2){
+        console.log("role shelter");
+      }
+    }
+    checkPath();
+  }, [session])
+
+  const checkPath = () => {
+    for(var i=0;i<navigation.length;i++){
+      if(pathname==navigation[i].href[id]){
+        navigation[i].current=true;
+      }else{
+        navigation[i].current=false;
+      }
+    }
+  }
+
+  const logOut = () => {
+    router.push('/');
+    setId(0);
+    supabase.auth.signOut();
+  }
 
   return (
     <Disclosure as="nav" class="bg-white">
@@ -53,7 +88,7 @@ export default function Navbar() {
                     {navigation.map((item) => (
                       <a
                         key={item.name}
-                        href={item.href}
+                        href={item.href[id]}
                         class={classNames(
                           item.current
                             ? "bg-salmon text-white"
@@ -68,10 +103,10 @@ export default function Navbar() {
                   </div>
                 </div>
                 <div class="hidden sm:ml-6 sm:block">
-                  <button class="flex space-x-4" type="button" onClick={() => supabase.auth.signOut()}>
+                  <button class="flex space-x-4" type="button">
                       <a
                         key="สำหรับมูลนิธิ"
-                        href="/signin"
+                        href="/signin/shelter"
                         class={classNames(
                           false
                             ? "bg-salmon text-white"
@@ -120,13 +155,13 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            href="/signin/login"
                             class={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
                           >
-                            Your Profile
+                            Log in
                           </a>
                         )}
                       </Menu.Item>
@@ -143,7 +178,7 @@ export default function Navbar() {
                           </a>
                         )}
                       </Menu.Item>
-                      <Menu.Item type="button" onClick={() => supabase.auth.signOut()}>
+                      <Menu.Item type="button" onClick={() => logOut()}>
                         {({ active }) => (
                           <a
                             class={classNames(

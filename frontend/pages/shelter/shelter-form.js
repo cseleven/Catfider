@@ -1,35 +1,11 @@
-function AddCat() {
-  //setup 
-  const session = useSession()
-  const [loading, setLoading] = useState(true)
-  const [cat, setCat] = useState(null)
+import Signin from '../../components/sigin'
 
-  useEffect(() => {
-    fetchCat("x", function() {
-          console.log("cat : " + cat)
-        })
-  }, [session])
-
-  //fetch data
-  const fetchCat = async (param, callback) => {
-    try {
-      setLoading(true)
-      //call page/api/queue/apiname
-      const addcat = await fetch("/api/cat/addCat").then(console.log("welcome to add cat"))
-      const data = await addcat.json()
-      console.log("response : " + JSON.stringify(data))
-      setCat(data)
-    } finally {
-      setLoading(false)
-      console.log("cat : " + cat)
-      callback()
-    }
-  }
- 
-    return (
+export default function ShelterForm() {
+  return (
     <div class="h-[87vh]">
-        <div class="container mx-auto h-[20rem]">
-            <p class="text-[48px] font-normal pt-[7rem]">ลงทะเบียนแมว</p>
+        <div class="w-screen h-[20rem]">
+            <p class="text-[48px] font-normal text-center pt-[7rem]">สมัครสมาชิก</p>
+            <p class="text-[20px] font-normal text-center pt-2">สำหรับผู้รับอุปการะ</p>
         </div>
         <form action="#" method="POST">
             <div class="bg-gray-200">
@@ -101,5 +77,3 @@ function AddCat() {
     </div>
   )
 }
-  
-export default AddCat
