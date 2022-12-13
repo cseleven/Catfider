@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function CatProfile() {
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function CatProfile() {
 
         </div>
       </div>
+      <Link href={{ pathname: '/user/queue', query: { color: 'yellow' } }}>test2</Link>
     </div>
   );
 }

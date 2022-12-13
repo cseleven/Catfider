@@ -1,4 +1,12 @@
 import { useRouter } from "next/router";
+import Image from 'next/image'
+import catProfile1 from '../../../public/index/cat-profile1.png'
+
+const urlpic = "https://images.unsplash.com/photo-1615789591457-74a63395c990"
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export default function CatProfile() {
   const router = useRouter();
@@ -21,13 +29,19 @@ export default function CatProfile() {
         </ol>
       </nav>
       <div class="flex h-[390px]">
-        <div class="w-1/3 ">
-
-        </div>
         <div class="w-1/3">
+          <Image
+      src={catProfile1}
+      alt="Picture of rose"
+      width="100%"
+      height="300px"
+  />
+          
+         <div class="w-1/3">
 
         </div>
       </div>
+    </div>
     </div>
   );
 }

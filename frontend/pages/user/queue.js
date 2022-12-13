@@ -1,7 +1,11 @@
-function Queue() {
+
+Queue.getInitialProps = async ({ query }) => {
+  const {color} = query
+  return {color}
+}
+
+export default function Queue({color}) {
     return (
-      <h2>จองคิวแมว</h2>
+      <h2>จองคิวแมว {color}</h2>
     )
 }
-  
-export default Queue
