@@ -40,13 +40,19 @@ export default function MyCat () {
 
   const catExample = async () => {
     var raw = JSON.stringify({
-      "page_number": 2,
+      "page_number": "1",
       //"cat_name": this.cat_name,
       //"password": this.password
     });
 
+    var myheader = {
+      'Content-Type': 'application/json'
+    };
+
+
     var requestOptions = {
       method: 'POST',
+      headers: myheader,
       body: raw,
       redirect: 'follow'
     };
