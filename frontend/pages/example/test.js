@@ -31,14 +31,8 @@ export default function Test() {
     let data = [{ 'cat_id': 0 ,'cat_name': 'loading' }];
     try {
       setLoading(true)
-<<<<<<< HEAD
-      const response = await fetch("/api/cat/searchCat").then(console.log("hello"));
-      // แแ
-      const data = await response.json();
-=======
       let response = await fetch("/api/getCatProfile").then(console.log("hello"));
       data = await response.json();
->>>>>>> 9edb37ee489553e5fdb5b48bc64a1868a1beb4e0
       console.log("response : " + JSON.stringify(data));
       setCat(data);
     } finally {
