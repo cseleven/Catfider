@@ -24,19 +24,25 @@ export default function Fetch(){
 
     const postExample = async () => {
         var raw = JSON.stringify({
-            "username": this.username,
-            "password": this.password
+            "username": "555",
+            "password": "666"
         });
+
+        var myheader = {
+            'Content-Type': 'application/json'
+        };
+
 
         var requestOptions = {
             method: 'POST',
+            headers: myheader,
             body: raw,
             redirect: 'follow'
         };
 
         try {
             setLoading(true);
-            let response = await fetch("/api/postexample");
+            let response = await fetch("/api/postexample",requestOptions);
             data = await response.json();
             console.log("response : " + JSON.stringify(data));
         } finally {
@@ -47,14 +53,13 @@ export default function Fetch(){
     return(
         <div class="h-[87vh]">
         {loading ? (
-        <Loading/>
-      ):(
+            <Loading/>
+        ):(
         <div>
         <div class="w-screen h-[20rem]">
             <p class="text-[48px] font-normal text-center pt-[7rem]">ตัวอย่างฟอร์ม</p>
             <p class="text-[20px] text-iris font-normal text-center pt-2">สำหรับผู้รับอุปการะ</p>
         </div>
-        <form action="/api/postexample" method="post">
             <div class="bg-gray-200">
                 <div class="container mx-auto flex justify-around">
                     <div class="w-1/3 pt-9">
@@ -124,9 +129,8 @@ export default function Fetch(){
                 </div>
             </div>
             <div class="container mx-auto flex justify-end">
-                <button class="rounded-[4px] bg-iris text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">ถัดไป</button>
+                <button type="button" onClick={()=>postExample()} class="rounded-[4px] bg-iris text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">ถัดไป</button>
             </div>
-        </form>
         </div>
       )}
     </div>
