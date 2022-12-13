@@ -6,7 +6,8 @@ export default async function handler(req, res) {
     const { cat_id , page_number} = req.body
 
     const { count, err } = await supabase
-
+        .from('cat_profile')
+        .select('*', { count: 'exact', head: true })
     
     let query = supabase
         .from('cat_profile')
