@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import Loading from '../../components/loading';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export default function Fetch(){
 
     const [loading,setLoading]=useState(true);
     const [topic,setTopic]=useState(null);
+    const [input, setInput] = useState({});
 
     useEffect(() => {
        fetchExample()
@@ -22,11 +26,8 @@ export default function Fetch(){
         }
     };
 
-    const postExample = async () => {
-        var raw = JSON.stringify({
-            "username": "555",
-            "password": "666"
-        });
+    const postExample = async (event) => {
+        var raw = JSON.stringify(input);
 
         var myheader = {
             'Content-Type': 'application/json'
@@ -43,11 +44,47 @@ export default function Fetch(){
         try {
             setLoading(true);
             let response = await fetch("/api/postexample",requestOptions);
-            data = await response.json();
+            let data = await response.json();
             console.log("response : " + JSON.stringify(data));
         } finally {
             setLoading(false);
         }
+    };
+
+    const updateInput = e => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const createPdf = () => {
+        console.log("createPDF")
+        var docDefinition = {
+            content: [
+                { text: "PDF Generate",style: "header"},
+                { text: topic.topic1+ " : " +input.email},
+                { text: topic.topic2+ " : " +input.password},
+                { text: topic.topic3+ " : " +input.password},
+            ],styles: {
+                header: {
+                    fontSize: 18,
+                    bold: true
+                },
+                subheader: {
+                    fontSize: 15,
+                    bold: true
+                },
+                quote: {
+                    italics: true
+                },
+                small: {
+                    fontSize: 8
+                }
+            }
+        };
+
+        pdfMake.createPdf(docDefinition).open()
     };
 
     return(
@@ -60,6 +97,7 @@ export default function Fetch(){
             <p class="text-[48px] font-normal text-center pt-[7rem]">ตัวอย่างฟอร์ม</p>
             <p class="text-[20px] text-iris font-normal text-center pt-2">สำหรับผู้รับอุปการะ</p>
         </div>
+        <form onSubmit={postExample}>
             <div class="bg-gray-200">
                 <div class="container mx-auto flex justify-around">
                     <div class="w-1/3 pt-9">
@@ -85,6 +123,7 @@ export default function Fetch(){
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                         "
                                         placeholder=""
+                                        onChange={updateInput}
                                     />
                                 </label>
                                 <label class="block">
@@ -103,6 +142,7 @@ export default function Fetch(){
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                         "
                                         placeholder=""
+                                        onChange={updateInput}
                                     />
                                 </label>
                                 <label class="block">
@@ -121,6 +161,7 @@ export default function Fetch(){
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                         "
                                         placeholder=""
+                                        onChange={updateInput}
                                     />
                                 </label>
                             </div>
@@ -129,8 +170,10 @@ export default function Fetch(){
                 </div>
             </div>
             <div class="container mx-auto flex justify-end">
-                <button type="button" onClick={()=>postExample()} class="rounded-[4px] bg-iris text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">ถัดไป</button>
+                <button type="submit" class="rounded-[4px] bg-iris text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">ถัดไป</button>
             </div>
+            </form>
+            <button type="button" onClick={()=>createPdf()} class="rounded-[4px] bg-iris text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">Download this as a PDF</button>
         </div>
       )}
     </div>
