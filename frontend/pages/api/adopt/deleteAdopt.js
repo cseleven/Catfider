@@ -1,42 +1,26 @@
 import { supabase } from "../supabase"
 
+//delete for user
 export default async function handler(req, res) {
 
   //call parameter from body
-  const {adopt_id, user_id, shelter_id} = req.body
+  const { user_id, adopt_id} = req.body
 
   //check if queue id exist 
   var adoptID = await checkAdoptId(adopt_id)
+
   if (adoptID) {
 
     //query
-    var query = supabase.from('adopt').delete().eq('adopt_id', adopt_id)
-    
-    //check if user_id input
-    if (user_id != null) {
-      //delete  
-      query = query.eq('user_id', user_id)
-      const { data, error } = await query
-      console.log(data)
-      res.status(200).json("Delete Adopt Success!")
-    } 
-
-    //check if shelter_id input
-    if (shelter_id != null){
-      //delete  
-      query = query.eq('shelter_id', shelter_id)
-      const { data, error } = await query
-      console.log(data)
-      res.status(200).json("Delete Adopt Success!")
+    const { error } = await supabase.from('adopt').delete().eq('adopt_id', adopt_id).eq('user_id', user_id)
+    const { data  } = await supabase.from('adopt').select().eq('adopt_id', adopt_id).eq('user_id', user_id)
+    if ( data != "" ){
+      res.status(400).json("Delete Fail!")
     }
-
-    //no user_id and shelter input
-    if (user_id == null && shelter_id == null) {
-      res.status(400).json("Missing user_id or shelter_id")
-    }
+    res.status(200).json("Delete Adopt Success!")
   } else {
     //queue_id does not exist
-    res.status(400).json("Queue ID not found!")
+    res.status(400).json("Adopt ID not found!")
   }
 }
 

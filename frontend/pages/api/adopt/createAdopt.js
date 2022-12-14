@@ -3,43 +3,51 @@ import { supabase } from "../supabase"
 export default async function handler(req, res) {
 
   //call parameter from body
-  const {cat_id, user_id, adopt_date, adopt_form_status} = req.body
+  const { queue_id, adopt_date } = req.body
 
   //query data
-  const {data , error} = await supabase.from('queue').select().eq('cat_id', cat_id).eq('user_id', user_id)
-  const shelterID = data?.map(({shelter_id}) => ({shelter_id}))
-  const queueID = data?.map(({queue_id}) => ({queue_id}))
-  
-  //check user_id exist
-  var userID = await checkUserId(user_id)
+  const {data , error} = await supabase.from('queue').select().eq('queue_id', queue_id)
 
-  if (!userID) {
-    // if user_id does not exist
-    console.log("User ID not found!")
-    res.status(400).json("User ID not found!")
+  const shelter = data?.map(({shelter_id}) => ({ shelter_id }))
+  const shelter_id = toString(shelter) 
+
+  const cat = data?.map(({cat_id}) => ({ cat_id }))
+  const cat_id = toString(cat)  
+
+  const user = data?.map(({user_id}) => ({ user_id }))
+  const user_id = toString(user)  
+ 
+  
+  //check queue_id exist
+  var queueID = await checkQueueId(queue_id)
+
+  if (!queueID) {
+    // if queue_id does not exist
+    console.log("Queue ID not found!")
+    res.status(400).json("Queue ID not found!")
   } else {
-    const {data, error} = await supabase.from('adopt').insert([{
+    const { error } = await supabase.from('adopt').insert([{
       cat_id: cat_id,
-      shelter_id: shelterID,
+      shelter_id: shelter_id,
       user_id: user_id,
       create_date: new Date(),
       adopt_date: adopt_date,
-      queue_id: queueID,
-      adopt_form_status: adopt_form_status,
+      queue_id: queue_id,
+      adopt_form_status: false,
     }])
     res.status(200).json("Create Adopt Succesful!")
   }
 }
 
-//check user_id exist
-async function checkUserId(user_id, response) {
+//check queue_id exist
+async function checkQueueId(queue_id, response) {
   //query
-  const { data, error } = await supabase.from('user_profile').select().eq('user_id', user_id)
+  const { data, error } = await supabase.from('queue').select().eq('queue_id', queue_id)
   if ( data == "" ) {
-    //user_id does not exist
+    //queue_id does not exist
     response = false
   } else {
-    //user_id exist
+    //queue_id exist
     response = true
   }
 
@@ -47,3 +55,10 @@ async function checkUserId(user_id, response) {
   return response
 }
 
+
+
+function toString (req) {
+  const jsonString = JSON.stringify(req)
+  const toString = jsonString.split(':')[1].split('}]')[0]
+  return toString
+}

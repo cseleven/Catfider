@@ -1,5 +1,6 @@
 import { supabase } from "../supabase"
 
+//delete for user
 export default async function handler(req, res) {
 
   //call parameter from body
