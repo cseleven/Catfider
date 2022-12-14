@@ -150,11 +150,12 @@ export default function ShelterForm() {
                 </div>
             </form>
 
-            <div class="hidden sm:block" aria-hidden="true">
+            <div class="hidden xs:block bg-gray-200" aria-hidden="true">
                 <div class="py-5">
-                    <div class="border-t border-gray-200"></div>
+                    <div class="border-t border-gray-300"></div>
                 </div>
             </div>
+
 
             <form action="#" method="POST">
                 <div class="bg-gray-200">
@@ -333,6 +334,7 @@ export default function ShelterForm() {
                 <div class="container mx-auto flex justify-end">
                     <button class="rounded-[4px] bg-iris text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">ถัดไป</button>
                 </div>
+
 
             </form>
         </div>
