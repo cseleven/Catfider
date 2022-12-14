@@ -7,9 +7,12 @@ export default async function handler(req, res) {
 
   //query data
   const {data , error} = await supabase.from('cat_profile').select().eq('cat_id', cat_id)
-
   const shelterID = data?.map(({shelter_id}) => ({ shelter_id }))
   
+  //convert json data to string
+  const shelterString = JSON.stringify(shelterID)
+  const shelter = shelterString.split(':')[1].split('}]')[0]
+
   //check user_id exist
   var userID = await checkUserId(user_id)
 
@@ -32,7 +35,7 @@ export default async function handler(req, res) {
       const { error } = await supabase.from('queue').insert([
         {
           cat_id: cat_id,
-          shelter_id: shelterID,
+          shelter_id: shelter,
           create_date: new Date(),
           update_date: new Date(),
           queue_date: queue_date,
