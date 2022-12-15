@@ -5,17 +5,20 @@ export default async function handler(req, res) {
     //get profile cat in shelter view per cat id
     //select by shelter_id
 
-    const { shelter_id } = req.body
+    const { shelter_id , page_number} = req.body
 
     const { count, err } = await supabase
         .from('cat_profile')
         .select('*', { count: 'exact', head: true })
         .match({ shelter_id: shelter_id })
-
+        
     let query = supabase
         .from('cat_profile')
         .select('cat_id, cat_name, sex, breed, color, cat_picture, status, create_date')
-        if (shelter_id ) { query = query.eq('shelter_id', shelter_id) }
+        .eq('shelter_id', shelter_id)
+        .range(9*(page_number-1), (9*page_number)-1)
+        //.limit(9)
+        
     
 
     const { data, error } = await query
