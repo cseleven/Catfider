@@ -5,12 +5,13 @@ import { stringify } from "querystring"
 export default async function handler(req, res) {
     //filtering cat 
 
-    const { cat_id, sex, breed, color, 
+    const { page_number, cat_id, sex, breed, color, 
             sterile, vaccine, age, status, shelter_id } = req.body
     
     let query = supabase
         .from('cat_profile')
         .select('cat_id, sex, breed, color, cat_picture, detail, shelter_id, from:shelter_id(shelter_name)')
+        .range(9 * (page_number - 1), (9 * page_number) - 1)
         /* select ตามที่โชว์
         .select('cat_id, cat_name, sex, breed, color, cat_picture, detail, shelter_id')
         */

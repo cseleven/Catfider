@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     let query = supabase
         .from('cat_profile')
         .select('cat_id, cat_name, detail, sex, breed, color, cat_picture, shelter_id')
-        .lte('cat_id', 3)
+        .limit(3)
 
     const { data, error } = await query
 

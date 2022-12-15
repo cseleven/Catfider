@@ -16,11 +16,8 @@ export default async function handler(req, res) {
         .from('cat_profile')
         .select('cat_id, cat_name, sex, breed, color, cat_picture, status, create_date')
         .eq('shelter_id', shelter_id)
-        .range(9*(page_number-1), (9*page_number)-1)
-        //.limit(9)
+        .range(6*(page_number-1), (6*page_number)-1)
         
-    
-
     const { data, error } = await query
 
     if (error) {
