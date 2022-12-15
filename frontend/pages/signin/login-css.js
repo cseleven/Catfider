@@ -1,7 +1,7 @@
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
-import { IconMail, Input } from "@supabase/ui";
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import Account from '../../components/account'
+
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 
 const LogIn = () => {
@@ -11,6 +11,7 @@ const LogIn = () => {
   //น่าจะทำใหม่แบบเขียนเอง
   return (
     <div class="h-[87vh]">
+
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
@@ -115,7 +116,6 @@ const LogIn = () => {
                 สมัครสมาชิก
               </a>
             </div>
-
           </form>
         </div>
       </div >

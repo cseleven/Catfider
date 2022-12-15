@@ -24,7 +24,7 @@ const LogIn = () => {
 
   //น่าจะทำใหม่แบบเขียนเอง
   return (
-    <div class="grid h-[87vh] place-items-center">
+    <div class="grid h-[40vh] place-items-center">
       <div className="mx-auto  w-full max-w-md space-y-6">
 
         <img
