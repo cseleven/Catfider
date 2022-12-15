@@ -11,7 +11,7 @@ function classNames(...classes) {
 export default function CatProfile() {
   const router = useRouter();
   return (
-    <div class="container h-[87vh] mx-auto">
+    <div class="container h-[87vh] mx-auto bg-slate-300">
       <nav class="flex" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">
@@ -28,17 +28,17 @@ export default function CatProfile() {
           </li>
         </ol>
       </nav>
-      <div class="flex h-[390px]">
+      <div class="flex">
         <div class="w-1/3">
           <Image
-      src={catProfile1}
-      alt="Picture of rose"
-      width="100%"
-      height="300px"
-  />
+            class="bg-cover"
+            src={catProfile1}
+            alt="Picture of rose"
+            width="100%"
+          />
           
          <div class="w-1/3">
-
+          
         </div>
       </div>
     </div>
