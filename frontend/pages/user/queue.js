@@ -1,45 +1,202 @@
+import Image from 'next/image'
+import vectorHome from '../../public/queue/vector-home.png'
+import vectorInto from '../../public/queue/vector-into.png'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
 
-function Queue() {
-  //setup 
-  const session = useSession()
-  const [loading, setLoading] = useState(true)
-  const [cat, setCat] = useState(null)
+export default function Queue() {
+    //setup 
+    const session = useSession()
+    const [loading, setLoading] = useState(true)
+    const [cat, setCat] = useState(null)
 
-  useEffect(() => {
-    fetchCat("x", function() {
-          console.log("cat : " + cat)
+    useEffect(() => {
+        fetchCat("x", function () {
+            console.log("cat : " + cat)
         })
-  }, [session])
+    }, [session])
 
-  //fetch data
-  const fetchCat = async (param, callback) => {
-    try {
-      setLoading(true)
-      //call page/api/queue/apiname
-      const createQueue = await fetch("/api/queue/createQueue").then(console.log("welcome to create queue"))
-      const data = await createQueue.json()
-      console.log("response : " + JSON.stringify(data))
-      setCat(data)
-    } finally {
-      setLoading(false)
-      console.log("cat : " + cat)
-      callback()
+    //fetch data
+    const fetchCat = async (param, callback) => {
+        try {
+            setLoading(true)
+            //call page/api/queue/apiname
+            const createQueue = await fetch("/api/queue/createQueue").then(console.log("welcome to create queue"))
+            const data = await createQueue.json()
+            console.log("response : " + JSON.stringify(data))
+            setCat(data)
+        } finally {
+            setLoading(false)
+            console.log("cat : " + cat)
+            callback()
+        }
     }
-  }
 
-  //return output
-  return (
-    <main>
-      <h2>จองคิวแมว</h2>
-      <h6>ชื่อแมว : {loading ? 'loading...': cat[0].cat_name}</h6>
-      <h6>สายพันธุ์ : {loading ? 'loading...': cat[0].breed}</h6>
-      <h6>สี : {loading ? 'loading...': cat[0].color}</h6>
-      <h6>อายุ (สัปดาห์) : {loading ? 'loading...': cat[0].age}</h6>
-    </main>
-  )
+
+
+
+    Queue.getInitialProps = async ({ query }) => {
+        const { color } = query
+        return { color }
+
+    }
+
+    return (
+        <div class="container">
+            <Head>
+                <title>Cat Finder</title>
+                <meta name="description" content="create by eleven" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+
+            {/*section 1*/}
+            <div class="w-screen h-[171px] mx-28">
+                <div class="flex my-8">
+                    <Image class="pb-1" src={vectorHome} placeholder="blur" />
+                    <p class="mx-2 text-sm font-normal text-gray-500">หน้าแรก</p>
+                    <Image class="mx-4 pb-1" src={vectorInto} placeholder="blur" />
+                    <p class="mx-2 text-sm font-normal text-gray-500">ค้นหาแมว</p>
+                    <Image class="mx-4 pb-1" src={vectorInto} placeholder="blur" />
+                    <p class="mx-2 text-sm font-normal text-gray-500">จองคิวแมว</p>
+                </div>
+                <p class="text-4xl text-black font-normal mt-8">จองคิวแมว</p>
+                <div class="w-10/12 h-0.5 bg-gray-200 mt-8" />
+            </div>
+
+            {/*section 2*/}
+            <div class="w-screen h-[560px] bg-light-salmon py-6">
+                <div class="flex">
+                    <div class="flex-none w-[276px] h-[490px] mx-28 ">
+                        <div class="flex flex-col">
+                            <div class="text-2xl font-normal text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon">จองคิวแมว</div>
+                            <div class="text-sm font-light text-gray-600 pt-1.5">เลือกช่วงเวลาเพื่อไปนัดดูแมวกับทาง</div>
+                            <div class="text-sm font-light text-gray-600">มูลนิธิหรือสถานสงเคราะห์</div>
+                        </div>
+                    </div>
+                    <div class="flex-none w-[1004px] h-[490px] mx-28 ">
+                        <div class="w-[803px] h-[407px] bg-white rounded-t shadow-md px-7 py-6 space-y-2.5">
+                            <label class="block w-1/3">
+                                <span class=" flex text-gray-700">รหัสแมว
+                                    <span class="text-error font-light">*</span>
+                                </span>
+                                <input
+                                    type="text"
+                                    class="
+                                            block
+                                            w-full
+                                            rounded-md
+                                            border-gray-300
+                                            shadow-sm
+                                            bg-gray-200
+                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            font-normal
+                                            placeholder-gray-500
+                                        "
+                                    placeholder="1210"
+                                />
+                            </label>
+                            <label class="block w-2/3">
+                                <span class=" flex text-gray-700">ชื่อน้องแมว
+                                    <span class="text-error font-light">*</span>
+                                </span>
+                                <input
+                                    type="text"
+                                    class="
+                                            block
+                                            w-full
+                                            rounded-md
+                                            border-gray-300
+                                            shadow-sm
+                                            bg-gray-200
+                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            font-normal
+                                            placeholder-gray-500
+                                        "
+                                    placeholder="มะลิ"
+                                />
+                            </label>
+                            <label class="block w-2/3">
+                                <span class=" flex text-gray-700">ชื่อมูลนิธิ
+                                    <span class="text-error font-light">*</span>
+                                </span>
+                                <input
+                                    type="text"
+                                    class="
+                                            block
+                                            w-full
+                                            rounded-md
+                                            border-gray-300
+                                            shadow-sm
+                                            bg-gray-200
+                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            font-normal
+                                            placeholder-gray-500
+                                        "
+                                    placeholder="ชื่อมูลนิธิ"
+                                />
+                            </label>
+                            <form action="#" method="POST">
+                                <label class="block">
+                                    <span class=" flex text-gray-700">เลือกวัน
+                                        <span class="text-error font-light">*</span>
+                                    </span>
+                                    <input
+                                        type="date"
+                                        class="
+                                        block
+                                        w-full
+                                        rounded-md
+                                        border-gray-300
+                                        shadow-sm
+                                        focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                        font-normal
+                                        placeholder-gray-500
+                                        "
+                                        placeholder="เลือกวัน"
+                                    />
+                                </label>
+                                <label class="block mr-64">
+                                    <span class=" flex text-gray-700">เลือกเวลา
+                                        <span class="text-error font-light">*</span>
+                                    </span>
+                                    <select
+                                        class="
+                                            block
+                                            w-full
+                                            mt-1
+                                            rounded-md
+                                            border-gray-300
+                                            shadow-sm
+                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            text-gray-500 
+                                            font-normal
+                                        "
+                                    >
+                                        <option>เลือกช่วงเวลา</option>
+                                        <option>9.00-10.00 น.</option>
+                                        <option>10.00-11.00 น.</option>
+                                        <option>11.00-12.00 น.</option>
+                                        <option>14.00-15.00 น.</option>
+                                    </select>
+                                </label>
+                            </form>
+                        </div>
+
+                        <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ">
+                            <div class="w-screen h-[30rem] py-3">
+                                <button type="button"
+                                    class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]"
+                                    onClick={() => supabase.auth.signOut()}>
+                                    ยืนยัน
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-10/12 h-0.5 bg-gray-200 mx-28" />
+            </div>
+            <div class="w-screen h-[15rem]" />
+        </div>
+    )
 }
