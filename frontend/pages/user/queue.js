@@ -1,9 +1,48 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import vectorHome from '../../public/queue/vector-home.png'
 import vectorInto from '../../public/queue/vector-into.png'
+import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import Head from 'next/head'
+import styles from '../styles/Home.module.css'
+import { useEffect, useState } from 'react'
 
 export default function Queue() {
+    //setup 
+    const session = useSession()
+    const [loading, setLoading] = useState(true)
+    const [cat, setCat] = useState(null)
+
+    useEffect(() => {
+        fetchCat("x", function () {
+            console.log("cat : " + cat)
+        })
+    }, [session])
+
+    //fetch data
+    const fetchCat = async (param, callback) => {
+        try {
+            setLoading(true)
+            //call page/api/queue/apiname
+            const createQueue = await fetch("/api/queue/createQueue").then(console.log("welcome to create queue"))
+            const data = await createQueue.json()
+            console.log("response : " + JSON.stringify(data))
+            setCat(data)
+        } finally {
+            setLoading(false)
+            console.log("cat : " + cat)
+            callback()
+        }
+    }
+
+
+
+
+    Queue.getInitialProps = async ({ query }) => {
+        const { color } = query
+        return { color }
+
+    }
+
     return (
         <div class="container">
             <Head>
@@ -158,7 +197,7 @@ export default function Queue() {
                 </div>
                 <div class="w-10/12 h-0.5 bg-gray-200 mx-28" />
             </div>
-            <div class="w-screen h-[15rem]"/>
+            <div class="w-screen h-[15rem]" />
         </div>
     )
 }
