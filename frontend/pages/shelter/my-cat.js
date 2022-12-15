@@ -36,7 +36,7 @@ export default function MyCat () {
 
   const catExample = async () => {
     var raw = JSON.stringify({
-      "cat_id": 5
+      "shelter_id": 1
 
     });
 
