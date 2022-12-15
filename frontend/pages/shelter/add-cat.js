@@ -19,17 +19,18 @@ function AddCat() {
     const catExample = async () => {
         var raw = JSON.stringify({
             //"cat_id": 5,
-            "shelter_id": 1,
-            "cat_name": "ขนมจีน",
-            "sex": "female",
-            "breed": "ผสม",
-            "color": "ขาว",
+            "shelter_id": 3,
+            "age": 2,
+            "cat_name": "ขนมจีบ",
+            "sex": "male",
+            "breed": "สีสวาด",
+            "color": "ส้ม",
             "sterile": false,
             "vaccine": true,
             "detail": "น้องเป็นแมวอารมณ์ดี เป็นมิตรกับสิ่งแวดล้อม",
             "cat_picture": "www.google.com",
             "status": false,
-            "age": 2
+            
 
 
         });
