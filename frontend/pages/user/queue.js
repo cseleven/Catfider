@@ -2,33 +2,60 @@
 import Head from 'next/head'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
+import { useUser } from '@supabase/auth-helpers-react'
 
 export default function Queue() {
-    //setup 
+    //setup
+    const user = useUser()
     const session = useSession()
     const [loading, setLoading] = useState(true)
     const [cat, setCat] = useState(null)
+    const [input, setInput] = useState(null)
+
 
     useEffect(() => {
-        fetchCat("x", function () {
-            console.log("cat : " + cat)
-        })
+
     }, [session])
 
     //fetch data
-    const fetchCat = async (param, callback) => {
+    const fetchCat = async (e) => {
+
+        var raw = JSON.stringify({
+
+            "cat_id": e.target.cat_id.value,
+            "user_id": user.id,
+            "queue_date": e.target.queue_date.value,
+            "queue_time": e.target.queue_time.value
+        });
+
+        var myheader = {
+            'Content-Type': 'application/json'
+        };
+
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myheader,
+            body: raw,
+            redirect: 'follow'
+        };
+
         try {
-            setLoading(true)
-            //call page/api/queue/apiname
-            const createQueue = await fetch("/api/queue/createQueue").then(console.log("welcome to create queue"))
-            const data = await createQueue.json()
-            console.log("response : " + JSON.stringify(data))
-            setCat(data)
+            setLoading(true);
+            let response = await fetch("/api/queue/createQueue", requestOptions);
+            let data = await response.json();
+            console.log("response : " + JSON.stringify(data));
         } finally {
-            setLoading(false)
-            console.log("cat : " + cat)
-            callback()
+            setLoading(false);
         }
+
+    };
+
+    const updateInput = e => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        })
     }
 
     return (
@@ -63,15 +90,19 @@ export default function Queue() {
                             <div class="text-sm font-light text-gray-600">มูลนิธิหรือสถานสงเคราะห์</div>
                         </div>
                     </div>
-                    <div class="flex-none w-[1004px] h-[490px] mx-28 ">
-                        <div class="w-[803px] h-[407px] bg-white rounded-t shadow-md px-7 py-6 space-y-2.5">
-                            <label class="block w-1/3">
-                                <span class=" flex text-gray-700">รหัสแมว
-                                    <span class="text-error font-light">*</span>
-                                </span>
-                                <input
-                                    type="text"
-                                    class="
+                    <form onSubmit={fetchCat}>
+                        <div class="flex-none w-[1004px] h-[490px] mx-28 ">
+                            <div class="w-[803px] h-[407px] bg-white rounded-t shadow-md px-7 py-6 space-y-2.5">
+                                <label class="block w-1/3">
+
+                                    <span class=" flex text-gray-700">รหัสแมว
+                                        <span class="text-error font-light">*</span>
+                                    </span>
+                                    <input
+                                        id="cat_id"
+                                        name="cat_id"
+                                        type="text"
+                                        class="
                                             block
                                             w-full
                                             rounded-md
@@ -82,16 +113,16 @@ export default function Queue() {
                                             font-normal
                                             placeholder-gray-500
                                         "
-                                    placeholder="1210"
-                                />
-                            </label>
-                            <label class="block w-2/3">
-                                <span class=" flex text-gray-700">ชื่อน้องแมว
-                                    <span class="text-error font-light">*</span>
-                                </span>
-                                <input
-                                    type="text"
-                                    class="
+                                        placeholder="1210"
+                                    />
+                                </label>
+                                <label class="block w-2/3">
+                                    <span class=" flex text-gray-700">ชื่อน้องแมว
+                                        <span class="text-error font-light">*</span>
+                                    </span>
+                                    <input
+                                        type="text"
+                                        class="
                                             block
                                             w-full
                                             rounded-md
@@ -102,16 +133,16 @@ export default function Queue() {
                                             font-normal
                                             placeholder-gray-500
                                         "
-                                    placeholder="มะลิ"
-                                />
-                            </label>
-                            <label class="block w-2/3">
-                                <span class=" flex text-gray-700">ชื่อมูลนิธิ
-                                    <span class="text-error font-light">*</span>
-                                </span>
-                                <input
-                                    type="text"
-                                    class="
+                                        placeholder="มะลิ"
+                                    />
+                                </label>
+                                <label class="block w-2/3">
+                                    <span class=" flex text-gray-700">ชื่อมูลนิธิ
+                                        <span class="text-error font-light">*</span>
+                                    </span>
+                                    <input
+                                        type="text"
+                                        class="
                                             block
                                             w-full
                                             rounded-md
@@ -122,15 +153,17 @@ export default function Queue() {
                                             font-normal
                                             placeholder-gray-500
                                         "
-                                    placeholder="ชื่อมูลนิธิ"
-                                />
-                            </label>
-                            <form action="#" method="POST">
+                                        placeholder="ชื่อมูลนิธิ"
+                                    />
+                                </label>
+
                                 <label class="block">
                                     <span class=" flex text-gray-700">เลือกวัน
                                         <span class="text-error font-light">*</span>
                                     </span>
                                     <input
+                                        id="queue_date"
+                                        name="queue_date"
                                         type="date"
                                         class="
                                         block
@@ -150,6 +183,8 @@ export default function Queue() {
                                         <span class="text-error font-light">*</span>
                                     </span>
                                     <select
+                                        id="queue_time"
+                                        name="queue_time"
                                         class="
                                             block
                                             w-full
@@ -163,30 +198,31 @@ export default function Queue() {
                                         "
                                     >
                                         <option>เลือกช่วงเวลา</option>
-                                        <option>9.00-10.00 น.</option>
-                                        <option>10.00-11.00 น.</option>
-                                        <option>11.00-12.00 น.</option>
-                                        <option>14.00-15.00 น.</option>
+                                        <option value="9.00-10.00">9.00-10.00 น.</option>
+                                        <option value="10.00-11.00">10.00-11.00 น.</option>
+                                        <option value="11.00-12.00">11.00-12.00 น.</option>
+                                        <option value="14.00-15.00">14.00-15.00 น.</option>
                                     </select>
                                 </label>
-                            </form>
-                        </div>
 
-                        <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ">
-                            <div class="w-screen h-[30rem] py-3">
-                                <button type="button"
-                                    class="flex rounded-lg bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]"
-                                    onClick={() => supabase.auth.signOut()}>
-                                    ยืนยัน
-                                </button>
+                            </div>
+
+                            <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ">
+                                <div class="w-screen h-[30rem] py-3">
+                                    <button type="submit"
+                                        class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]"
+                                    >
+                                        ยืนยัน
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="w-10/12 h-0.5 bg-gray-200 mx-28" />
             </div>
-            <div class="w-screen h-[15rem]"/>
-        </div>
+            <div class="w-screen h-[15rem]" />
+        </div >
     )
 }
 

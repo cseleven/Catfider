@@ -391,7 +391,7 @@ export default function AddCat() {
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ">
                             <div class="w-screen h-[30rem] py-3">
                                 <button type="button"
-                                    class="flex rounded-lg bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]"
+                                    class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]"
                                     onClick={() => supabase.auth.signOut()}>
                                     ยืนยัน
                                 </button>
