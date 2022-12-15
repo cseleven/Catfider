@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
         //more ช่องทางการบริจาค
 
-    if (cat_id) { query = query.eq('cat_id', cat_id) }
+
 
 
 

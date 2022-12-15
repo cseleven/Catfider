@@ -17,32 +17,28 @@ export default function MyCat () {
   // const [id, setId] = useState(0)
 
   useEffect(() => {
-    fetchCat("x", function () {
-      console.log("cat : " + cat)
-    })
-  }, [session])
+    catExample()
+  }, [])
 
   //fetch data
-  const fetchCat = async (param, callback) => {
+  const fetchCat = async () => {
     try {
       setLoading(true)
       //call page/api/queue/apiname
-      const selectcat = await fetch("/api/cat/selectCat").then(console.log("welcome to add cat"))
-      const data = await selectcat.json()
+      let response = await fetch("/api/cat/searchCat").then(console.log("welcome to add cat"))
+      let data = await response.json()
       console.log("response : " + JSON.stringify(data))
       setCat(data)
     } finally {
       setLoading(false)
-      console.log("cat : " + cat)
-      callback()
     }
   }
 
   const catExample = async () => {
     var raw = JSON.stringify({
-      "page_number": "1",
-      //"cat_name": this.cat_name,
-      //"password": this.password
+      //"cat_id": 1
+      "sex": "male"
+
     });
 
     var myheader = {
@@ -59,8 +55,8 @@ export default function MyCat () {
 
     try {
       setLoading(true);
-      let response = await fetch("/api/cat/selectCat");
-      data = await response.json();
+      let response = await fetch("/api/cat/searchCat", requestOptions);
+      let data = await response.json();
       console.log("response : " + JSON.stringify(data));
     } finally {
       setLoading(false);
