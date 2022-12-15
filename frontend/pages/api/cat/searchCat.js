@@ -7,8 +7,7 @@ export default async function handler(req, res) {
 
     const { cat_id, sex, breed, color, 
             sterile, vaccine, age, status, shelter_id } = req.body
-    console.log("cat_id"+cat_id)
-    console.log(JSON.stringify(req.body))
+    
     let query = supabase
         .from('cat_profile')
         .select('cat_id, sex, breed, color, cat_picture, detail, shelter_id, from:shelter_id(shelter_name)')
