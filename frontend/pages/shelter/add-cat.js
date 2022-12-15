@@ -1,4 +1,3 @@
-
 import Head from 'next/head'
 import Image from 'next/image'
 import vectorHome from '../../public/add-cat/vector-home.png'
