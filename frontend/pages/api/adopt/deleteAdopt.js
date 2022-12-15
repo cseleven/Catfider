@@ -11,8 +11,9 @@ export default async function handler(req, res) {
 
   if (adoptID) {
 
-    //query
+    //delete
     const { error } = await supabase.from('adopt').delete().eq('adopt_id', adopt_id).eq('user_id', user_id)
+    //query
     const { data  } = await supabase.from('adopt').select().eq('adopt_id', adopt_id).eq('user_id', user_id)
     if ( data != "" ){
       res.status(400).json("Delete Fail!")
