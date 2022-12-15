@@ -1,13 +1,14 @@
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
-import Account from '../components/account'
+import Account from '../../components/account'
 
-const SignIn = () => {
+const LogIn = () => {
   const session = useSession()
   const supabase = useSupabaseClient()
 
+  //น่าจะทำใหม่แบบเขียนเอง
   return (
-    <div class="grid h-screen place-items-center">
+    <div class="grid h-[87vh] place-items-center">
       {!session ? (
         <div class="h-64 w-80 -mt-24">
           <Auth supabaseClient={supabase} appearance={{
@@ -29,4 +30,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default LogIn

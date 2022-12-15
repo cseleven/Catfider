@@ -4,8 +4,67 @@ import vectorHome from '../../public/add-cat/vector-home.png'
 import vectorInto from '../../public/add-cat/vector-into.png'
 import addProfile from '../../public/add-cat/add-profile.png'
 import changeProfile from '../../public/add-cat/change-profile.png'
+import { useSession, useUser } from '@supabase/auth-helpers-react'
+import { useEffect, useState } from 'react'
+
 
 export default function AddCat() {
+    //setup 
+    const user = useUser()
+    const session = useSession()
+    const [loading, setLoading] = useState(true)
+    const [cat, setCat] = useState(null)
+    // const [id, setId] = useState(0)
+
+    useEffect(() => {
+        catExample()
+    }, [])
+
+
+
+    const catExample = async () => {
+        var raw = JSON.stringify({
+            //"cat_id": 5,
+            "shelter_id": 1,
+            "cat_name": "ขนมจีน",
+            "sex": "female",
+            "breed": "ผสม",
+            "color": "ขาว",
+            "sterile": false,
+            "vaccine": true,
+            "detail": "น้องเป็นแมวอารมณ์ดี เป็นมิตรกับสิ่งแวดล้อม",
+            "cat_picture": "www.google.com",
+            "status": false,
+            "age": 2
+
+
+        });
+
+        var myheader = {
+            'Content-Type': 'application/json'
+        };
+
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myheader,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            setLoading(true);
+            let response = await fetch("/api/cat/shelterview/addCat", requestOptions);
+            let data = await response.json();
+            console.log("response : " + JSON.stringify(data));
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+
+
     return (
         <div class="container">
             <Head>

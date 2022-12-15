@@ -1,6 +1,6 @@
 export default function Loading() {
     return (
-        <div class="grid h-screen place-items-center">
+        <div class="grid h-[87vh] place-items-center">
             <div>
                 <svg class="animate-spin m-auto h-8 w-8 text-salmon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
