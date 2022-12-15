@@ -3,7 +3,6 @@ import vectorHome from '../../public/queue/vector-home.png'
 import vectorInto from '../../public/queue/vector-into.png'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
 
 export default function Queue() {
