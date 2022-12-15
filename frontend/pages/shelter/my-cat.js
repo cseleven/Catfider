@@ -36,8 +36,7 @@ export default function MyCat () {
 
   const catExample = async () => {
     var raw = JSON.stringify({
-      //"cat_id": 1
-      "sex": "male"
+      "cat_id": 5
 
     });
 
@@ -55,7 +54,7 @@ export default function MyCat () {
 
     try {
       setLoading(true);
-      let response = await fetch("/api/cat/searchCat", requestOptions);
+      let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
     } finally {
