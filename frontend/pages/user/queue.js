@@ -3,6 +3,9 @@ import Head from 'next/head'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
 import { useUser } from '@supabase/auth-helpers-react'
+import Image from 'next/image'
+import vectorHome from '../../public/queue/vector-home.png'
+import vectorInto from '../../public/queue/vector-into.png'
 
 export default function Queue() {
     //setup
