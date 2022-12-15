@@ -3,7 +3,7 @@ import profilePic from '../public/index/cat.png'
 import tickSquare from '../public/index/tick-square.png'
 import vectorHome from '../public/index/vector-home.png'
 import group1 from '../public/index/group-1.png'
-import Homecard from '../components/homecard'
+import Homecard from '../../components/homecard'
 import { useEffect, useState } from 'react'
 
 export default function Home() {

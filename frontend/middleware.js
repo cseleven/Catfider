@@ -10,10 +10,15 @@ export async function middleware(req) {
     data: { session },
   } = await supabase.auth.getSession()
 
-  if (!session) {
-    console.log("Authorization error, redirecting to login page")
-    res = NextResponse.redirect(new URL('/signin', req.url))
-   } else {
+  // if ( session && req.nextUrl.pathname.startsWith('/signin')) {
+  //     console.log("please logout before new signin")
+  //     res = NextResponse.redirect(new URL('/', req.url))
+  // }
+
+  // if (!session) {
+  //   console.log("Authorization error, redirecting to login page")
+  //   res = NextResponse.redirect(new URL('/signin', req.url))
+  //  } else {
 
   //   if (req.nextUrl.pathname.startsWith('/user')) {
   //     if (session.user.user_metadata.role != 1) {
@@ -28,11 +33,11 @@ export async function middleware(req) {
   //       res = NextResponse.redirect(new URL('/', req.url))
   //     }
   //   }
-  }
+  // }
 
   return res
 }
 
 export const config = {
-  matcher: ['/user/:path*', '/shelter/:path*'],
+  matcher: ['/user/:path*', '/shelter/:path*', '/signin/:path*'],
 }
