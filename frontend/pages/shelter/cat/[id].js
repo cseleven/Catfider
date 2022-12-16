@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import Image from 'next/image'
-import catProfile1 from '../../../public/index/cat-profile1.png'
-
+import profilePic from '../../../public/index/cat.png'
 const urlpic = "https://images.unsplash.com/photo-1615789591457-74a63395c990"
 
 function classNames(...classes) {
@@ -29,19 +28,18 @@ export default function CatProfile() {
         </ol>
       </nav>
       <div class="flex h-[390px]">
-        <div class="w-1/3">
-          <Image
-      src={catProfile1}
-      alt="Picture of rose"
-      width="100%"
-      height="300px"
-  />
-          
-         <div class="w-1/3">
-
+        <div class="w-1/3 h-full bg-cover rounded-md" style={{"background-image": "url(https://images.unsplash.com/photo-1615789591457-74a63395c990)"}}>
+        </div>
+        <div class="w-2/3">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.810927024412!2d100.77565737605752!3d13.729894097798276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d664988a1bedf%3A0xcc678f180e221cd0!2sKing%20Mongkut&#39;s%20Institute%20of%20Technology%20Ladkrabang!5e0!3m2!1sen!2sth!4v1671191115547!5m2!1sen!2sth" class="w-full h-3/5 px-2 pb-1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="flex pt-1 px-2 h-2/5">
+            <div class="w-1/4 border-2 border-gray-300 rounded-md "></div>
+            <div class="w-1/4 border-2 border-gray-300 rounded-md "></div>
+            <div class="w-1/4 border-2 border-gray-300 rounded-md "></div>
+            <div class="w-1/4 border-2 border-gray-300 rounded-md "></div>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }
