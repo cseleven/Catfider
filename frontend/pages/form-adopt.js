@@ -362,6 +362,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="name"
+                                            id="name"
                                             type="text"
                                             class="
                                             mt-1
@@ -382,6 +384,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="surname"
+                                            id="surname"
                                             type="text"
                                             class="
                                             mt-1
@@ -400,6 +404,8 @@ export default function FormAdopt() {
                                     <label class="block basis-1/6">
                                         <span class=" flex text-gray-700 ">ชื่อเล่น</span>
                                         <input
+                                            name="nickname"
+                                            id="nickname"
                                             type="text"
                                             class="
                                             mt-1
@@ -418,6 +424,8 @@ export default function FormAdopt() {
                                     <label class="block basis-1/12">
                                         <span class=" flex text-gray-700 ">อายุ</span>
                                         <input
+                                            name="age"
+                                            id="age"
                                             type="text"
                                             class="
                                             mt-1
@@ -440,6 +448,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="idcard"
+                                            id="idcard"
                                             type="text"
                                             class="
                                             mt-1
@@ -482,6 +492,8 @@ export default function FormAdopt() {
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="house"
+                                                id="house"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -502,6 +514,8 @@ export default function FormAdopt() {
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="renthouse"
+                                                id="renthouse"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -522,6 +536,8 @@ export default function FormAdopt() {
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="renthouse"
+                                                id="renthouse"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -542,6 +558,8 @@ export default function FormAdopt() {
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="renthouse"
+                                                id="renthouse"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
