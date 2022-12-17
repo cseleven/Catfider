@@ -180,15 +180,6 @@ export default function Home() {
             <button class="rounded-lg bg-salmon text-white text-2xl mt-[40px] ml-[620px] px-20 py-[8px]">สมัครสมาชิก</button>
           </div>
 
-          {/*section 7*/}
-          <div class="w-screen h-[35rem] bg-bright-salmon">
-            <div class="flex text-[30px] text-black font-normal">
-              <p class="pl-[900px] pt-[70px]">About</p>
-              <p class="pl-[100px] pt-[70px]">Help</p>
-              <p class="pl-[100px] pt-[70px]">Contact</p>
-            </div>
-          </div>
-
           {/*img backgroud*/}
           <div class="w-screen">
             <Image class="absolute mt-24 top-20 left-0 -z-40 object-none object-right" src={vectorHome} placeholder="blur"></Image>

@@ -5,6 +5,8 @@ import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { useUser } from '@supabase/auth-helpers-react'
+import { useRouter } from "next/router";
+
 
 export default function Queue() {
     //setup
@@ -14,6 +16,10 @@ export default function Queue() {
     const [cat, setCat] = useState(null)
     const [input, setInput] = useState(null)
 
+    var router = useRouter();
+    const id = router.query.id
+    const name = router.query.name
+    const shelter = router.query.shelter
 
     useEffect(() => {
 
@@ -115,7 +121,8 @@ export default function Queue() {
                                             font-normal
                                             placeholder-gray-500
                                         "
-                                        placeholder="1210"
+                                        value={id}
+                                        placeholder={id}
                                     />
                                 </label>
                                 <label class="block w-2/3">
@@ -135,7 +142,8 @@ export default function Queue() {
                                             font-normal
                                             placeholder-gray-500
                                         "
-                                        placeholder="มะลิ"
+                                        value={name}
+                                        placeholder={name}
                                     />
                                 </label>
                                 <label class="block w-2/3">
@@ -155,7 +163,8 @@ export default function Queue() {
                                             font-normal
                                             placeholder-gray-500
                                         "
-                                        placeholder="ชื่อมูลนิธิ"
+                                        value={shelter}
+                                        placeholder={shelter}
                                     />
                                 </label>
 
