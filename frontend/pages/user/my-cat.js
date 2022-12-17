@@ -10,23 +10,9 @@ function MyCat() {
       catExample()
     }, [])
 
-    //fetch data
-    const fetchCat = async () => {
-      try {
-        setLoading(true)
-        //call page/api/queue/apiname
-        let response = await fetch("/api/cat/userview/showMyCat").then(console.log("welcome to show my cat"))
-        let data = await response.json()
-        console.log("response : " + JSON.stringify(data))
-        setCat(data)
-      } finally {
-        setLoading(false)
-      }
-    }
-
     const catExample = async () => {
       var raw = JSON.stringify({
-        "cat_id": 5
+        "user_id": 2
 
       });
 
@@ -44,7 +30,7 @@ function MyCat() {
 
       try {
         setLoading(true);
-        let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
+        let response = await fetch("/api/cat/userview/showmyCat", requestOptions);
         let data = await response.json();
         console.log("response : " + JSON.stringify(data));
       } finally {
