@@ -16,7 +16,8 @@ import { useEffect, useState } from 'react'
 
   const catExample = async () => {
     var raw = JSON.stringify({
-      "shelter_id": 2
+      "shelter_id": 2,
+      "page_number":1
 
     });
 

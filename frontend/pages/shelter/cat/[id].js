@@ -1,3 +1,5 @@
+import { useSession, useUser } from '@supabase/auth-helpers-react'
+import { useEffect, useState } from 'react'
 import { useRouter } from "next/router";
 import Image from 'next/image'
 import catProfile1 from '../../../public/index/cat-profile1.png'

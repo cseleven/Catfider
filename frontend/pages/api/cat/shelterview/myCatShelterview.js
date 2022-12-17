@@ -25,6 +25,7 @@ export default async function handler(req, res) {
     }
 
     console.log(count)
+    console.log(data)
     console.log("Show My Cat SUCCESS!")
     res.status(200).json(data)
 
