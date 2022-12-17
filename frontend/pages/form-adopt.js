@@ -23,7 +23,6 @@ pdfMake.fonts = {
 
 export default function FormAdopt() {
     const [loading, setLoading] = useState(true);
-    const [topic, setTopic] = useState(null);
     const [input, setInput] = useState({});
 
     useEffect(() => {
@@ -36,7 +35,6 @@ export default function FormAdopt() {
             let response = await fetch("/api/getexample");
             let data = await response.json();
             console.log("response : " + JSON.stringify(data));
-            setTopic(data);
         } finally {
             setLoading(false);
         }
@@ -79,6 +77,7 @@ export default function FormAdopt() {
 
         var docDefinition = {
             content: [
+
                 {
                     text: 'แบบฟอร์มขอรับอุปการะแมว',
                     bold: 'true',
@@ -99,97 +98,332 @@ export default function FormAdopt() {
                     text:
                         'ตอนที่ 1 ข้อมูลผู้รับอุปการะ',
                     bold: 'true',
-                    fontSize: 14,
+                    fontSize: 15,
                     width: 'auto',
                     margin: [0, 0, 0, 0]
 
                 },
-
                 {
                     text:
                         'ตอนที่ 1.1 ข้อมูลส่วนตัว',
                     width: 'auto',
-
                 },
                 {
-                    text:
-                        'ชื่อ: ' +
-                        'คำนำหน้า: ' +
-                        'ชื่อจริง: ' + input.name +
-                        'นามสกุล: ' +
-                        'ชื่อเล่น: ' +
-                        'อายุ: ',
-                    width: 'auto',
-
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'ชื่อ: ' + input.name, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'นามสกุล: ' + input.surname, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ชื่อเล่น: ' + input.nickname, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'อายุ: ' + input.age, listType: 'none' },
+                            ]
+                        },
+                    ]
                 },
 
                 {
-                    text:
-                        'เลขที่ตามบัตรประจำตัวประชาชน: ' +
-                        'เพศ: ',
-                    width: 'auto',
-
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'เลขที่ตามบัตรประจำตัวประชาชน: ' + input.idcard, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'เพศ: ', listType: 'none' },
+                            ]
+                        }
+                    ]
                 },
-                // ที่อยู่ กับ อาศัยอยู่กับ
+                //checkbox
                 {
-                    text:
-                        'ที่อยู่อาศัยปัจจุบัน: ' +
-                        'อาศัยอยู่กับ: ' +
-                        'จำนวนสมาชิก(รวมตัวเอง): ' +
-                        'สมาชิกในครอบครัว: ',
-                    width: 'auto',
-
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'ที่อยู่อาศัยปัจจุบัน: ', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'อาศัยอยู่กับ: ', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'จำนวนสมาชิก(รวมตัวเอง): ' + input.familymembercount, listType: 'none' },
+                            ]
+                        },
+                    ]
                 },
-                // รายละเอียดที่อยู่
-                {
-                    text:
-                        'รายละเอียดที่อยู่: ' +
-                        'บ้านเลขที่: ' +
-                        'หมู่: ' +
-                        'หมู่บ้าน/อาคาร: ' +
-                        'ชั้น: ' +
-                        'เลขที่ห้อง: ' +
-                        'ซอย: ' +
-                        'ถนน: ' +
-                        'แขวง/ตำบล: ' +
-                        'เขต/อำเภอ: ' +
-                        'จังหวัด: ' +
-                        'รหัสไปรษณีย์: ',
-                    width: 'auto',
-                },
-                {
-                    text:
-                        'ตอนที่ 1.2 ข้อมูลที่อยู่ที่จะนำแมวไปเลี้ยง',
-                    width: 'auto',
 
+                {
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'สมาชิกในครอบครัว/ความสัมพันธ์ที่เกี่ยวข้อง: ' + input.familymember, listType: 'none' },
+                            ]
+                        },
+                    ]
+                },
+
+                {
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'รายละเอียดที่อยู่: ', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'บ้านเลขที่: ' + input.housenumber, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'หมู่: ' + input.moo, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'หมู่บ้าน/อาคาร: ' + input.village, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ชั้น: ' + input.floor, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'เลขที่ห้อง: ' + input.roomnumber, listType: 'none' },
+                            ]
+                        },
+                    ]
+                },
+
+                {
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'ซอย: ' + input.alley, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ถนน: ' + input.road, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'แขวง/ตำบล: ' + input.subdistrict, listType: 'none' },
+                            ]
+                        },
+                    ]
+                },
+
+                {
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'เขต/อำเภอ: ' + input.district, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'จังหวัด: ' + input.province, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'รหัสไปรษณีย์: ' + input.zipcode, listType: 'none' },
+                            ]
+                        },
+                    ],
+                    margin: [0, 0, 0, 8]
+                },
+
+                {
+                    columns: [
+                        // ติ้กถูก
+                        { text: 'ตอนที่ 1.2 ข้อมูลที่อยู่ที่จะนำแมวไปเลี้ยง', listType: 'none' },
+
+                        {
+                            ul: [
+                                { text: 'ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1 ', listType: 'none' },
+                            ]
+                        },
+                    ],
+                },
+
+                //ไม่ใช่ที่อยู่เดียวกัน
+                {
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'รายละเอียดที่อยู่: ', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'บ้านเลขที่: ' + input.nhousenumber, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'หมู่: ' + input.nmoo, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'หมู่บ้าน/อาคาร: ' + input.nvillage, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ชั้น: ' + input.nfloor, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'เลขที่ห้อง: ' + input.nroomnumber, listType: 'none' },
+                            ]
+                        },
+                    ]
+                },
+
+                {
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'ซอย: ' + input.nalley, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ถนน: ' + input.nroad, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'แขวง/ตำบล: ' + input.nsubdistrict, listType: 'none' },
+                            ]
+                        },
+                    ]
+                },
+
+                {
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'เขต/อำเภอ: ' + input.ndistrict, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'จังหวัด: ' + input.nprovince, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'รหัสไปรษณีย์: ' + input.nzipcode, listType: 'none' },
+                            ]
+                        },
+                    ],
+                    margin: [0, 0, 0, 8]
                 },
 
                 {
                     text:
                         'ตอนที่ 1.3 ข้อมูลติดต่อ',
                     width: 'auto',
+                },
 
-                },
                 {
-                    text:
-                        'เบอร์มือถือ: ' +
-                        'เบอร์ที่บ้าน: ' +
-                        'เบอร์ที่ทำงาน: ',
-                    width: 'auto',
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'โทรศัพท์ที่ติดต่อได้', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'เบอร์มือถือ: ' + input.mobilephone, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'เบอร์ที่บ้าน: ' + input.homephone, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'เบอร์ที่ทำงาน: ' + input.workphone, listType: 'none' },
+                            ]
+                        },
+                    ]
                 },
+
                 {
-                    text:
-                        'Facebook user: ' +
-                        'Line ID: ',
-                    width: 'auto',
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'ช่องทางติดต่ออื่น', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'Facebook user: ' + input.facebook, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'LINE ID: ' + input.line, listType: 'none' },
+                            ]
+                        },
+                    ]
                 },
+
                 {
-                    text:
-                        'บุคคลอื่นที่สามารถติดต่อได้: ' +
-                        'ชื่อและนามสกุล: ' +
-                        'เกี่ยวข้องเป็น: ' +
-                        'เบอร์มือถือ: ',
-                    width: 'auto',
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'บุคคลอื่นที่สามารถติดต่อได้', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ชื่อและนามสกุล: ' + input.nameperson, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'เกี่ยวข้องเป็น: ' + input.namepersonrelationship, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'เบอร์มือถือ: ' + input.namepersonphone, listType: 'none' },
+                            ]
+                        },
+                    ],
+                    margin: [0, 0, 0, 8]
                 },
 
                 {
@@ -198,19 +432,60 @@ export default function FormAdopt() {
                     width: 'auto',
 
                 },
+
                 {
-                    text:
-                        'อาชีพปัจจุบัน: ',
-                    width: 'auto',
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'อาชีพปัจจุบัน: ', listType: 'none' },
+                            ]
+                        },
+                    ]
                 },
+
                 {
-                    text:
-                        'ข้อมูลบริษัทเบื้องต้น: ' +
-                        'ชื่อบริษัท: ' +
-                        'ธุรกิจเกี่ยวข้องกับ: ' +
-                        'ตำแหน่ง: ' +
-                        'เงินเดือนประจำ(): ',
-                    width: 'auto',
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'ข้อมูลบริษัทเบื้องต้น', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ชื่อบริษัท: ' + input.namecompany, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: '', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: '', listType: 'none' },
+                            ]
+                        },
+                    ]
+                },
+
+                {
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'ธุรกิจเกี่ยวข้องกับ: ' + input.relationcompany, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ตำแหน่ง: ' + input.jobtitle, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: ' เงินเดือนประจำ(บาท): ' + input.salary, listType: 'none' },
+                            ]
+                        },
+                    ],
                     margin: [0, 0, 0, 8]
                 },
 
@@ -218,65 +493,189 @@ export default function FormAdopt() {
                     text:
                         'ตอนที่ 2 ข้อมูลการเลี้ยงแมว',
                     bold: 'true',
-                    fontSize: 14,
+                    fontSize: 15,
                     width: 'auto',
                     margin: [0, 0, 0, 0]
 
                 },
-                {
-                    text:
-                        'ประวัติการเลี้ยงแมว: ' +
-                        'จำนวนแมว: ' +
-                        'สายพันธุ์: ',
-                    width: 'auto',
+                //ติ้กถูก
 
-                },
                 {
-                    text:
-                        'มีสัตว์เลี้ยงชนิดอื่น: ' +
-                        'จำนวน: ' +
-                        'ชนิดสัตว์: ',
-                    width: 'auto',
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'ประวัติการเลี้ยงแมว', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'เคยเลี้ยง', listType: 'none' },
+                                { text: 'จำนวนแมว: ' + input.countcat, listType: 'none' },
+                                { text: ' สายพันธุ์: ' + input.species, listType: 'none' },
 
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ไม่เคยเลี้ยง', listType: 'none' },
+                            ]
+                        },
+                    ],
+                    margin: [0, 0, 0, 5]
                 },
+
                 {
-                    text:
-                        'การเลี้ยงแมวปัจจุบัน: ',
-                    width: 'auto',
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'มีสัตว์เลี้ยงชนิดอื่น', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'มี', listType: 'none' },
+                                { text: 'จำนวน: ' + input.countanimal, listType: 'none' },
+                                { text: 'ชนิดสัตว์: ' + input.speciesanimal, listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ไม่มี', listType: 'none' },
+                            ]
+                        },
+                    ],
+                    margin: [0, 0, 0, 5]
+                },
+
+                {
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'การเลี้ยงแมวปัจจุบัน', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'เลี้ยงอยู่', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ไม่ได้เลี้ยง', listType: 'none' },
+                                { text: 'สาเหตุ: ' + input.pastpetdetail, listType: 'none' },
+                            ]
+                        },
+                    ],
                     margin: [0, 0, 0, 8]
-
                 },
+
                 {
                     text:
                         'ตอนที่ 3 รับอุปการะ และส่งมอบ',
                     bold: 'true',
-                    fontSize: 14,
+                    fontSize: 15,
                     width: 'auto',
                     margin: [0, 0, 0, 0]
 
                 },
+
                 {
-                    text:
-                        'ข้าพเจ้าฯ ขอรับรองว่าจะเลี้ยงดูแมวที่รับอุปการะ  ' +
-                        'รหัสแมว: ' +
-                        'ชื่อใหม่: ',
-                    width: 'auto',
-
+                    columns: [
+                        {
+                            ul: [
+                                { text: 'ข้าพเจ้าฯ ขอรับรองว่าจะเลี้ยงดูแมวที่รับอุปการะ', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'รหัสแมว: ', listType: 'none' },
+                            ]
+                        },
+                        {
+                            ul: [
+                                { text: 'ชื่อใหม่: ' + input.newnamed, listType: 'none' },
+                            ]
+                        },
+                    ],
                 },
+
                 {
-                    text:
-                        'ด้วยความรัก ความมตตา ความเอาใจใส่เป็นอย่างตี รมทั้งใช้ความระมัดระวัง ดูแลป้องกัน รับผิดชอบความเสียหายที่จะเกิดขึ้นจากแมวเป็นผู้กระทำตามวิสัย' +
-                        'ที่บุคคลทั่วไปพีงปฏิบัติ จะพาไปรักษาหากเกิดการเจ็บไช้ได้ป่วย ตลอดจนรับผิดชอบชีวิตของแมวจนสุดกำลัง  จะไม่นำแมวที่รับอุปการะนี้ไปเพื่อแสวงหาผลประโยชน์ทางการค้า การขยายพันธุ์เพื่อจำหน่าย หรือกระทำการอื่นใดอันเป็นการผิดวัตถุประสงค์ของการรับอุปการะ และพร้อมที่จะให้มีการตรวจสอบได้ตลอดเวลา' +
-                        'และจะไม่นำแมวไปปล่อยทิ้งให้เป็นแมวจร หากแต่จะส่งมอบให้กับบุคคลอื่นนำไปอุปการะต่อ จะต้องได้รับการพิจารณาและยินยอมจากผู้ส่งมอบก่อนบันทึกช้อตกลงฉบับนี้ ข้พเจ้าได้อำนทำความเข้าใจข้อความในสัญญา เห็นถูกต้องตามความประสงค์ และขอยืนยันในสิ่งที่ข้าพเจ้าได้กรอกข้อมูล และตอบแบบสอบถามข้างตันนี้เป็นความจริงทุกประการ',
-                    width: '*',
-
+                    columns: [
+                        {
+                            ul: [
+                                {
+                                    text:
+                                        'ด้วยความรัก ความมตตา ความเอาใจใส่เป็นอย่างตี รมทั้งใช้ความระมัดระวัง ดูแลป้องกัน รับผิดชอบความเสียหายที่จะเกิดขึ้นจากแมวเป็นผู้กระทำตามวิสัย' +
+                                        'ที่บุคคลทั่วไปพีงปฏิบัติ จะพาไปรักษาหากเกิดการเจ็บไช้ได้ป่วย ตลอดจนรับผิดชอบชีวิตของแมวจนสุดกำลัง  จะไม่นำแมวที่รับอุปการะนี้ไปเพื่อแสวงหาผลประโยชน์ทางการค้า การขยายพันธุ์เพื่อจำหน่าย หรือกระทำการอื่นใดอันเป็นการผิดวัตถุประสงค์ของการรับอุปการะ และพร้อมที่จะให้มีการตรวจสอบได้ตลอดเวลา' +
+                                        'และจะไม่นำแมวไปปล่อยทิ้งให้เป็นแมวจร หากแต่จะส่งมอบให้กับบุคคลอื่นนำไปอุปการะต่อ จะต้องได้รับการพิจารณาและยินยอมจากผู้ส่งมอบก่อนบันทึกช้อตกลงฉบับนี้ ข้พเจ้าได้อำนทำความเข้าใจข้อความในสัญญา เห็นถูกต้องตามความประสงค์ และขอยืนยันในสิ่งที่ข้าพเจ้าได้กรอกข้อมูล และตอบแบบสอบถามข้างตันนี้เป็นความจริงทุกประการ',
+                                    width: '*',
+                                    listType: 'none'
+                                },
+                            ]
+                        },
+                    ],
+                    margin: [0, 0, 0, 8]
                 },
+                // ลายเซ็น
 
-
+                {
+                    columns: [
+                        {
+                            ul: [
+                                {
+                                    text: '.........................................................',
+                                    width: '*',
+                                    listType: 'none'
+                                },
+                                {
+                                    text: '(.........................................................)',
+                                    width: '*',
+                                    listType: 'none'
+                                },
+                                {
+                                    text: 'วันที่  ........./........./.........',
+                                    width: '*',
+                                    listType: 'none'
+                                },
+                                {
+                                    text: 'ลงชื่อเจ้าหน้าที่มูลนิธิ........................',
+                                    width: '*',
+                                    listType: 'none'
+                                },
+                            ]
+                        },
+                        {
+                            ul: [
+                                {
+                                    text: '.........................................................',
+                                    width: '*',
+                                    listType: 'none'
+                                },
+                                {
+                                    text: '(.........................................................)',
+                                    width: '*',
+                                    listType: 'none'
+                                },
+                                {
+                                    text: 'วันที่  ........./........./.........',
+                                    width: '*',
+                                    listType: 'none'
+                                },
+                                {
+                                    text: 'ลงชื่อผู้รับอุปการะ ',
+                                    width: '*',
+                                    listType: 'none'
+                                },
+                            ]
+                        },
+                    ],
+                    margin: [0, 180, 0, 0]
+                },
 
             ],
             defaultStyle: {
                 font: 'THSarabunNew',
+                fontSize: 15,
                 margin: [0, 0, 0, 8]
             }
         };
@@ -368,6 +767,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="name"
                                             id="name"
                                             type="text"
@@ -390,6 +790,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="surname"
                                             id="surname"
                                             type="text"
@@ -410,6 +811,7 @@ export default function FormAdopt() {
                                     <label class="block basis-1/6">
                                         <span class=" flex text-gray-700 ">ชื่อเล่น</span>
                                         <input
+                                            onChange={updateInput}
                                             name="nickname"
                                             id="nickname"
                                             type="text"
@@ -430,6 +832,7 @@ export default function FormAdopt() {
                                     <label class="block basis-1/12">
                                         <span class=" flex text-gray-700 ">อายุ</span>
                                         <input
+                                            onChange={updateInput}
                                             name="age"
                                             id="age"
                                             type="text"
@@ -454,6 +857,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="idcard"
                                             id="idcard"
                                             type="text"
@@ -686,8 +1090,8 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">จำนวนสมาชิก (รวมตัวเอง)
                                         </span>
                                         <input
-                                            name="familymember-count"
-                                            id="familymember-count"
+                                            name="familymembercount"
+                                            id="familymembercount"
                                             type="text"
                                             class="
                                             block
@@ -819,6 +1223,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="housenumber"
                                             id="housenumber"
                                             type="text"
@@ -840,6 +1245,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="moo"
                                             id="moo"
                                             type="text"
@@ -861,6 +1267,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="village"
                                             id="village"
                                             type="text"
@@ -882,6 +1289,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="floor"
                                             id="floor"
                                             type="text"
@@ -902,6 +1310,7 @@ export default function FormAdopt() {
                                         <span class="text-gray-700">เลขที่ห้อง
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="roomnumber"
                                             id="roomnumber"
                                             type="text"
@@ -925,6 +1334,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="alley"
                                             id="alley"
                                             type="text"
@@ -946,6 +1356,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="road"
                                             id="road"
                                             type="text"
@@ -967,6 +1378,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="subdistrict"
                                             id="subdistrict"
                                             type="text"
@@ -990,6 +1402,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="district"
                                             id="district"
                                             type="text"
@@ -1011,6 +1424,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="province"
                                             id="province"
                                             type="text"
@@ -1032,6 +1446,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="zipcode"
                                             id="zipcode"
                                             type="text"
@@ -1106,8 +1521,9 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
-                                            name="n-housenumber"
-                                            id="n-housenumber"
+                                            onChange={updateInput}
+                                            name="nhousenumber"
+                                            id="nhousenumber"
                                             type="text"
                                             class="
                                             block
@@ -1128,8 +1544,9 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
-                                            name="n-moo"
-                                            id="n-moo"
+                                            onChange={updateInput}
+                                            name="nmoo"
+                                            id="nmoo"
                                             type="text"
                                             class="
                                             block
@@ -1150,8 +1567,9 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
-                                            name="n-village"
-                                            id="n-village"
+                                            onChange={updateInput}
+                                            name="nvillage"
+                                            id="nvillage"
                                             type="text"
                                             class="
                                             block
@@ -1171,8 +1589,9 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
-                                            name="n-floor"
-                                            id="n-floor"
+                                            onChange={updateInput}
+                                            name="nfloor"
+                                            id="nfloor"
                                             type="text"
                                             class="
                                             block
@@ -1192,8 +1611,9 @@ export default function FormAdopt() {
                                         <span class="text-gray-700">เลขที่ห้อง
                                         </span>
                                         <input
-                                            name="n-roomnumber"
-                                            id="n-roomnumber"
+                                            onChange={updateInput}
+                                            name="nroomnumber"
+                                            id="nroomnumber"
                                             type="text"
                                             class="
                                             block
@@ -1216,8 +1636,9 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
-                                            name="n-alley"
-                                            id="n-alley"
+                                            onChange={updateInput}
+                                            name="nalley"
+                                            id="nalley"
                                             type="text"
                                             class="
                                             block
@@ -1238,8 +1659,9 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
-                                            name="n-road"
-                                            id="n-road"
+                                            onChange={updateInput}
+                                            name="nroad"
+                                            id="nroad"
                                             type="text"
                                             class="
                                             block
@@ -1260,8 +1682,9 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
-                                            name="n-subdistrict"
-                                            id="n-subdistrict"
+                                            onChange={updateInput}
+                                            name="nsubdistrict"
+                                            id="nsubdistrict"
                                             type="text"
                                             class="
                                             block
@@ -1283,8 +1706,9 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
-                                            name="n-district"
-                                            id="n-district"
+                                            onChange={updateInput}
+                                            name="ndistrict"
+                                            id="ndistrict"
                                             type="text"
                                             class="
                                             block
@@ -1305,8 +1729,9 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
-                                            name="n-province"
-                                            id="n-province"
+                                            onChange={updateInput}
+                                            name="nprovince"
+                                            id="nprovince"
                                             type="text"
                                             class="
                                             block
@@ -1327,8 +1752,9 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
-                                            name="n-zipcode"
-                                            id="n-zipcode"
+                                            onChange={updateInput}
+                                            name="nzipcode"
+                                            id="nzipcode"
                                             type="text"
                                             class="
                                             block
@@ -1353,6 +1779,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="mobilephone"
                                             id="mobilephone"
                                             type="text"
@@ -1375,6 +1802,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="homephone"
                                             id="homephone"
                                             type="text"
@@ -1397,6 +1825,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="workphone"
                                             id="workphone"
                                             type="text"
@@ -1423,6 +1852,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="facebook"
                                             id="facebook"
                                             type="text"
@@ -1445,6 +1875,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="line"
                                             id="line"
                                             type="text"
@@ -1470,6 +1901,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="nameperson"
                                             id="nameperson"
                                             type="text"
@@ -1492,8 +1924,9 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
-                                            name="nameperson-relationship"
-                                            id="nameperson-relationship"
+                                            onChange={updateInput}
+                                            name="namepersonrelationship"
+                                            id="namepersonrelationship"
                                             type="text"
                                             class="
                                             block
@@ -1514,6 +1947,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="namepersonphone"
                                             id="namepersonphone"
                                             type="text"
@@ -1654,6 +2088,7 @@ export default function FormAdopt() {
 
                                     <label class="block basis-1/4">
                                         <input
+                                            onChange={updateInput}
                                             name="othercareer-detail"
                                             id="othercareer-detail"
                                             type="text"
@@ -1681,6 +2116,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="namecompany"
                                             id="namecompany"
                                             type="text"
@@ -1726,6 +2162,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="jobtitle"
                                             id="jobtitle"
                                             type="text"
@@ -1747,6 +2184,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="salary"
                                             id="salary"
                                             type="text"
@@ -1820,6 +2258,7 @@ export default function FormAdopt() {
                                     <label class="block basis-2/12">
                                         <span class="text-gray-700">จำนวนแมว</span>
                                         <input
+                                            onChange={updateInput}
                                             name="countcat"
                                             id="countcat"
                                             type="text"
@@ -1839,6 +2278,7 @@ export default function FormAdopt() {
                                     <label class="block basis-5/12">
                                         <span class=" flex text-gray-700">สายพันธุ์</span>
                                         <input
+                                            onChange={updateInput}
                                             name="species"
                                             id="species"
                                             type="text"
@@ -1909,6 +2349,7 @@ export default function FormAdopt() {
                                     <label class="block basis-2/12">
                                         <span class="text-gray-700">จำนวน</span>
                                         <input
+                                            onChange={updateInput}
                                             name="countanimal"
                                             id="countanimal"
                                             type="text"
@@ -1928,6 +2369,7 @@ export default function FormAdopt() {
                                     <label class="block basis-5/12">
                                         <span class=" flex text-gray-700">ชนิดสัตว์</span>
                                         <input
+                                            onChange={updateInput}
                                             name="speciesanimal"
                                             id="speciesanimal"
                                             type="text"
@@ -1995,8 +2437,9 @@ export default function FormAdopt() {
                                     </div>
                                     <label class="block basis-4/12">
                                         <input
-                                            name="pastpet-detail"
-                                            id="pastpet-detail"
+                                            onChange={updateInput}
+                                            name="pastpetdetail"
+                                            id="pastpetdetail"
                                             type="text"
                                             class="
                                             block
@@ -2019,6 +2462,7 @@ export default function FormAdopt() {
                                         <span class="text-error font-light">*</span>
                                     </span>
                                     <input
+                                        onChange={updateInput}
                                         name="newnamed"
                                         id="newnamed"
                                         type="text"
