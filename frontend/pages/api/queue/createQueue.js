@@ -5,7 +5,12 @@ export default async function handler(req, res) {
   //call parameter from body
   const {cat_id, user_id, queue_date, queue_time } = req.body
 
-  //query data
+  //check already queue
+  var checkQueue = await checkQueueUser(user_id, cat_id)
+  if (!checkQueue) {
+    res.status(400).json("Already Queued!")
+  } else {
+    //query data
   const {data , error} = await supabase.from('cat_profile').select().eq('cat_id', cat_id)
   const shelterID = data?.map(({shelter_id}) => ({ shelter_id }))
   
@@ -21,35 +26,48 @@ export default async function handler(req, res) {
     console.log("User ID not found!")
     res.status(400).json("User ID not found!")
   } else {
-    //check if queue date already exist
-    console.log("User ID found!")
-    var queueDate = await checkQueueDateTime(queue_date, queue_time)
+      //check if queue date already exist
+      console.log("User ID found!")
+      var queueDate = await checkQueueDateTime(queue_date, queue_time)
 
-    if (!queueDate) {
-      // if queue_date exist
-      console.log("Queue Date Time already exist!")
-      res.status(400).json("Queue Date already exist!")
-    } else {
-      // if queue date does not exist then insert data
-      console.log("Queue Date Time not exist!")
-      const { error } = await supabase.from('queue').insert([
-        {
-          cat_id: cat_id,
-          shelter_id: shelter,
-          create_date: new Date(),
-          update_date: new Date(),
-          queue_date: queue_date,
-          queue_time: queue_time,
-          queue_status: false,
-          user_id: user_id,
-        }
-      ])
+      if (!queueDate) {
+        // if queue_date exist
+        console.log("Queue Date Time already exist!")
+        res.status(400).json("Queue Date already exist!")
+      } else {
+        // if queue date does not exist then insert data
+        console.log("Queue Date Time not exist!")
+        const { error } = await supabase.from('queue').insert([
+          {
+            cat_id: cat_id,
+            shelter_id: shelter,
+            create_date: new Date(),
+            update_date: new Date(),
+            queue_date: queue_date,
+            queue_time: queue_time,
+            queue_status: false,
+            user_id: user_id,
+          }
+        ])
 
-      //print data
-      console.log("Insert Data Success!")
-      res.status(200).json("Insert Data Success!")
+        //print data
+        console.log("Insert Data Success!")
+        res.status(200).json("Insert Data Success!")
+      }
     }
   }
+}
+
+//check already queue
+async function checkQueueUser(user_id, cat_id, response) {
+  const { data, error } = await supabase.from('queue').select().eq('user_id', user_id).eq('cat_id', cat_id)
+  if (data != "") {
+    //already queue
+    response = false
+  } else {
+    response = true
+  }
+  return response
 }
 
 //check user_id exist

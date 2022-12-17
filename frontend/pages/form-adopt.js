@@ -1,8 +1,40 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import vectorprinter from '../public/form-adopt/vector-printer.png'
+import { useEffect, useState } from 'react';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+pdfMake.fonts = {
+    THSarabunNew: {
+        normal: 'THSarabunNew.ttf',
+        bold: 'THSarabunNew-Bold.ttf',
+        italics: 'THSarabunNew-Italic.ttf',
+        bolditalics: 'THSarabunNew-BoldItalic.ttf'
+    },
+    Roboto: {
+        normal: 'Roboto-Regular.ttf',
+        bold: 'Roboto-Medium.ttf',
+        italics: 'Roboto-Italic.ttf',
+        bolditalics: 'Roboto-MediumItalic.ttf'
+    }
+}
 
 export default function FormAdopt() {
+
+    // pdfMake
+
+
+
+
+
+
+
+
+
+
+
     return (
         <div class="container">
             <Head>
@@ -1579,7 +1611,7 @@ export default function FormAdopt() {
             <div class="w-screen h-[30rem]">
                 <button type="button"
                     class="flex rounded-lg bg-salmon text-white rounded text-lg mx-auto my-12 px-7 py-2 gap-3"
-                    onClick={() => supabase.auth.signOut()}>
+                    onClick={() => createPdf()}>
                     <Image src={vectorprinter} placeholder="blur" />
                     พิมพ์เอกสาร
                 </button>

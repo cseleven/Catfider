@@ -11,27 +11,31 @@ export default async function handler(req, res) {
   //role = shelter
   if (!role) {
     var shelter_id = await getShelterID(user_id)
-    if (queue_id == null) {
+    if (queue_id == null && shelter_id != null) {
       //get all
       query = query.eq('shelter_id', shelter_id)
-    } else {
+    } else if (queue_id != null && shelter_id != null) {
       //get one
       query = query.eq('shelter_id', shelter_id).eq('queue_id', queue_id)
+    } else {
+      res.status(400).json("Data Not Found")
     }
   } else {
     //role = user
     //get all 
-    if (queue_id == null) {
+    if (queue_id == null && user_id != null) {
       //get all
       query = query.eq('user_id', user_id)
-    } else {
+    } else if (queue_id != null && user_id != null) {
       //get one
       query = query.eq('user_id', user_id).eq('queue_id', queue_id)
+    } else {
+      res.status(400).json("Data Not Found")
     }
   }
 
   //print data
-  const {data } = await query
+  const { data } = await query
   if (data == "") {
     res.status(400).json("Data Not Found")
   }
@@ -42,7 +46,8 @@ export default async function handler(req, res) {
 async function checkUserId(user_id, response) {
   //query
   const { data, error } = await supabase.from('user_profile').select().eq('user_id', user_id)
-  if ( data == "" ) {
+  console.log("data ", data)
+  if ( data == "" || data == null) {
     //user_id does not exist
     response = false
   } else {
@@ -66,6 +71,11 @@ async function checkUserId(user_id, response) {
 async function getShelterID(user_id, shelterID) {
   const { data } = await supabase.from('shelter_profile').select().eq('user_id', user_id)
   const query = data?.map(({ shelter_id }) => ({ shelter_id }))
+  console.log(query)
+  if (query == "" || query == null) {
+    return null
+  } 
+
   const shelterquery = JSON.stringify(query)
   shelterID = shelterquery.split(':')[1].split('}]')[0]
   console.log(shelterID)
