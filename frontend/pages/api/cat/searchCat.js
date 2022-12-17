@@ -1,12 +1,13 @@
 import { supabase } from "../supabase"
 import { useEffect, useState } from 'react'
+import { stringify } from "querystring"
 
 export default async function handler(req, res) {
     //filtering cat 
 
     const { cat_id, sex, breed, color, 
             sterile, vaccine, age, status, shelter_id } = req.body
-
+    
     let query = supabase
         .from('cat_profile')
         .select('cat_id, sex, breed, color, cat_picture, detail, shelter_id, from:shelter_id(shelter_name)')
@@ -31,7 +32,7 @@ export default async function handler(req, res) {
         throw error
     }
 
-    console.log(data)
+    //console.log(data)
     res.status(200).json(data)
 
 }
