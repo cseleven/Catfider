@@ -1,6 +1,60 @@
 import Signin from '../../components/sigin'
+import { useSession, useUser } from '@supabase/auth-helpers-react'
+import { useEffect, useState } from 'react'
 
 export default function ShelterForm() {
+    const user = useUser()
+    const session = useSession()
+    const [loading, setLoading] = useState(true)
+    const [cat, setCat] = useState(null)
+    // const [id, setId] = useState(0)
+
+    useEffect(() => {
+        ShelterForm()
+    }, [])
+
+
+    const ShelterForm = async () => {
+        var raw = JSON.stringify({
+            "shelter_id": 1,
+            "shelter_name": "บ้านรักแมว",
+            "website_url": "https://www.google.com",
+            "email": "catlover@gmail.com",
+            "address": "-",
+            "location_url": "https://www.google.com",
+            "contact_name": "มานี",
+            "contact_lastname": "มีใจ",
+            "contact_email": "catlover@gmail.com",
+            "contact_phone": "022222223",
+            "donate_name1": "กรุงศรี",
+            "donate_number1": "151-0-04118-2",
+            "donate_name2": "กรุงไทย",
+            "donate_number2": "151-0-04118-3"
+
+        });
+
+        var myheader = {
+            'Content-Type': 'application/json'
+        };
+
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myheader,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            setLoading(true);
+            let response = await fetch("/api/shelter/editShelter", requestOptions);
+            let data = await response.json();
+            console.log("response : " + JSON.stringify(data));
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div class="h-[87vh]">
             <div class="w-screen h-[20rem]">
