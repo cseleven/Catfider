@@ -4,7 +4,7 @@ import { supabase } from "../supabase"
 export default async function handler(req, res) {
 
   //call parameter from body
-  const { user_id, adopt_id} = req.body
+  const { shelter_id, adopt_id} = req.body
 
   //check if queue id exist 
   var adoptID = await checkAdoptId(adopt_id)
@@ -12,9 +12,9 @@ export default async function handler(req, res) {
   if (adoptID) {
 
     //delete
-    const { error } = await supabase.from('adopt').delete().eq('adopt_id', adopt_id).eq('user_id', user_id)
+    const { error } = await supabase.from('adopt').delete().eq('adopt_id', adopt_id).eq('shelter_id', shelter_id)
     //query
-    const { data  } = await supabase.from('adopt').select().eq('adopt_id', adopt_id).eq('user_id', user_id)
+    const { data  } = await supabase.from('adopt').select().eq('adopt_id', adopt_id).eq('shelter_id', shelter_id)
     if ( data != "" ){
       res.status(400).json("Delete Fail!")
     }
