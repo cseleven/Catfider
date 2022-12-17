@@ -22,9 +22,15 @@ pdfMake.fonts = {
 }
 
 export default function FormAdopt() {
+    const [loading, setLoading] = useState(true);
+    const [topic, setTopic] = useState(null);
+    const [input, setInput] = useState({});
 
-    // pdfMake
-    const fetchExample = async () => {
+    useEffect(() => {
+        fetchFormAdopt()
+    }, [])
+
+    const fetchFormAdopt = async () => {
         try {
             setLoading(true)
             let response = await fetch("/api/getexample");
@@ -109,7 +115,7 @@ export default function FormAdopt() {
                     text:
                         'ชื่อ: ' +
                         'คำนำหน้า: ' +
-                        'ชื่อจริง: ' +
+                        'ชื่อจริง: ' + input.name +
                         'นามสกุล: ' +
                         'ชื่อเล่น: ' +
                         'อายุ: ',
@@ -297,7 +303,7 @@ export default function FormAdopt() {
 
 
             {/*form*/}
-            <form action="#" method="POST">
+            <form onSubmit={postExample}>
 
                 {/*section 1*/}
                 <div class="w-screen h-[22rem]">
@@ -489,6 +495,7 @@ export default function FormAdopt() {
                                     <span class=" flex text-gray-700 pt-2">ที่อยู่อาศัยปัจจุบัน
                                         <span class="text-error font-light">*</span>
                                     </span>
+
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
@@ -511,6 +518,7 @@ export default function FormAdopt() {
                                             <span class="ml-2 font-light">บ้านส่วนตัว</span>
                                         </label>
                                     </div>
+
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
@@ -533,11 +541,12 @@ export default function FormAdopt() {
                                             <span class="ml-2 font-light">บ้านเช่า</span>
                                         </label>
                                     </div>
+
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
-                                                name="renthouse"
-                                                id="renthouse"
+                                                name="apartment"
+                                                id="apartment"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -555,11 +564,12 @@ export default function FormAdopt() {
                                             <span class="ml-2 font-light">อพาร์ทเมนท์</span>
                                         </label>
                                     </div>
+
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
-                                                name="renthouse"
-                                                id="renthouse"
+                                                name="condo"
+                                                id="condo"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -577,9 +587,12 @@ export default function FormAdopt() {
                                             <span class="ml-2 font-light">คอนโด</span>
                                         </label>
                                     </div>
+
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="otheraddress"
+                                                id="otheraddress"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -597,8 +610,11 @@ export default function FormAdopt() {
                                             <span class="ml-2 font-light">อื่นๆ</span>
                                         </label>
                                     </div>
+
                                     <label class="block basis-1/4">
                                         <input
+                                            name="otheraddress-detail"
+                                            id="otheraddress-detail"
                                             type="text"
                                             class="
                                             block
@@ -617,12 +633,15 @@ export default function FormAdopt() {
                                         />
                                     </label>
                                 </div>
+
                                 <span class=" flex text-gray-700">อาศัยอยู่กับ
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <div class="block ml-36 font-light">
                                     <label class="inline-flex items-center">
                                         <input
+                                            name="alone"
+                                            id="alone"
                                             type="checkbox"
                                             class="
                                                         rounded-full
@@ -643,6 +662,8 @@ export default function FormAdopt() {
                                 <div class="block ml-36 font-light">
                                     <label class="inline-flex items-center">
                                         <input
+                                            name="family"
+                                            id="family"
                                             type="checkbox"
                                             class="
                                                         rounded-full
@@ -665,6 +686,8 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">จำนวนสมาชิก (รวมตัวเอง)
                                         </span>
                                         <input
+                                            name="familymember-count"
+                                            id="familymember-count"
                                             type="text"
                                             class="
                                             block
@@ -679,10 +702,13 @@ export default function FormAdopt() {
                                             placeholder="จำนวนสมาชิก"
                                         />
                                     </label>
+
                                     <label class="block basis-2/4">
                                         <span class=" flex text-gray-700">สมาชิกในครอบครัว
                                         </span>
                                         <input
+                                            name="familymember"
+                                            id="familymember"
                                             type="text"
                                             class="
                                             block
@@ -702,6 +728,8 @@ export default function FormAdopt() {
                                     <div class="block ml-36 font-light">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="otherrelationship"
+                                                id="otherrelationship"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -721,6 +749,8 @@ export default function FormAdopt() {
                                     </div>
                                     <label class="block basis-1/4">
                                         <input
+                                            name="otherrelationship-detail"
+                                            id="otherrelationship--detail"
                                             type="text"
                                             class="
                                             block
@@ -745,6 +775,8 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">จำนวนสมาชิก (รวมตัวเอง)
                                         </span>
                                         <input
+                                            name="otherrelationship-count"
+                                            id="otherrelationship-count"
                                             type="text"
                                             class="
                                             block
@@ -763,6 +795,8 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">ความสัมพันธ์ที่เกี่ยวข้อง
                                         </span>
                                         <input
+                                            name="otherrelationship-member"
+                                            id="otherrelationship-member"
                                             type="text"
                                             class="
                                             block
@@ -785,6 +819,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="housenumber"
+                                            id="housenumber"
                                             type="text"
                                             class="
                                             block
@@ -804,6 +840,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="moo"
+                                            id="moo"
                                             type="text"
                                             class="
                                             block
@@ -823,6 +861,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="village"
+                                            id="village"
                                             type="text"
                                             class="
                                             block
@@ -842,6 +882,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="floor"
+                                            id="floor"
                                             type="text"
                                             class="
                                             block
@@ -860,6 +902,8 @@ export default function FormAdopt() {
                                         <span class="text-gray-700">เลขที่ห้อง
                                         </span>
                                         <input
+                                            name="roomnumber"
+                                            id="roomnumber"
                                             type="text"
                                             class="
                                             block
@@ -881,6 +925,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="alley"
+                                            id="alley"
                                             type="text"
                                             class="
                                             block
@@ -900,6 +946,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="road"
+                                            id="road"
                                             type="text"
                                             class="
                                             block
@@ -919,6 +967,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="subdistrict"
+                                            id="subdistrict"
                                             type="text"
                                             class="
                                             block
@@ -940,6 +990,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="district"
+                                            id="district"
                                             type="text"
                                             class="
                                             block
@@ -959,6 +1011,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="province"
+                                            id="province"
                                             type="text"
                                             class="
                                             block
@@ -978,6 +1032,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="zipcode"
+                                            id="zipcode"
                                             type="text"
                                             class="
                                             block
@@ -996,8 +1052,11 @@ export default function FormAdopt() {
                                 <p class="text-black text-[24px] font-normal pt-7">1.2 ข้อมูลที่อยู่ที่จะนำแมวไปเลี้ยง</p>
                                 <div class="flex">
                                     <div class="block ml-36 font-light">
+
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="sameaddress"
+                                                id="sameaddress"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1015,9 +1074,12 @@ export default function FormAdopt() {
                                             <span class="ml-2">ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1</span>
                                         </label>
                                     </div>
+
                                     <div class="block ml-36 font-light">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="notsameaddress"
+                                                id="notsameaddress"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1035,6 +1097,7 @@ export default function FormAdopt() {
                                             <span class="ml-2">ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1</span>
                                         </label>
                                     </div>
+
                                 </div>
                                 <div class="flex space-x-4">
                                     <span class="text-black/[0.7] font-normal">รายละเอียดที่อยู่</span>
@@ -1043,6 +1106,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="n-housenumber"
+                                            id="n-housenumber"
                                             type="text"
                                             class="
                                             block
@@ -1057,11 +1122,14 @@ export default function FormAdopt() {
                                             placeholder="บ้านเลขที่"
                                         />
                                     </label>
+
                                     <label class="block basis-1/12">
                                         <span class=" flex text-gray-700">หมู่
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="n-moo"
+                                            id="n-moo"
                                             type="text"
                                             class="
                                             block
@@ -1076,11 +1144,14 @@ export default function FormAdopt() {
                                             placeholder="หมู่"
                                         />
                                     </label>
+
                                     <label class="block basis-4/12">
                                         <span class=" flex text-gray-700">หมู่บ้าน/อาคาร
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="n-village"
+                                            id="n-village"
                                             type="text"
                                             class="
                                             block
@@ -1100,6 +1171,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="n-floor"
+                                            id="n-floor"
                                             type="text"
                                             class="
                                             block
@@ -1114,10 +1187,13 @@ export default function FormAdopt() {
                                             placeholder="ชั้น"
                                         />
                                     </label>
+
                                     <label class="block basis-1/12">
                                         <span class="text-gray-700">เลขที่ห้อง
                                         </span>
                                         <input
+                                            name="n-roomnumber"
+                                            id="n-roomnumber"
                                             type="text"
                                             class="
                                             block
@@ -1133,12 +1209,15 @@ export default function FormAdopt() {
                                         />
                                     </label>
                                 </div>
+
                                 <div class="flex space-x-4">
                                     <label class="block basis-1/3 pl-36">
                                         <span class=" flex text-gray-700">ซอย
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="n-alley"
+                                            id="n-alley"
                                             type="text"
                                             class="
                                             block
@@ -1153,11 +1232,14 @@ export default function FormAdopt() {
                                             placeholder="ซอย"
                                         />
                                     </label>
+
                                     <label class="block basis-1/3">
                                         <span class=" flex text-gray-700">ถนน
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="n-road"
+                                            id="n-road"
                                             type="text"
                                             class="
                                             block
@@ -1172,11 +1254,14 @@ export default function FormAdopt() {
                                             placeholder="ถนน"
                                         />
                                     </label>
+
                                     <label class="block basis-1/3 pr-32">
                                         <span class=" flex text-gray-700">แขวง/ตำบล
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="n-subdistrict"
+                                            id="n-subdistrict"
                                             type="text"
                                             class="
                                             block
@@ -1198,6 +1283,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="n-district"
+                                            id="n-district"
                                             type="text"
                                             class="
                                             block
@@ -1212,11 +1299,14 @@ export default function FormAdopt() {
                                             placeholder="เขต/อำเภอ"
                                         />
                                     </label>
+
                                     <label class="block basis-1/3">
                                         <span class=" flex text-gray-700">จังหวัด
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="n-province"
+                                            id="n-province"
                                             type="text"
                                             class="
                                             block
@@ -1231,11 +1321,14 @@ export default function FormAdopt() {
                                             placeholder="จังหวัด"
                                         />
                                     </label>
+
                                     <label class="block basis-1/3 pr-32">
                                         <span class=" flex text-gray-700">รหัสไปรษณีย์
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="n-zipcode"
+                                            id="n-zipcode"
                                             type="text"
                                             class="
                                             block
@@ -1254,11 +1347,14 @@ export default function FormAdopt() {
                                 <p class="text-black text-[24px] font-normal pt-7">1.3 ข้อมูลติดต่อ</p>
                                 <div class="flex space-x-4">
                                     <span class="text-black/[0.7] font-normal pt-8">โทรศัพท์ที่ติดต่อได้</span>
+
                                     <label class="block basis-1/4 pl-2">
                                         <span class=" flex text-gray-700">เบอร์มือถือ
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="mobilephone"
+                                            id="mobilephone"
                                             type="text"
                                             class="
                                             block
@@ -1273,11 +1369,14 @@ export default function FormAdopt() {
                                             placeholder="เบอร์มือถือ"
                                         />
                                     </label>
+
                                     <label class="block basis-1/4">
                                         <span class=" flex text-gray-700">เบอร์ที่บ้าน
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="homephone"
+                                            id="homephone"
                                             type="text"
                                             class="
                                             block
@@ -1292,11 +1391,14 @@ export default function FormAdopt() {
                                             placeholder="เบอร์ที่บ้าน"
                                         />
                                     </label>
+
                                     <label class="block basis-1/4">
                                         <span class=" flex text-gray-700">เบอร์ที่ทำงาน
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="workphone"
+                                            id="workphone"
                                             type="text"
                                             class="
                                             block
@@ -1315,11 +1417,14 @@ export default function FormAdopt() {
 
                                 <div class="flex space-x-4">
                                     <span class="text-black/[0.7] font-normal pt-8">ช่องทางติดต่ออื่น</span>
+
                                     <label class="block basis-2/4 pl-2">
                                         <span class=" flex text-gray-700">Facebook user
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="facebook"
+                                            id="facebook"
                                             type="text"
                                             class="
                                             block
@@ -1334,11 +1439,14 @@ export default function FormAdopt() {
                                             placeholder="Facebook user"
                                         />
                                     </label>
+
                                     <label class="block basis-1/4">
                                         <span class=" flex text-gray-700">LIne ID
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="line"
+                                            id="line"
                                             type="text"
                                             class="
                                             block
@@ -1362,6 +1470,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="nameperson"
+                                            id="nameperson"
                                             type="text"
                                             class="
                                             block
@@ -1376,11 +1486,14 @@ export default function FormAdopt() {
                                             placeholder="ชื่อและนามสกุล"
                                         />
                                     </label>
+
                                     <label class="block basis-2/12">
                                         <span class=" flex text-gray-700">เกี่ยวข้องเป็น
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="nameperson-relationship"
+                                            id="nameperson-relationship"
                                             type="text"
                                             class="
                                             block
@@ -1395,11 +1508,14 @@ export default function FormAdopt() {
                                             placeholder="เกี่ยวข้องเป็น"
                                         />
                                     </label>
+
                                     <label class="block basis-3/12">
                                         <span class=" flex text-gray-700">เบอร์มือถือ
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="namepersonphone"
+                                            id="namepersonphone"
                                             type="text"
                                             class="
                                             block
@@ -1424,6 +1540,8 @@ export default function FormAdopt() {
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="gov-officer"
+                                                id="gov-officer"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1441,9 +1559,12 @@ export default function FormAdopt() {
                                             <span class="ml-2 font-light">ข้าราชการ</span>
                                         </label>
                                     </div>
+
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="enterprise"
+                                                id="enterprise"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1461,9 +1582,12 @@ export default function FormAdopt() {
                                             <span class="ml-2 font-light">เอกชน/รัฐวิสาหกิจ</span>
                                         </label>
                                     </div>
+
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="private"
+                                                id="private"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1481,9 +1605,12 @@ export default function FormAdopt() {
                                             <span class="ml-2 font-light">ธุรกิจส่วนตัว</span>
                                         </label>
                                     </div>
+
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="employee"
+                                                id="employee"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1501,9 +1628,12 @@ export default function FormAdopt() {
                                             <span class="ml-2 font-light">ลูกจ้าง</span>
                                         </label>
                                     </div>
+
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="othercareer"
+                                                id="othercareer"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1521,8 +1651,11 @@ export default function FormAdopt() {
                                             <span class="ml-2 font-light">อื่นๆ</span>
                                         </label>
                                     </div>
+
                                     <label class="block basis-1/4">
                                         <input
+                                            name="othercareer-detail"
+                                            id="othercareer-detail"
                                             type="text"
                                             class="
                                             block
@@ -1548,6 +1681,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="namecompany"
+                                            id="namecompany"
                                             type="text"
                                             class="
                                             block
@@ -1567,6 +1702,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="relationcompany"
+                                            id="relationcompany"
                                             type="text"
                                             class="
                                             block
@@ -1589,6 +1726,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="jobtitle"
+                                            id="jobtitle"
                                             type="text"
                                             class="
                                             block
@@ -1608,6 +1747,8 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            name="salary"
+                                            id="salary"
                                             type="text"
                                             class="
                                             block
@@ -1633,6 +1774,8 @@ export default function FormAdopt() {
                                     <div class="block pl-8">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="usedtopet"
+                                                id="usedtopet"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1653,6 +1796,8 @@ export default function FormAdopt() {
                                     <div class="block">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="dontusedtopet"
+                                                id="dontusedtopet"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1675,6 +1820,8 @@ export default function FormAdopt() {
                                     <label class="block basis-2/12">
                                         <span class="text-gray-700">จำนวนแมว</span>
                                         <input
+                                            name="countcat"
+                                            id="countcat"
                                             type="text"
                                             class="
                                             block
@@ -1692,6 +1839,8 @@ export default function FormAdopt() {
                                     <label class="block basis-5/12">
                                         <span class=" flex text-gray-700">สายพันธุ์</span>
                                         <input
+                                            name="species"
+                                            id="species"
                                             type="text"
                                             class="
                                             block
@@ -1714,6 +1863,8 @@ export default function FormAdopt() {
                                     <div class="block">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="haveanimal"
+                                                id="haveanimal"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1734,6 +1885,8 @@ export default function FormAdopt() {
                                     <div class="block">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="donthaveanimal"
+                                                id="donthaveanimal"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1756,6 +1909,8 @@ export default function FormAdopt() {
                                     <label class="block basis-2/12">
                                         <span class="text-gray-700">จำนวน</span>
                                         <input
+                                            name="countanimal"
+                                            id="countanimal"
                                             type="text"
                                             class="
                                             block
@@ -1773,6 +1928,8 @@ export default function FormAdopt() {
                                     <label class="block basis-5/12">
                                         <span class=" flex text-gray-700">ชนิดสัตว์</span>
                                         <input
+                                            name="speciesanimal"
+                                            id="speciesanimal"
                                             type="text"
                                             class="
                                             block
@@ -1795,6 +1952,8 @@ export default function FormAdopt() {
                                     <div class="block pl-8 pt-2">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="presentpet"
+                                                id="presentpet"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1815,6 +1974,8 @@ export default function FormAdopt() {
                                     <div class="block pt-2">
                                         <label class="inline-flex items-center">
                                             <input
+                                                name="pastpet"
+                                                id="pastpet"
                                                 type="checkbox"
                                                 class="
                                                         rounded-full
@@ -1834,6 +1995,8 @@ export default function FormAdopt() {
                                     </div>
                                     <label class="block basis-4/12">
                                         <input
+                                            name="pastpet-detail"
+                                            id="pastpet-detail"
                                             type="text"
                                             class="
                                             block
@@ -1856,6 +2019,8 @@ export default function FormAdopt() {
                                         <span class="text-error font-light">*</span>
                                     </span>
                                     <input
+                                        name="newnamed"
+                                        id="newnamed"
                                         type="text"
                                         class="
                                             mt-1
