@@ -20,22 +20,22 @@ export default function AddCat() {
 
 
 
-    const catExample = async () => {
+    const catExample = async (e) => {
         var raw = JSON.stringify({
             //"cat_id": 5,
-            "shelter_id": 1,
-            "cat_name": "ขนมจีน",
-            "sex": "female",
-            "breed": "ผสม",
-            "color": "ขาว",
-            "sterile": false,
-            "vaccine": true,
-            "detail": "น้องเป็นแมวอารมณ์ดี เป็นมิตรกับสิ่งแวดล้อม",
+            "login_id": user.id,
+            "cat_name": e.target.cat_name.value,
+            "sex": e.target.sex.value,
+            "breed": e.target.breed.value,
+            "color": e.target.color.value,
+            "sterile": e.target.sterile.value,
+            "vaccine": e.target.vaccine.value,
+            "detail": e.target.detail.value,
             "cat_picture": "www.google.com",
-            "status": false,
-            "age": 2
-
-
+            "status": e.target.status.value,
+            "age": e.target.age.value,
+            "age_unit": e.target.age_unit.value,
+            "congenital_disease": e.target.congenital_disease.value
         });
 
         var myheader = {
@@ -121,6 +121,8 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <input
+                                    id="cat_name"
+                                    name="cat_name"
                                     type="text"
                                     class="
                                             block
@@ -141,6 +143,8 @@ export default function AddCat() {
                                         <span class="text-error font-light">*</span>
                                     </span>
                                     <input
+                                        id="age"
+                                        name="age"
                                         type="text"
                                         class="
                                             block
@@ -156,6 +160,8 @@ export default function AddCat() {
                                 </label>
                                 <label class="block pl-5 pt-5">
                                     <select
+                                        id="age_unit"
+                                        name="age_unit"
                                         class="
                                             block
                                             w-full
@@ -168,8 +174,8 @@ export default function AddCat() {
                                             font-normal
                                         "
                                     >
-                                        <option>ปี</option>
-                                        <option>เดือน</option>
+                                        <option value="ปี">ปี</option>
+                                        <option value="เดือน">เดือน</option>
                                     </select>
                                 </label>
                             </div>
@@ -178,6 +184,8 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                    id="sex"
+                                    name="sex"
                                     class="
                                             block
                                             w-full
@@ -190,9 +198,9 @@ export default function AddCat() {
                                             font-normal
                                         "
                                 >
-                                    <option>เลือกเพศ</option>
-                                    <option>เพศผู้</option>
-                                    <option>เพศเมีย</option>
+                                    <option value="" selected disabled hidden>เลือกเพศ</option>
+                                    <option value="female">เพศผู้</option>
+                                    <option value="male">เพศเมีย</option>
                                 </select>
                             </label>
                             <label class="block w-3/6">
@@ -200,6 +208,8 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                    id="breed"
+                                    name="breed"
                                     class="
                                             block
                                             w-full
@@ -212,19 +222,19 @@ export default function AddCat() {
                                             font-normal
                                         "
                                 >
-                                    <option>เลือกสายพันธุ์</option>
-                                    <option>ไทย</option>
-                                    <option>ผสม</option>
-                                    <option>สีสวาด</option>
-                                    <option>ขาวมณี</option>
-                                    <option>วิเชียรมาศ</option>
-                                    <option>สก็อตติช โฟลด์</option>
-                                    <option>อเมริกัน ชอร์ตแฮร์</option>
-                                    <option>บริติช ชอร์ตแฮร์</option>
-                                    <option>เอ็กโซติก ชอร์ตแฮร์</option>
-                                    <option>เปอร์เซีย</option>
-                                    <option>แร็กดอลล์</option>
-                                    <option>สฟิงซ์</option>
+                                    <option value="" selected disabled hidden>เลือกสายพันธุ์</option>
+                                    <option value="ไทย">ไทย</option>
+                                    <option value="ผสม">ผสม</option>
+                                    <option value="สีสวาด">สีสวาด</option>
+                                    <option value="ขาวมณี">ขาวมณี</option>
+                                    <option value="วิเชียรมาศ">วิเชียรมาศ</option>
+                                    <option value="สก็อตติช โฟลด์">สก็อตติช โฟลด์</option>
+                                    <option value="อเมริกัน ชอร์ตแฮร์">อเมริกัน ชอร์ตแฮร์</option>
+                                    <option value="บริติช ชอร์ตแฮร์">บริติช ชอร์ตแฮร์</option>
+                                    <option value="เอ็กโซติก ชอร์ตแฮร์">เอ็กโซติก ชอร์ตแฮร์</option>
+                                    <option value="เปอร์เซีย">เปอร์เซีย</option>
+                                    <option value="แร็กดอลล์">แร็กดอลล์</option>
+                                    <option value="สฟิงซ์">สฟิงซ์</option>
                                 </select>
                             </label>
                             <label class="block w-3/6">
@@ -232,6 +242,8 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                    id="color"
+                                    name="color"
                                     class="
                                             block
                                             w-full
@@ -244,24 +256,24 @@ export default function AddCat() {
                                             font-normal
                                         "
                                 >
-                                    <option>เลือกสี หรือ ลาย</option>
-                                    <option>ดำ</option>
-                                    <option>ส้ม</option>
-                                    <option>ขาว</option>
-                                    <option>ครีม</option>
-                                    <option>เทา</option>
-                                    <option>น้ำตาล</option>
-                                    <option>ทองแดง</option>
-                                    <option>ขาวดำ</option>
-                                    <option>ขาวส้ม</option>
-                                    <option>ขาวเทา</option>
-                                    <option>ขาวครีม</option>
-                                    <option>สองสี</option>
-                                    <option>สลิด</option>
-                                    <option>สามสี</option>
-                                    <option>เปรอะ</option>
-                                    <option>แต้ม</option>
-                                    <option>แต้มเปรอะ</option>
+                                    <option value="" selected disabled hidden>เลือกสี หรือ ลาย</option>
+                                    <option value="ดำ">ดำ</option>
+                                    <option value="ส้ม">ส้ม</option>
+                                    <option value="ขาว">ขาว</option>
+                                    <option value="ครีม">ครีม</option>
+                                    <option value="เทา">เทา</option>
+                                    <option value="น้ำตาล">น้ำตาล</option>
+                                    <option value="ทองแดง">ทองแดง</option>
+                                    <option value="ขาวดำ">ขาวดำ</option>
+                                    <option value="ขาวส้ม">ขาวส้ม</option>
+                                    <option value="ขาวเทา">ขาวเทา</option>
+                                    <option value="ขาวครีม">ขาวครีม</option>
+                                    <option value="สองสี">สองสี</option>
+                                    <option value="สลิด">สลิด</option>
+                                    <option value="สามสี">สามสี</option>
+                                    <option value="เปรอะ">เปรอะ</option>
+                                    <option value="แต้ม">แต้ม</option>
+                                    <option value="แต้มเปรอะ">แต้มเปรอะ</option>
                                 </select>
                             </label>
                             <label class="block w-3/6">
@@ -269,6 +281,8 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                    id="vaccine"
+                                    name="vaccine"
                                     class="
                                             block
                                             w-full
@@ -281,9 +295,9 @@ export default function AddCat() {
                                             font-normal
                                         "
                                 >
-                                    <option>เลือกประวัติ</option>
-                                    <option>ซีดวัคซีนแล้ว</option>
-                                    <option>ยังไม่ซีดวัคซีน</option>
+                                    <option value="" selected disabled hidden>เลือกประวัติ</option>
+                                    <option value={true}>ซีดวัคซีนแล้ว</option>
+                                    <option value={false}>ยังไม่ซีดวัคซีน</option>
                                 </select>
                             </label>
                             <label class="block w-3/6">
@@ -291,6 +305,8 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                    id="sterile"
+                                    name="sterile"
                                     class="
                                             block
                                             w-full
@@ -303,9 +319,9 @@ export default function AddCat() {
                                             font-normal
                                         "
                                 >
-                                    <option>เลือกประวัติ</option>
-                                    <option>ทำหมันแล้ว</option>
-                                    <option>ยังไม่ทำหมัน</option>
+                                    <option value="" selected disabled hidden>เลือกประวัติ</option>
+                                    <option value={true}>ทำหมันแล้ว</option>
+                                    <option value={false}>ยังไม่ทำหมัน</option>
                                 </select>
                             </label>
                             <label class="block w-3/6">
@@ -313,6 +329,8 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                    id="congenital_disease"
+                                    name="congenital_disease"
                                     class="
                                             block
                                             w-full
@@ -325,23 +343,24 @@ export default function AddCat() {
                                             font-normal
                                         "
                                 >
-                                    <option>เลือกโรคประจำตัว</option>
-                                    <option>ไม่มี</option>
-                                    <option>โรคติดเชื้อไวรัส(หวัดแมว)</option>
-                                    <option>โรคไข้หัดแมว</option>
-                                    <option>โรคติดเชื้อไวรัส(หวัดแมว)</option>
-                                    <option>โรคมะเร็งเม็ดโลหิตขาว(FeLV)</option>
-                                    <option>โรคเอดส์แมว(FIV)</option>
-                                    <option>โรคเยื่อบุช่องท้องอักเสบ(FIP)</option>
-                                    <option>โรคปอดบวม</option>
-                                    <option>โรคผิวหนัง</option>
-                                    <option>อื่นๆ (กรุณาระบุในประวัติ)</option>
+                                    <option value="" selected disabled hidden>เลือกโรคประจำตัว</option>
+                                    <option value="ไม่มี">ไม่มี</option>
+                                    <option value="โรคติดเชื้อไวรัส(หวัดแมว)">โรคติดเชื้อไวรัส(หวัดแมว)</option>
+                                    <option value="โรคไข้หัดแมว">โรคไข้หัดแมว</option>
+                                    <option value="โรคมะเร็งเม็ดโลหิตขาว(FeLV)">โรคมะเร็งเม็ดโลหิตขาว(FeLV)</option>
+                                    <option value="โรคเอดส์แมว(FIV)">โรคเอดส์แมว(FIV)</option>
+                                    <option value="โรคเยื่อบุช่องท้องอักเสบ(FIP)">โรคเยื่อบุช่องท้องอักเสบ(FIP)</option>
+                                    <option value="โรคปอดบวม">โรคปอดบวม</option>
+                                    <option value="โรคผิวหนัง">โรคผิวหนัง</option>
+                                    <option value="อื่นๆ (ระบุในประวัติ)">อื่นๆ (กรุณาระบุในประวัติ)</option>
                                 </select>
                             </label>
 
                             <label class="block w-full">
                                 <span class="text-gray-700">ประวัติโดยย่อ</span>
                                 <input
+                                    id="detail"
+                                    name="detail"
                                     type="text"
                                     class="
                                             block
@@ -366,7 +385,7 @@ export default function AddCat() {
                                     <div class="flex flex-col items-center justify-center pb-6">
                                         Change
                                     </div>
-                                    <input id="dropzone-file" type="file" class="hidden" />
+                                    <input id="cat_picture" name="cat_picture" type="file" class="hidden" />
                                 </label>
                             </div>
                             <div class="flex items-center justify-center w-full">
@@ -376,7 +395,7 @@ export default function AddCat() {
                                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="text-indigo-600">Upload a file</span> or drag and drop</p>
                                         <span class="text-gray-500 text-xs font-light">PNG, JPG, GIF up to 10MB</span>
                                     </div>
-                                    <input id="dropzone-file" type="file" class="hidden" />
+                                    <input id="cat_picture" name="cat_picture" type="file" class="hidden" />
                                 </label>
                             </div>
                         </div>

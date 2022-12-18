@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import vectorprinter from '../public/form-adopt/vector-printer.png'
-import logo from '../public/form-adopt/logocat.jpg'
+import vectorprinter from '../../public/form-adopt/vector-printer.png'
+import logo from '../../public/form-adopt/logocat.jpg'
 import { useEffect, useState } from 'react';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
