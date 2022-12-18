@@ -3,18 +3,18 @@ import { supabase } from "../supabase"
 export default async function handler(req, res) {
 
     //call parameter from body
-    const { user_id } = req.body
+    const { login_id } = req.body
 
-    //check user id
-    var userID = await checkUserId(user_id)
-    if (!userID) {
-        console.log("User ID not found!")
-        res.status(200).json("User ID not found!")
+    //check login id
+    var LoginID = await checkLoginId(login_id)
+    if (!LoginID) {
+        console.log("Login ID not matched!")
+        res.status(200).json("Login ID not matched!")
     } else {
-        console.log("User ID Found!")
+        console.log("Login ID matched!")
         const { error } = await supabase.from('shelter_profile').insert([
             {
-              user_id: user_id,
+              login_id: login_id,
             }
           ])
         //print data
@@ -24,15 +24,16 @@ export default async function handler(req, res) {
 }
 
 
-//check user_id exist
-async function checkUserId(user_id, response) {
+//check login_id exist
+async function checkLoginId(login_id, response) {
     //query
-    const { data, error } = await supabase.from('user_profile').select().eq('user_id', user_id)
+    const { data, error } = await supabase.from('user_profile').select()
+    .not('login_id', login_id)
     if (data == "") {
-        //user_id does not exist
+        //Login_id does not exist
         response = false
     } else {
-        //user_id exist
+        //Login_id exist
         response = true
     }
 

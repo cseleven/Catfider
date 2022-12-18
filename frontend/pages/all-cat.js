@@ -14,36 +14,63 @@ export default function AllCat() {
   const [cat, setCat] = useState(null)
   const [id, setId] = useState(0)
 
+  
+
   useEffect(() => {
-    console.log("user : " + JSON.stringify(user));
-    fetchCat("x", function() {
-          console.log("cat : " + cat);
-        });
-    if(user){
-      console.log("role : " + user.user_metadata.role);
-      setId(user.user_metadata.role);
-      if(id==1){
-        console.log("role user");
-      }else if(id==2){
-        console.log("role shelter");
-      }
-    }
-  }, [session])
+    fetchCat()
+  }, [])
+
+
+  // useEffect(() => {
+  //   console.log("user : " + JSON.stringify(user));
+  //   fetchCat("x", function() {
+  //         console.log("cat : " + cat);
+  //       });
+  //   if(user){
+  //     console.log("role : " + user.user_metadata.role);
+  //     setId(user.user_metadata.role);
+  //     if(id==1){
+  //       console.log("role user");
+  //     }else if(id==2){
+  //       console.log("role shelter");
+  //     }
+  //   }
+  // }, [session])
 
   const fetchCat = async (param, callback) => {
-    let data = [{ 'cat_id': 0 ,'cat_name': 'loading' }];
+    var raw = JSON.stringify({
+      "page_number" : "",
+      "cat_id": 1,
+      "sex" : "",
+      "breed" : "",
+      "color" : "",
+      "status" : ""
+
+
+    });
+
+    var myheader = {
+      'Content-Type': 'application/json'
+    };
+
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myheader,
+      body: raw,
+      redirect: 'follow'
+    };
+
     try {
-      setLoading(true)
-      let response = await fetch("/api/getCatProfile").then(console.log("hello"));
-      data = await response.json();
+      setLoading(true);
+      let response = await fetch("/api/cat/searchCat", requestOptions);
+      let data = await response.json();
       console.log("response : " + JSON.stringify(data));
-      setCat(data);
     } finally {
-      setLoading(false)
-      console.log("cat : " + id);
-      callback();
+      setLoading(false);
     }
   };
+  
  
   return (
     <div class="container mx-auto">

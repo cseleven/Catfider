@@ -2,15 +2,13 @@ import { supabase } from "../../supabase"
 
 export default async function handler(req, res) {
 
-  //add edit delete
-
-  //call parameter from body
-  //"queue_date": "2022-12-09T07:36:58.793+00:00"
   const {
-    shelter_id, cat_id, cat_name, sex,
-    breed, color, sterile, vaccine,
-    detail, cat_picture, status, age,
+    cat_name, login_id, sex, age_unit,
+    breed, color, sterile, vaccine, congenital_disease,
+    detail, cat_picture, status, age
   } = req.body
+
+  var shelter_id = await getShelterID(login_id)
 
   //check shelter id
   var shelterID = await checkShelterId(shelter_id)
@@ -34,16 +32,17 @@ export default async function handler(req, res) {
         cat_picture: cat_picture,
         status: status,
         age: age,
+        age_unit: age_unit,
+        congenital_disease: congenital_disease
+
       }])
 
     //print data
-    res.status(200).json("Insert Data Success!")
+    res.status(200).json("Insert Cat Success!")
 
   }
 
 }
-
-
 
 //check user_id exist
 async function checkShelterId(shelter_id, response) {
@@ -62,3 +61,19 @@ async function checkShelterId(shelter_id, response) {
   return response
 }
 
+//check ShelterID
+async function getShelterID(login_id, shelter_id) {
+  //query
+  const { data } = await supabase.from('shelter_profile').select().eq('login_id', login_id)
+  console.log(data)
+  if (data == "" || data == null) {
+    //shelter_id does not exist
+    shelter_id = null
+  } else {
+    const query = data?.map(({ shelter_id }) => ({ shelter_id }))
+    const json = JSON.stringify(query)
+    shelter_id = json.split(':')[1].split('}]')[0]
+  }
+  console.log("shelter id ", shelter_id)
+  return shelter_id
+}
