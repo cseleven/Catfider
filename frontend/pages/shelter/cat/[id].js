@@ -131,21 +131,17 @@ export default function CatProfile() {
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white border-b  hover:bg-gray-50">
-                  <td class="px-3 py-2">jack.cooper@example.com</td>
-                  <td class="px-3 py-2">22/12/2022</td>
-                  <td class="px-3 py-2">10.00-11.00 น.</td>
-                </tr>
-                <tr class="bg-white border-b  hover:bg-gray-50">
-                  <td class="px-3 py-2">user.person@example.com</td>
-                  <td class="px-3 py-2">15/12/2022</td>
-                  <td class="px-3 py-2 text-error">ยกเลิก</td>
-                </tr >
-                <tr class="bg-white border-b  hover:bg-gray-50">
-                  <td class="px-3 py-2">iris.sri@example.com</td>
-                  <td class="px-3 py-2">8/12/2022</td>
-                  <td class="px-3 py-2">10.00-11.00 น.</td>
-                </tr>
+                {cat.map((item)=>(
+                  <tr class="bg-white border-b  hover:bg-gray-50">
+                    <td class="px-3 py-2">{item.queue?.user_profile?.email}</td>
+                    <td class="px-3 py-2">{item.queue?.queue_date}</td>
+                    {item.queue?.queue_status ? (
+                        <td class="px-3 py-2">{item.queue?.queue_time} น.</td>
+                      ):( 
+                        <td class="px-3 py-2 text-error">ยกเลิก</td>
+                      )}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
