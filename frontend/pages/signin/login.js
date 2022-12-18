@@ -8,6 +8,14 @@ const LogIn = () => {
   const session = useSession()
   const supabase = useSupabaseClient()
 
+  const signin = async(e) => {
+    let { data, error } = await supabase.auth.signInWithPassword({
+      email: e.target.email.value,
+      password: e.target.password.value
+    }).then(console.log("data:"+data))
+  }
+
+
   //น่าจะทำใหม่แบบเขียนเอง
   return (
     <div class="h-[87vh]">
@@ -17,7 +25,6 @@ const LogIn = () => {
           <div>
             <img
               className="mx-auto h-12 w-auto"
-              src="https://cdn-icons-png.flaticon.com/512/763/763704.png"
               alt="Cat "
             />
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -25,7 +32,8 @@ const LogIn = () => {
             </h2>
 
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          
+          <form className="mt-8 space-y-6" onSubmit={signin}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
@@ -33,7 +41,7 @@ const LogIn = () => {
                   Email address
                 </label>
                 <input
-                  id="email-address"
+                  id="email"
                   name="email"
                   type="email"
                   autoComplete="email"
