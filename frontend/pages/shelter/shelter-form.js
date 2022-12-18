@@ -1,15 +1,7 @@
-<<<<<<< HEAD
-import Signin from '../../components/sigin'
-=======
->>>>>>> jee2
 import { useSession, useUser } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
 
 export default function ShelterForm() {
-<<<<<<< HEAD
-=======
-
->>>>>>> jee2
     const user = useUser()
     const session = useSession()
     const [loading, setLoading] = useState(true)
@@ -17,28 +9,6 @@ export default function ShelterForm() {
     // const [id, setId] = useState(0)
 
     useEffect(() => {
-<<<<<<< HEAD
-        ShelterForm()
-    }, [])
-
-
-    const ShelterForm = async () => {
-        var raw = JSON.stringify({
-            "shelter_id": 1,
-            "shelter_name": "บ้านรักแมว",
-            "website_url": "https://www.google.com",
-            "email": "catlover@gmail.com",
-            "address": "-",
-            "location_url": "https://www.google.com",
-            "contact_name": "มานี",
-            "contact_lastname": "มีใจ",
-            "contact_email": "catlover@gmail.com",
-            "contact_phone": "022222223",
-            "donate_name1": "กรุงศรี",
-            "donate_number1": "151-0-04118-2",
-            "donate_name2": "กรุงไทย",
-            "donate_number2": "151-0-04118-3"
-=======
     }, [])
 
     const ShelterForm = async (e) => {
@@ -56,7 +26,6 @@ export default function ShelterForm() {
             "donate_number1": e.target.donate_number1.value,
             "donate_name2": e.target.donate_name2.value,
             "donate_number2": e.target.donate_number2.value
->>>>>>> jee2
 
         });
 
@@ -81,10 +50,6 @@ export default function ShelterForm() {
             setLoading(false);
         }
     };
-<<<<<<< HEAD
-
-=======
->>>>>>> jee2
     return (
         <div class="h-auto">
             <div class="w-screen h-[20rem]">
