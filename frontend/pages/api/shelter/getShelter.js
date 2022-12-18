@@ -20,43 +20,37 @@ export default async function handler(req, res) {
   }
 }
   
-  //check user_id exist
+//check shelter_id exist
 async function checkShelterId(shelter_id, response) {
   //query
-  const { data, error } = await supabase.from('shelter_profile').select('*').eq('shelter_id', shelter_id)
-  if ( data == "" ) {
-    //shelter_id does not exist
+  const { data, error } = await supabase.from('shelter_profile').select().eq('shelter_id', shelter_id)
+  if (data == "") {
+    //user_id does not exist
     response = false
   } else {
-    //shelter_id exist
+    //user_id exist
     response = true
   }
-  //console.log("user id ", response)
+
+  //print result
+  console.log("Shelter Found")
   return response
 }
 
-async function getShelterID(user_id, shelterID) {
-  const { data } = await supabase.from('shelter_profile').select().eq('user_id', user_id)
-  const query = data?.map(({ shelter_id }) => ({ shelter_id }))
-  const shelterquery = JSON.stringify(query)
-  shelterID = shelterquery.split(':')[1].split('}]')[0]
-  console.log(shelterID)
-  return shelterID
-}
 
 //check ShelterID
 async function getShelterID(login_id, shelter_id) {
-  //query
-  const { data } = await supabase.from('shelter_profile').select().eq('login_id', login_id)
-  console.log(data)
-  if (data == "" || data == null) {
-    //shelter_id does not exist
-    shelter_id = null
-  } else {
-    const query = data?.map(({ shelter_id }) => ({ shelter_id }))
-    const json = JSON.stringify(query)
-    shelter_id = json.split(':')[1].split('}]')[0]
-  }
-  console.log("shelter id ", shelter_id)
-  return shelter_id
+    //query
+    const { data } = await supabase.from('shelter_profile').select().eq('login_id', login_id)
+    console.log(data)
+    if (data == "" || data == null) {
+        //shelter_id does not exist
+        shelter_id = null
+    } else {
+        const query = data?.map(({ shelter_id }) => ({ shelter_id }))
+        const json = JSON.stringify(query)
+        shelter_id = json.split(':')[1].split('}]')[0]
+    }
+    console.log("shelter id ", shelter_id)
+    return shelter_id
 }
