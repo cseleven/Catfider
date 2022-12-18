@@ -117,7 +117,7 @@ export default function Queue() {
                                     id="cat_id"
                                     name="cat_id"
                                     type="text"
-                                    class="text-gray-500 text-base font-normal rounded-lg 
+                                    class="text-gray-500 text-base font-normal
                                         block
                                             w-full
                                             rounded-md
@@ -135,7 +135,7 @@ export default function Queue() {
                                 </span>
                                 <input
                                     type="text"
-                                    class="text-gray-500 text-base font-normal rounded-lg 
+                                    class="text-gray-500 text-base font-normal
                                         w-full
                                             rounded-md
                                             border-gray-300
@@ -152,7 +152,7 @@ export default function Queue() {
                                 </span>
                                 <input
                                     type="text"
-                                    class="text-gray-500 text-base font-normal rounded-lg 
+                                    class="text-gray-500 text-base font-normal
                                         w-full
                                             rounded-md
                                             border-gray-300
@@ -215,7 +215,7 @@ export default function Queue() {
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
                             <div class="w-screen h-[30rem] py-3">
                                 <button type="submit"
-                                    class="flex rounded-lg bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]"
+                                    class="flex bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]"
                                 >
                                     ยืนยัน
                                 </button>
