@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
 
-        <div class="flex flex-col min-h-screen">
+        <div class="flex flex-col">
 
             <footer class="mt-auto p-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6">
                 <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="https://github.com/cseleven" class="hover:underline">Eleven</a>. SE, Computer Science, KMITL.

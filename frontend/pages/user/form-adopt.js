@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import vectorprinter from '../../public/form-adopt/vector-printer.png'
-import logo from '../../public/form-adopt/logocat.jpg'
+//import logo from '../../public/form-adopt/logocat.jpg'
 import { useEffect, useState } from 'react';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -36,31 +36,6 @@ export default function FormAdopt() {
         try {
             setLoading(true)
             let response = await fetch("/api/getexample");
-            let data = await response.json();
-            console.log("response : " + JSON.stringify(data));
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const postExample = async (event) => {
-        var raw = JSON.stringify(input);
-
-        var myheader = {
-            'Content-Type': 'application/json'
-        };
-
-
-        var requestOptions = {
-            method: 'POST',
-            headers: myheader,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        try {
-            setLoading(true);
-            let response = await fetch("/api/postexample", requestOptions);
             let data = await response.json();
             console.log("response : " + JSON.stringify(data));
         } finally {
@@ -169,7 +144,7 @@ export default function FormAdopt() {
                     columns: [
                         {
                             ul: [
-                                { text: 'ที่อยู่อาศัยปัจจุบัน: ', listType: 'none' },
+                                { text: 'ที่อยู่อาศัยปัจจุบัน: ' + input.house, listType: 'none' },
                             ]
                         },
                         {
@@ -739,7 +714,7 @@ export default function FormAdopt() {
 
 
             {/*form*/}
-            <form onSubmit={postExample}>
+            <form >
 
                 {/*section 1*/}
                 <div class="w-screen h-[22rem]">
@@ -751,6 +726,7 @@ export default function FormAdopt() {
                                 <span class="text-error font-light">*</span>
                             </span>
                             <select
+                                onChange={updateInput}
                                 class="
                                             block
                                             w-full
@@ -763,9 +739,7 @@ export default function FormAdopt() {
                                         "
                             >
                                 <option>โปรดระบุ</option>
-                                <option>Yes</option>
-                                <option>No</option>
-                                <option>Maybe</option>
+                                <option></option>
                             </select>
 
                         </label>
@@ -783,6 +757,7 @@ export default function FormAdopt() {
                                     <label class="block">
                                         <span class="text-black/[0.7] font-normal">คำนำหน้า</span>
                                         <select
+                                            onChange={updateInput}
                                             class="
                                             block
                                             w-full
@@ -794,9 +769,9 @@ export default function FormAdopt() {
                                             text-gray-900 font-light
                                         "
                                         >
-                                            <option>นาย</option>
-                                            <option>นาง</option>
-                                            <option>นางสาว</option>
+                                            <option value="นาย">นาย</option>
+                                            <option value="นาง">นาง</option>
+                                            <option value="นางสาว">นางสาว</option>
                                         </select>
                                     </label>
                                     <label class="block basis-1/4">
@@ -915,6 +890,7 @@ export default function FormAdopt() {
                                     <label class="block">
                                         <span class="text-black/[0.7] font-normal">เพศ</span>
                                         <select
+                                            onChange={updateInput}
                                             class="
                                             block
                                             w-full
@@ -926,9 +902,9 @@ export default function FormAdopt() {
                                             text-gray-900 font-light
                                         "
                                         >
-                                            <option>ชาย</option>
-                                            <option>หญิง</option>
-                                            <option>ไม่ระบุ</option>
+                                            <option value="ชาย">ชาย</option>
+                                            <option value="หญิง">หญิง</option>
+                                            <option value="ไม่ระบุ">ไม่ระบุ</option>
                                         </select>
                                     </label>
                                 </div>
@@ -936,58 +912,60 @@ export default function FormAdopt() {
                                     <span class=" flex text-gray-700 pt-2">ที่อยู่อาศัยปัจจุบัน
                                         <span class="text-error font-light">*</span>
                                     </span>
+
                                     <div class="flex items-center">
                                         <input
+                                            onChange={updateInput}
                                             name="house"
-                                            id="house" 
-                                            idform="default-radio"
+                                            id="house"
                                             type="radio"
-                                            nameform="default-radio-address"
+                                            value="บ้านส่วนตัว"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">บ้านส่วนตัว</label>
                                     </div>
                                     <div class="flex items-center">
                                         <input
-                                            name="renthouse"
+                                            onChange={updateInput}
+                                            name="house"
                                             id="renthouse"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-address"
+                                            value="บ้านเช่า"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">บ้านเช่า</label>
                                     </div>
                                     <div class="flex items-center">
                                         <input
-                                            name="apartment"
+                                            onChange={updateInput}
+                                            name="house"
                                             id="apartment"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-address"
+                                            value="อพาร์ทเมนท์"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">อพาร์ทเมนท์</label>
                                     </div>
                                     <div class="flex items-center">
                                         <input
-                                            name="condo"
+                                            onChange={updateInput}
+                                            name="house"
                                             id="condo"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-address"
+                                            value="คอนโด"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">คอนโด</label>
                                     </div>
                                     <div class="flex items-center">
                                         <input
-                                            name="otheraddress"
+                                            onChange={updateInput}
+                                            name="house"
                                             id="otheraddress"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-address"
+                                            value="อื่นๆ"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">อื่นๆ</label>
                                     </div>
                                     <label class="block basis-1/4">
                                         <input
+                                            onChange={updateInput}
                                             name="otheraddress-detail"
                                             id="otheraddress-detail"
                                             type="text"
@@ -1015,21 +993,21 @@ export default function FormAdopt() {
                                     </span>
                                     <div class="flex items-center ml-36">
                                         <input
+                                            onChange={updateInput}
                                             name="alone"
                                             id="alone"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-with"
+                                            value="คนเดียว"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">คนเดียว</label>
                                     </div>
                                     <div class="flex items-center ml-36 mt-5">
                                         <input
-                                            name="family"
+                                            onChange={updateInput}
+                                            name="alone"
                                             id="family"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-with"
+                                            value="ครอบครัว"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">ครอบครัว</label>
                                     </div>
@@ -1040,6 +1018,7 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">จำนวนสมาชิก (รวมตัวเอง)
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="familymember-count"
                                             id="familymember-count"
                                             type="text"
@@ -1061,6 +1040,7 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">สมาชิกในครอบครัว
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="familymember"
                                             id="familymember"
                                             type="text"
@@ -1082,16 +1062,17 @@ export default function FormAdopt() {
                                 <div class="flex space-x-11">
                                     <div class="flex items-center ml-36">
                                         <input
-                                            name="otherrelationship"
+                                            onChange={updateInput}
+                                            name="alone"
                                             id="otherrelationship"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-with"
+                                            value="อื่นๆ"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio-2" class="ml-2 text-sm font-light text-black">อื่นๆ</label>
                                     </div>
                                     <label class="block basis-1/4">
                                         <input
+                                            onChange={updateInput}
                                             name="otherrelationship-detail"
                                             id="otherrelationship--detail"
                                             type="text"
@@ -1117,6 +1098,7 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">จำนวนสมาชิก (รวมตัวเอง)
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="otherrelationship-count"
                                             id="otherrelationship-count"
                                             type="text"
@@ -1137,6 +1119,7 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">ความสัมพันธ์ที่เกี่ยวข้อง
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="otherrelationship-member"
                                             id="otherrelationship-member"
                                             type="text"
@@ -1406,21 +1389,21 @@ export default function FormAdopt() {
                                 <div class="flex">
                                     <div class="flex items-center ml-36">
                                         <input
+                                            onChange={updateInput}
                                             name="sameaddress"
                                             id="sameaddress"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-address1.2"
+                                            value="ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1</label>
                                     </div>
                                     <div class="flex items-center ml-36">
                                         <input
-                                            name="notsameaddress"
+                                            onChange={updateInput}
+                                            name="sameaddress"
                                             id="notsameaddress"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-address1.2"
+                                            value="ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1</label>
                                     </div>
@@ -1884,51 +1867,51 @@ export default function FormAdopt() {
                                     </span>
                                     <div class="flex items-center">
                                         <input
+                                            onChange={updateInput}
                                             name="gov-officer"
                                             id="gov-officer"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-career"
+                                            value="ข้าราชการ"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">ข้าราชการ</label>
                                     </div>
                                     <div class="flex items-center">
                                         <input
-                                            name="enterprise"
+                                            onChange={updateInput}
+                                            name="gov-officer"
                                             id="enterprise"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-career"
+                                            value="เอกชน/รัฐวิสาหกิจ"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">เอกชน/รัฐวิสาหกิจ</label>
                                     </div>
                                     <div class="flex items-center">
                                         <input
-                                            name="private"
+                                            onChange={updateInput}
+                                            name="gov-officer"
                                             id="private"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-career"
+                                            value="ธุรกิจส่วนตัว"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">ธุรกิจส่วนตัว</label>
                                     </div>
                                     <div class="flex items-center">
                                         <input
-                                            name="employee"
+                                            onChange={updateInput}
+                                            name="gov-officer"
                                             id="employee"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-career"
+                                            value="ลูกจ้าง"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">ลูกจ้าง</label>
                                     </div>
                                     <div class="flex items-center">
                                         <input
-                                            name="othercareer"
+                                            onChange={updateInput}
+                                            name="gov-officer"
                                             id="othercareer"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-career"
+                                            value="อื่นๆ"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">อื่นๆ</label>
                                     </div>
@@ -1984,6 +1967,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="relationcompany"
                                             id="relationcompany"
                                             type="text"
@@ -2057,21 +2041,21 @@ export default function FormAdopt() {
                                     </span>
                                     <div class="flex items-center pl-8">
                                         <input
+                                            onChange={updateInput}
                                             name="usedtopet"
                                             id="usedtopet"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-cat"
+                                            value="เคยเลี้ยง"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">เคยเลี้ยง</label>
                                     </div>
                                     <div class="flex items-center">
                                         <input
-                                            name="dontusedtopet"
+                                            onChange={updateInput}
+                                            name="usedtopet"
                                             id="dontusedtopet"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-cat"
+                                            value="ไม่เคยเลี้ยง"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">ไม่เคยเลี้ยง</label>
                                     </div>
@@ -2124,21 +2108,21 @@ export default function FormAdopt() {
                                     </span>
                                     <div class="flex items-center pl-8">
                                         <input
+                                            onChange={updateInput}
                                             name="haveanimal"
                                             id="haveanimal"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-other"
+                                            value="มี"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">มี</label>
                                     </div>
                                     <div class="flex items-center pl-10">
                                         <input
-                                            name="donthaveanimal"
+                                            onChange={updateInput}
+                                            name="haveanimal"
                                             id="donthaveanimal"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-other"
+                                            value="ไม่มี"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">ไม่มี</label>
                                     </div>
@@ -2192,21 +2176,20 @@ export default function FormAdopt() {
 
                                     <div class="flex items-center pl-8">
                                         <input
+                                            onChange={updateInput}
                                             name="presentpet"
                                             id="presentpet"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-raise"
+                                            value="เลี้ยงอยู่"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">เลี้ยงอยู่</label>
                                     </div>
                                     <div class="flex items-center">
                                         <input
-                                            name="pastpet"
+                                            name="presentpet"
                                             id="pastpet"
-                                            idform="default-radio"
                                             type="radio"
-                                            nameform="default-radio-raise"
+                                            value="ไม่ได้เลี้ยง"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">ไม่ได้เลี้ยง</label>
                                     </div>

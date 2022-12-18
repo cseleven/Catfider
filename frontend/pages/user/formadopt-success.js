@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import printer from '../public/print-formadopt/printer.png'
+import printer from '../../public/print-formadopt/printer.png'
 
 export default function PrintFormAdopt() {
     return (

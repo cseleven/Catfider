@@ -1,20 +1,45 @@
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
 export default function Signin({ role }) {
     const supabase = useSupabaseClient()
 
+    const createProfile = async () => {
+        const user = useUser()
+        var raw = JSON.stringify({ "login_id": user.id });
+
+        var myheader = {
+            'Content-Type': 'application/json'
+        };
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myheader,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            setLoading(true);
+            let response = await fetch("/api/shelter/createShelter", requestOptions);
+            let data = await response.json();
+            console.log("response : " + JSON.stringify(data));
+        } finally {
+            setLoading(false);
+        }
+    };
+
     //func call Auth Signin Supabase
     const signup = async (e) => {
-        console.log(e.target.email.value+e.target.password.value+role)
+        console.log(e.target.email.value + e.target.password.value + role)
         const { data, error } = supabase.auth.updateUser({
             email: e.target.email.value,
             password: e.target.password.value,
             data: { role: role }
-        }).then(console.log(e.target.email.value))
+        }).then(console.log(e.target.email.value)).finally(() => createProfile())
     }
 
     return (
-        <div>
+        <div class="h-auto">
             <form onSubmit={signup}>
                 <div class="bg-gray-200">
                     <div class="container mx-auto flex justify-around">

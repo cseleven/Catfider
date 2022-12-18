@@ -114,7 +114,7 @@ export default function AddCat() {
                         <div class="text-sm font-light text-gray-600">สำหรับแสดงส่วนของโปรไฟล์</div>
                     </div>
 
-                    <form action="#" method="POST">
+                    <form onSubmit={catExample}>
                         <div class="w-[803px] h-[1200px] bg-white rounded-t shadow-md px-7 py-6 space-y-3 ml-28">
                             <label class="block w-2/3">
                                 <span class=" flex text-gray-700">ชื่อน้องแมว
@@ -401,7 +401,7 @@ export default function AddCat() {
                         </div>
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
                             <div class="w-screen h-[30rem] py-3">
-                                <button type="button"
+                                <button type="submit"
                                     class="flex rounded-lg bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]">
                                     ยืนยัน
                                 </button>
