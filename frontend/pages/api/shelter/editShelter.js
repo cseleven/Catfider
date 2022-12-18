@@ -34,7 +34,6 @@ export default async function handler(req, res) {
                         location_url: location_url,
                         contact_name: contact_name,
                         contact_lastname: contact_lastname,
-                        email: email,
                         contact_phone: contact_phone,
                         donate_name1: donate_name1, 
                         donate_number1: donate_number1, 
