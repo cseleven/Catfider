@@ -1,6 +1,9 @@
 import { useSession, useUser } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
-function MyCat() {
+import Loading from '../../components/loading'
+import catProfile1 from '../../public/index/cat-profile-adopt1.png'
+
+export default  function MyCat() {
     const user = useUser()
     const session = useSession()
     const [loading, setLoading] = useState(true)
@@ -38,8 +41,15 @@ function MyCat() {
       }
     };
     return (
-      <h2>แมวของฉัน</h2>
+      <div>
+        {!loading? (<Loading/>):(
+          <div>
+            {cat.map((item)=>(
+              <HomecardCatprofile imgcat={catProfile1} statuscat="ว่าง" namecat="มะลิ (#1210)" detail="แม่มะลิ แมวจรพันธุ์ไทย สีขาวดำ นิสัยเป็นมิตร ใจดีกับแมวเด็ก..." tagbreed="พันธุ์ไทย" tagcolor="ขาวดำ" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
+            ))}
+          </div>
+        )}
+      </div>
     )
 }
   
-export default MyCat
