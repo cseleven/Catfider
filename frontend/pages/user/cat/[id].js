@@ -7,49 +7,9 @@ import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
 import Router from 'next/router';
 
-// export default function CatProfile() {
-//   const router = useRouter();
-//   const user = useUser()
-//   const session = useSession()
-//   const [loading, setLoading] = useState(true)
-//   const [cat, setCat] = useState(null)
-
-
-//   useEffect(() => {
-//     catExample()
-//   }, [])
-
-
-//   // const catExample = async () => {
-//   //   var raw = JSON.stringify({
-//   //     "cat_id": 1
-
-  //   });
-
-  //   var myheader = {
-  //     'Content-Type': 'application/json'
-  //   };
-
-
-  //   var requestOptions = {
-  //     method: 'POST',
-  //     headers: myheader,
-  //     body: raw,
-  //     redirect: 'follow'
-  //   };
-
-  //   try {
-  //     setLoading(true);
-  //     let response = await fetch("/api/cat/userview/profileCat", requestOptions);
-  //     let data = await response.json();
-  //     console.log("response : " + JSON.stringify(data));
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
 
 const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
-    return !condition ? (
+    return condition ? (
         <div class="grid mb-8 md:place-content-end md:mr-20">
           <button type="button" onClick={()=>Router.push({
               pathname: '/user/queue',
@@ -72,6 +32,11 @@ const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) 
 
 export default function CatProfile() {
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const user = useUser()
+  const session = useSession()
+  const [cat, setCat] = useState(null)
+  
   const mock = { 
     name:"มะลิ", pic:"https://images.unsplash.com/photo-1615789591457-74a63395c990", vaccine:true, sterile:true,bank:["กสิกร 999-999-9999","กรุงไทย 888-888-888"],
     id: 1210, map:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.810927024412!2d100.77565737605752!3d13.729894097798276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d664988a1bedf%3A0xcc678f180e221cd0!2sKing%20Mongkut&#39;s%20Institute%20of%20Technology%20Ladkrabang!5e0!3m2!1sen!2sth!4v1671191115547!5m2!1sen!2sth",
@@ -79,7 +44,40 @@ export default function CatProfile() {
     age:4.5, sex:"เพศเมีย", breed:"ไทย", color:"ขาวดำ", disease:"ไม่มี", hold:true, shelter:"มูลนิธิบ้านรักแมว",day: "22/12/2022", time : "10.00-11.00 น.", สถานที่ : "มูลนิธิบ้านรักแมว"
   }
 
-  useEffect(() => setLoading(false), [])
+  
+  useEffect(() => {
+    catExample()
+  }, [])
+
+
+  const catExample = async () => {
+    var raw = JSON.stringify({
+      "cat_id": "1"
+      "login_id": user.id
+    });
+
+    var myheader = {
+      'Content-Type': 'application/json'
+    };
+
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myheader,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/userview/profileCat", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+      setCat(data);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
   <div>
@@ -105,28 +103,31 @@ export default function CatProfile() {
         </nav>
         <hr class="border-1 border-gray-200"/>
         <Catprofile
-          pic = {mock.pic}
+          pic={cat[0].cat_picture}
           map = {mock.map}
-          vaccine = {mock.vaccine}
-          sterile = {mock.sterile}
-          bank = {mock.bank}
+          vaccine={cat[0].vaccine}
+          sterile={cat[0].sterile}
+          bank1={cat[0].shelter_profile.donate_name1}
+          donate_number1={cat[0].shelter_profile.donate_number1}
+          bank2={cat[0].shelter_profile.donate_name2}
+          donate_number2={cat[0].shelter_profile.donate_number2}
         />
 
         {/*section2*/}
         <div class="flex flex-col max-w-md md:max-w-full mx-auto md:mx-0 md:flex-row justify-between text-gray-600">
           <Catdetail
-            name = {mock.name}
-            id = {mock.id}
-            detail = {mock.detail} 
-            age = {mock.age}
-            sex = {mock.sex}
-            breed = {mock.breed}
-            color = {mock.color}
-            disease = {mock.disease}
+            name = {cat[0].cat_name}
+            id={cat[0].cat_id}
+            detail={cat[0].detail} 
+            age={cat[0].age}
+            sex={cat[0].sex}
+            breed={cat[0].breed}
+            color={cat[0].color}
+            disease={cat[0].congenital_disease}
           />
           <div class="md:basis-2/5 lg:border-l-2 lg:px-6">
             {!mock.status?(<></>):(
-                <ConditionalWrapper condition={mock.hold} id={mock.id} name={mock.name} shelter={mock.shelter} day={mock.day} time={mock.time} place={mock.place}/>
+                <ConditionalWrapper condition={cat[0].queue} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue?.queue_date} time={cat[0].queue?.queue_time} place={cat[0].shelter_profile?.address}/>
             )}
           </div>
         </div>

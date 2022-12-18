@@ -24,12 +24,11 @@ export default function Queue() {
     }, [session])
 
     //fetch data
-    const fetchCat = async (e) => {
+    const postQueueCat = async (e) => {
 
         var raw = JSON.stringify({
-
-            "cat_id": e.target.cat_id.value,
-            "user_id": user.id,
+            "cat_id": id,
+            "login_id": user.id,
             "queue_date": e.target.queue_date.value,
             "queue_time": e.target.queue_time.value
         });
@@ -56,13 +55,6 @@ export default function Queue() {
         }
 
     };
-
-    const updateInput = e => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        })
-    }
 
     return (
         <div class="container">
@@ -113,8 +105,8 @@ export default function Queue() {
                         <div class="text-sm font-light text-gray-600">มูลนิธิหรือสถานสงเคราะห์</div>
 
                     </div>
-                    <form onSubmit={fetchCat}>
-                        <div class="w-[803px] h-[407px] bg-white rounded-t shadow-md px-7 py-6 space-y-2.5 mx-28">
+                    <form onSubmit={postQueueCat} method="POST">
+                        <div class="w-[803px] h-[407px] bg-white rounded-t shadow-md px-7 py-6 space-y-2.5 ml-28">
                             <label class="block w-1/3">
                                 <span class=" flex text-gray-700">รหัสแมว
                                     <span class="text-error font-light">*</span>

@@ -22,10 +22,43 @@ import Homecard from '../components/homecard'
 import HomecardCatprofile from '../components/homecardcatprofile.js'
 import { useEffect, useState } from 'react'
 import Loading from '../components/loading'
+import Router from 'next/router';
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
-  useEffect(() => setLoading(false), [])
+  const [cat, setCat] = useState([1,2,3])
+  useEffect(() => {
+    catExample()
+    setLoading(false)}, [])
+
+  const catExample = async () => {
+    var raw = JSON.stringify({
+      "number": 3
+
+    });
+
+    var myheader = {
+      'Content-Type': 'application/json'
+    };
+
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myheader,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/homepageCat", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+      setCat(data);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div class="container">
@@ -53,7 +86,7 @@ export default function Home() {
               <p>จากมูลนิธิหรือสถานสงเคราะห์</p>
             </div>
             <div class="mx-[85px] mt-[50px] text-zinc-500">
-              <table class="table-auto">
+              <table class="table-auto mb-20">
                 <tr class="flex ">
                   <td class="flex border border-transparent pr-1">
                     <Image class="mr-5 " src={tickSquare} placeholder="blur" />
@@ -75,7 +108,7 @@ export default function Home() {
                   </td>
                 </tr>
               </table>
-              <button class="rounded-lg bg-salmon text-white text-2xl mt-[52px] px-20 py-[8px]">สมัครสมาชิก</button>
+              <a href="/signin/user" class="rounded-lg bg-salmon text-white text-2xl mt-[52px] px-20 py-[8px]">สมัครสมาชิก</a>
             </div>
           </div>
 
@@ -92,17 +125,17 @@ export default function Home() {
 
           {/*section 3*/}
           <div class="w-screen h-[43rem]">
-            <div class="flex front-normal px-[100px]">
+            <div class="flex front-normal justify-evenly">
               <p class="text-[36px] text-gray-600 pt-[24px]">น้องแมวหาบ้าน</p>
               <p class="text-[24px] text-black mt-3 ml-[940px]">ค้นหาแมว</p>
               <Image class="w-[16px] h-[9.99px] mt-7 ml-[12px]" src={vectorArrow} placeholder="blur" />
             </div>
             <div class="w-[1325px] h-[0.5px] bg-gray-200 opacity-75 mx-[100px] mt-[24px]" />
             <div class="w-[20px] h-[24px] opacity-75 mt-[24px]" />
-            <div class="flex space-x-40 place-content-center">
-              <HomecardCatprofile imgcat={catProfile1} statuscat="ว่าง" namecat="มะลิ (#1210)" detail="แม่มะลิ แมวจรพันธุ์ไทย สีขาวดำ นิสัยเป็นมิตร ใจดีกับแมวเด็ก..." tagbreed="พันธุ์ไทย" tagcolor="ขาวดำ" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
-              <HomecardCatprofile imgcat={catProfile2} statuscat="ว่าง" namecat="มูมู่ (#1222)" detail="มูมู่ แมวจรพันธุ์ไทย สามสี ขี้อาย ชอบมุดเล่นในกล่อง... " tagbreed="พันธุ์ไทย" tagcolor="สามสี" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
-              <HomecardCatprofile imgcat={catProfile3} statuscat="ว่าง" namecat="ต๋า (#1237)" detail="ต๋า แมวจรพันธุ์ไทย แมวส้ม นิสัยเป็นมิตร ซนมาก ร่าเริง... " tagbreed="พันธุ์ไทย" tagcolor="ส้ม" tagsex="เพศผู้" fund="มูลนิธิบ้านรักแมว" />
+            <div class="flex space-x-40 place-content-center ">
+              {cat.map((item)=>(
+                <HomecardCatprofile item={item} />
+              ))}
             </div>
           </div>
 
@@ -182,11 +215,9 @@ export default function Home() {
           </div>
 
           {/*section 6*/}
-          <div class="w-screen h-[35rem]">
+          <div class="w-screen h-[35rem] flex flex-col items-center">
             <p class="text-[40px] text-black/[0.8] font-medium text-center pt-[200px]">ยังมีน้องแมวที่ต้องการความรักจากคุณ</p>
-            <div class="flex justify-center">
-              <button class="rounded-lg bg-salmon text-white text-2xl mt-12 px-20 py-[8px]">สมัครสมาชิก</button>
-            </div>
+            <a href="/signin/user" class="rounded-lg bg-salmon text-white text-2xl mt-[48px]  mx-auto px-20 py-[8px]">สมัครสมาชิก</a>
           </div>
 
           {/*section 7*/}

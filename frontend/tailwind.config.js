@@ -25,4 +25,6 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('tailwindcss-font-inter'),
   ],
+
+
 }

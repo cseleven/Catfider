@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import vectorprinter from '../../public/form-adopt/vector-printer.png'
-//import logo from '../../public/form-adopt/logocat.jpg'
+import vectorprinter from '../public/form-adopt/vector-printer.png'
+
 import { useEffect, useState } from 'react';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -28,6 +28,7 @@ export default function FormAdopt() {
     const [loading, setLoading] = useState(true);
     const [input, setInput] = useState({});
 
+
     useEffect(() => {
         fetchFormAdopt()
     }, [])
@@ -48,6 +49,8 @@ export default function FormAdopt() {
             ...input,
             [e.target.name]: e.target.value
         })
+        console.log(JSON.stringify(input));
+
     }
 
 
@@ -104,7 +107,7 @@ export default function FormAdopt() {
                     columns: [
                         {
                             ul: [
-                                { text: 'ชื่อ: ' + input.name, listType: 'none' },
+                                { text: 'ชื่อ: ' + input.nametitle + ' ' + input.name, listType: 'none' },
                             ]
                         },
                         {
@@ -705,6 +708,7 @@ export default function FormAdopt() {
 
 
     return (
+
         <div class="container">
             <Head>
                 <title>Cat Finder</title>
@@ -754,10 +758,13 @@ export default function FormAdopt() {
                         <div class="mt-8 ">
                             <div class="grid grid-cols-1 gap-6">
                                 <div class="flex space-x-7">
+
                                     <label class="block">
                                         <span class="text-black/[0.7] font-normal">คำนำหน้า</span>
                                         <select
                                             onChange={updateInput}
+                                            name="nametitle"
+                                            id="nametitle"
                                             class="
                                             block
                                             w-full
@@ -769,11 +776,13 @@ export default function FormAdopt() {
                                             text-gray-900 font-light
                                         "
                                         >
+                                            <option value="นาย">โปรดระบุ</option>
                                             <option value="นาย">นาย</option>
                                             <option value="นาง">นาง</option>
                                             <option value="นางสาว">นางสาว</option>
                                         </select>
                                     </label>
+
                                     <label class="block basis-1/4">
                                         <span class=" flex text-gray-700 ">ชื่อจริง
                                             <span class="text-error font-light">*</span>
@@ -902,6 +911,7 @@ export default function FormAdopt() {
                                             text-gray-900 font-light
                                         "
                                         >
+                                            <option value="นาย">โปรดระบุ</option>
                                             <option value="ชาย">ชาย</option>
                                             <option value="หญิง">หญิง</option>
                                             <option value="ไม่ระบุ">ไม่ระบุ</option>
@@ -965,6 +975,7 @@ export default function FormAdopt() {
                                     </div>
                                     <label class="block basis-1/4">
                                         <input
+                                            disabled={(input.house !== "อื่นๆ") ? true : false}
                                             onChange={updateInput}
                                             name="otheraddress-detail"
                                             id="otheraddress-detail"
@@ -975,6 +986,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200
                                             focus:border-indigo-300 
                                             focus:ring 
                                             focus:ring-indigo-200 
@@ -1018,9 +1030,10 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">จำนวนสมาชิก (รวมตัวเอง)
                                         </span>
                                         <input
+                                            disabled={(input.alone !== "ครอบครัว") ? true : false}
                                             onChange={updateInput}
-                                            name="familymember-count"
-                                            id="familymember-count"
+                                            name="familymembercount"
+                                            id="familymembercount"
                                             type="text"
                                             class="
                                             block
@@ -1028,6 +1041,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1040,6 +1054,7 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">สมาชิกในครอบครัว
                                         </span>
                                         <input
+                                            disabled={(input.alone !== "ครอบครัว") ? true : false}
                                             onChange={updateInput}
                                             name="familymember"
                                             id="familymember"
@@ -1050,6 +1065,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1072,9 +1088,10 @@ export default function FormAdopt() {
                                     </div>
                                     <label class="block basis-1/4">
                                         <input
+                                            disabled={(input.alone !== "อื่นๆ") ? true : false}
                                             onChange={updateInput}
-                                            name="otherrelationship-detail"
-                                            id="otherrelationship--detail"
+                                            name="otherrelationshipdetail"
+                                            id="otherrelationshipdetail"
                                             type="text"
                                             class="
                                             block
@@ -1082,6 +1099,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200
                                             focus:border-indigo-300 
                                             focus:ring 
                                             focus:ring-indigo-200 
@@ -1093,14 +1111,16 @@ export default function FormAdopt() {
                                         />
                                     </label>
                                 </div>
+
                                 <div class="flex space-x-7 ml-60">
                                     <label class="block basis-1/4">
                                         <span class=" flex text-gray-700">จำนวนสมาชิก (รวมตัวเอง)
                                         </span>
                                         <input
+                                            disabled={(input.alone !== "อื่นๆ") ? true : false}
                                             onChange={updateInput}
-                                            name="otherrelationship-count"
-                                            id="otherrelationship-count"
+                                            name="otherrelationshipcount"
+                                            id="otherrelationshipcount"
                                             type="text"
                                             class="
                                             block
@@ -1108,6 +1128,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1119,9 +1140,10 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">ความสัมพันธ์ที่เกี่ยวข้อง
                                         </span>
                                         <input
+                                            disabled={(input.alone !== "อื่นๆ") ? true : false}
                                             onChange={updateInput}
-                                            name="otherrelationship-member"
-                                            id="otherrelationship-member"
+                                            name="otherrelationshipmember"
+                                            id="otherrelationshipmember"
                                             type="text"
                                             class="
                                             block
@@ -1129,6 +1151,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1137,6 +1160,8 @@ export default function FormAdopt() {
                                         />
                                     </label>
                                 </div>
+
+
                                 <div class="flex space-x-4">
                                     <span class="text-black/[0.7] font-normal">รายละเอียดที่อยู่</span>
                                     <label class="block basis-2/12 pl-7">
@@ -1405,7 +1430,7 @@ export default function FormAdopt() {
                                             type="radio"
                                             value="ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1</label>
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1 (ข้ามหัวข้อ 1.2)</label>
                                     </div>
                                 </div>
                                 <div class="flex space-x-4">
@@ -1415,9 +1440,10 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
-                                            name="n-housenumber"
-                                            id="n-housenumber"
+                                            name="nhousenumber"
+                                            id="nhousenumber"
                                             type="text"
                                             class="
                                             block
@@ -1425,6 +1451,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1438,9 +1465,10 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
-                                            name="n-moo"
-                                            id="n-moo"
+                                            name="nmoo"
+                                            id="nmoo"
                                             type="text"
                                             class="
                                             block
@@ -1448,6 +1476,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1461,9 +1490,10 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
-                                            name="n-village"
-                                            id="n-village"
+                                            name="nvillage"
+                                            id="nvillage"
                                             type="text"
                                             class="
                                             block
@@ -1471,6 +1501,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1483,9 +1514,10 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
-                                            name="n-floor"
-                                            id="n-floor"
+                                            name="nfloor"
+                                            id="nfloor"
                                             type="text"
                                             class="
                                             block
@@ -1493,6 +1525,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1505,9 +1538,10 @@ export default function FormAdopt() {
                                         <span class="text-gray-700">เลขที่ห้อง
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
-                                            name="n-roomnumber"
-                                            id="n-roomnumber"
+                                            name="nroomnumber"
+                                            id="nroomnumber"
                                             type="text"
                                             class="
                                             block
@@ -1515,6 +1549,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1530,9 +1565,10 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
-                                            name="n-alley"
-                                            id="n-alley"
+                                            name="nalley"
+                                            id="nalley"
                                             type="text"
                                             class="
                                             block
@@ -1540,6 +1576,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1553,9 +1590,10 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
-                                            name="n-road"
-                                            id="n-road"
+                                            name="nroad"
+                                            id="nroad"
                                             type="text"
                                             class="
                                             block
@@ -1563,6 +1601,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1576,9 +1615,10 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
-                                            name="n-subdistrict"
-                                            id="n-subdistrict"
+                                            name="nsubdistrict"
+                                            id="nsubdistrict"
                                             type="text"
                                             class="
                                             block
@@ -1586,6 +1626,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1600,9 +1641,10 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
-                                            name="n-district"
-                                            id="n-district"
+                                            name="ndistrict"
+                                            id="ndistrict"
                                             type="text"
                                             class="
                                             block
@@ -1610,6 +1652,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1623,9 +1666,10 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
-                                            name="n-province"
-                                            id="n-province"
+                                            name="nprovince"
+                                            id="nprovince"
                                             type="text"
                                             class="
                                             block
@@ -1633,6 +1677,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1646,9 +1691,10 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
-                                            name="n-zipcode"
-                                            id="n-zipcode"
+                                            name="nzipcode"
+                                            id="nzipcode"
                                             type="text"
                                             class="
                                             block
@@ -1656,6 +1702,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1683,6 +1730,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1706,6 +1754,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1868,8 +1917,8 @@ export default function FormAdopt() {
                                     <div class="flex items-center">
                                         <input
                                             onChange={updateInput}
-                                            name="gov-officer"
-                                            id="gov-officer"
+                                            name="govofficer"
+                                            id="govofficer"
                                             type="radio"
                                             value="ข้าราชการ"
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
@@ -1878,7 +1927,7 @@ export default function FormAdopt() {
                                     <div class="flex items-center">
                                         <input
                                             onChange={updateInput}
-                                            name="gov-officer"
+                                            name="govofficer"
                                             id="enterprise"
                                             type="radio"
                                             value="เอกชน/รัฐวิสาหกิจ"
@@ -1888,7 +1937,7 @@ export default function FormAdopt() {
                                     <div class="flex items-center">
                                         <input
                                             onChange={updateInput}
-                                            name="gov-officer"
+                                            name="govofficer"
                                             id="private"
                                             type="radio"
                                             value="ธุรกิจส่วนตัว"
@@ -1898,7 +1947,7 @@ export default function FormAdopt() {
                                     <div class="flex items-center">
                                         <input
                                             onChange={updateInput}
-                                            name="gov-officer"
+                                            name="govofficer"
                                             id="employee"
                                             type="radio"
                                             value="ลูกจ้าง"
@@ -1908,7 +1957,7 @@ export default function FormAdopt() {
                                     <div class="flex items-center">
                                         <input
                                             onChange={updateInput}
-                                            name="gov-officer"
+                                            name="govofficer"
                                             id="othercareer"
                                             type="radio"
                                             value="อื่นๆ"
@@ -1917,6 +1966,7 @@ export default function FormAdopt() {
                                     </div>
                                     <label class="block basis-1/4">
                                         <input
+                                            disabled={(input.govofficer !== "อื่นๆ") ? true : false}
                                             onChange={updateInput}
                                             name="othercareer-detail"
                                             id="othercareer-detail"
@@ -1927,6 +1977,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 
                                             focus:ring 
                                             focus:ring-indigo-200 
@@ -2064,6 +2115,7 @@ export default function FormAdopt() {
                                     <label class="block basis-2/12">
                                         <span class="text-gray-700">จำนวนแมว</span>
                                         <input
+                                            disabled={(input.usedtopet === "ไม่เคยเลี้ยง") ? true : false}
                                             onChange={updateInput}
                                             name="countcat"
                                             id="countcat"
@@ -2074,7 +2126,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            disabled:bg-gray-200 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
                                         "
@@ -2084,6 +2136,7 @@ export default function FormAdopt() {
                                     <label class="block basis-5/12">
                                         <span class=" flex text-gray-700">สายพันธุ์</span>
                                         <input
+                                            disabled={(input.usedtopet === "ไม่เคยเลี้ยง") ? true : false}
                                             onChange={updateInput}
                                             name="species"
                                             id="species"
@@ -2094,7 +2147,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            disabled:bg-gray-200 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
                                         "
@@ -2102,6 +2155,7 @@ export default function FormAdopt() {
                                         />
                                     </label>
                                 </div>
+
                                 <div class="flex space-x-12">
                                     <span class=" flex text-gray-700">มีสัตว์เลี้ยงชนิดอื่น
                                         <span class="text-error font-light">*</span>
@@ -2131,6 +2185,7 @@ export default function FormAdopt() {
                                     <label class="block basis-2/12">
                                         <span class="text-gray-700">จำนวน</span>
                                         <input
+                                            disabled={(input.haveanimal === "ไม่มี") ? true : false}
                                             onChange={updateInput}
                                             name="countanimal"
                                             id="countanimal"
@@ -2141,7 +2196,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            disabled:bg-gray-200 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
                                         "
@@ -2151,6 +2206,7 @@ export default function FormAdopt() {
                                     <label class="block basis-5/12">
                                         <span class=" flex text-gray-700">ชนิดสัตว์</span>
                                         <input
+                                            disabled={(input.haveanimal === "ไม่มี") ? true : false}
                                             onChange={updateInput}
                                             name="speciesanimal"
                                             id="speciesanimal"
@@ -2161,7 +2217,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            disabled:bg-gray-200 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
                                         "
@@ -2169,6 +2225,7 @@ export default function FormAdopt() {
                                         />
                                     </label>
                                 </div>
+
                                 <div class="flex space-x-10">
                                     <span class=" flex text-gray-700 pt-2">การเลี้ยงแมวปัจจุบัน
                                         <span class="text-error font-light pt-2">*</span>
@@ -2184,8 +2241,10 @@ export default function FormAdopt() {
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">เลี้ยงอยู่</label>
                                     </div>
+
                                     <div class="flex items-center">
                                         <input
+                                            onChange={updateInput}
                                             name="presentpet"
                                             id="pastpet"
                                             type="radio"
@@ -2193,26 +2252,32 @@ export default function FormAdopt() {
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">ไม่ได้เลี้ยง</label>
                                     </div>
-                                    <label class="block basis-4/12">
-                                        <input
-                                            onChange={updateInput}
-                                            name="pastpetdetail"
-                                            id="pastpetdetail"
-                                            type="text"
-                                            class="
+
+                                    <div class="items-center">
+                                        <label class="block basis-4/12">
+                                            <input
+                                                disabled={(input.presentpet === "เลี้ยงอยู่") ? true : false}
+                                                onChange={updateInput}
+                                                name="pastpetdetail"
+                                                id="pastpetdetail"
+                                                type="text"
+                                                class="
                                             block
                                             w-full
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            disabled:bg-gray-200 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
                                         "
-                                            placeholder="สาเหตุ"
-                                        />
-                                    </label>
+                                                placeholder="สาเหตุ"
+                                            />
+                                        </label>
+                                    </div>
+
                                 </div>
+
                                 {/*section 4*/}
                                 <p class="text-[24px] font-normal text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon pt-8">ตอนที่ 3 รับอุปการะ และส่งมอบ</p>
                                 <label class="block pl-24 flex-initial w-[400px]">
@@ -2242,16 +2307,16 @@ export default function FormAdopt() {
                         </div>
                     </div>
                 </div>
-            </form>
+            </form >
             {/*section 5*/}
-            <div class="w-screen h-[30rem]">
+            <div div class="w-screen h-[30rem]" >
                 <button type="button"
-                    class="flex rounded-lg bg-salmon text-white rounded text-lg mx-auto my-12 px-7 py-2 gap-3"
+                    class="flex rounded-lg bg-salmon text-white text-lg mx-auto my-12 px-7 py-2 gap-3"
                     onClick={() => createPdf()}>
                     <Image src={vectorprinter} placeholder="blur" />
                     พิมพ์เอกสาร
                 </button>
-            </div>
+            </div >
         </div >
     )
 }
