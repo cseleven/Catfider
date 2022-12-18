@@ -5,6 +5,9 @@ export default async function handler(req, res) {
   //call parameter from body
   const {cat_id, login_id, queue_date, queue_time } = req.body
 
+  console.log("cat_id: "+ JSON.stringify(cat_id))
+  console.log("login_id: "+ JSON.stringify(login_id))
+
   const user_id = await getUserId(login_id)
 
   //check already queue
@@ -19,6 +22,7 @@ export default async function handler(req, res) {
   
   //convert json data to string
   const shelterString = JSON.stringify(shelterID)
+  console.log("cat's shelterString", JSON.stringify(shelterString))
   const shelter_id = shelterString.split(':')[1].split('}]')[0]
   console.log("cat's shelter id ", shelter_id)
 

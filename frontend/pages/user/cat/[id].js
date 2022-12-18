@@ -7,8 +7,12 @@ import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
 import Router from 'next/router';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
-    return !condition ? (
+    return condition ? (
         <div class="grid mb-8 md:place-content-end md:mr-20">
           <button type="button" onClick={()=>Router.push({
               pathname: '/user/queue',
@@ -43,40 +47,40 @@ export default function CatProfile() {
     age:4.5, sex:"เพศเมีย", breed:"ไทย", color:"ขาวดำ", disease:"ไม่มี", hold:true, shelter:"มูลนิธิบ้านรักแมว",day: "22/12/2022", time : "10.00-11.00 น.", สถานที่ : "มูลนิธิบ้านรักแมว"
   }
 
-
-    useEffect(() => {
-      catExample()
-    }, [])
+  
+  useEffect(() => {
+    catExample()
+  }, [])
 
 
   const catExample = async () => {
-      var raw = JSON.stringify({
-        "cat_id": "3"
+    var raw = JSON.stringify({
+      "cat_id": "1"
 
-  });
+    });
 
-  var myheader = {
-    'Content-Type': 'application/json'
-  };
+    var myheader = {
+      'Content-Type': 'application/json'
+    };
 
 
-  var requestOptions = {
-    method: 'POST',
-    headers: myheader,
-    body: raw,
-    redirect: 'follow'
-  };
+    var requestOptions = {
+      method: 'POST',
+      headers: myheader,
+      body: raw,
+      redirect: 'follow'
+    };
 
-  try {
-    setLoading(true);
-    let response = await fetch("/api/cat/userview/profileCat", requestOptions);
-    let data = await response.json();
-    console.log("response : " + JSON.stringify(data));
-    setCat(data);
-  } finally {
-    setLoading(false);
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/userview/profileCat", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+      setCat(data);
+    } finally {
+      setLoading(false);
+    }
   }
-}
 
   return (
   <div>

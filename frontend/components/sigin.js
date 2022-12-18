@@ -1,46 +1,46 @@
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useState } from 'react';
+import Router from 'next/router';
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export default function Signin({ role }) {
     const supabase = useSupabaseClient()
+    const [input,setInput] = useState({email:"",password:0,confirmPassword:1});
 
-    const createProfile = async () => {
-        const user = useUser()
-        var raw = JSON.stringify({ "login_id": user.id });
 
-        var myheader = {
-            'Content-Type': 'application/json'
-        };
-
-        var requestOptions = {
-            method: 'POST',
-            headers: myheader,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        try {
-            setLoading(true);
-            let response = await fetch("/api/shelter/createShelter", requestOptions);
-            let data = await response.json();
-            console.log("response : " + JSON.stringify(data));
-        } finally {
-            setLoading(false);
-        }
-    };
+    const updateInput = e => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        })
+    }
 
     //func call Auth Signin Supabase
     const signup = async (e) => {
         console.log(e.target.email.value + e.target.password.value + role)
-        const { data, error } = supabase.auth.updateUser({
-            email: e.target.email.value,
-            password: e.target.password.value,
-            data: { role: role }
-        }).then(console.log(e.target.email.value)).finally(() => createProfile())
+        if(role==1){
+            let { data, error } = supabase.auth.signUp({
+                email: e.target.email.value,
+                password: e.target.password.value
+            }).then(console)
+        } 
+        
+        if(role==1) {
+            let { data, error } = supabase.auth.signUp({
+                email: e.target.email.value,
+                password: e.target.password.value
+            }).then(()=>Router.push({
+              pathname: '/shelter/shelter-form'
+            }))
+        }
     }
 
     return (
         <div class="h-auto">
-            <form onSubmit={signup}>
+            <form onSubmit={signup} method="POST">
                 <div class="bg-gray-200">
                     <div class="container mx-auto flex justify-around">
                         <div class="w-1/3 pt-9">
@@ -56,15 +56,13 @@ export default function Signin({ role }) {
                                             id="email"
                                             name="email"
                                             type="text"
-                                            class="
-                                                mt-1
-                                                block
-                                                w-full
-                                                rounded-md
-                                                border-gray-300
-                                                shadow-sm
-                                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                            "
+                                            onChange={updateInput}
+                                            class={classNames(
+                                                (!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(input.email)))
+                                                    ? "border-error"
+                                                    : "border-gray-300",
+                                                "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                            )}
                                             placeholder=""
                                         />
                                     </label>
@@ -73,16 +71,14 @@ export default function Signin({ role }) {
                                         <input
                                             id="password"
                                             name="password"
-                                            type="text"
-                                            class="
-                                                mt-1
-                                                block
-                                                w-full
-                                                rounded-md
-                                                border-gray-300
-                                                shadow-sm
-                                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                            "
+                                            type="password"
+                                            onChange={updateInput}
+                                            class={classNames(
+                                                (input.password!=""&&input.password!=input.confirmPassword)
+                                                    ? "border-error"
+                                                    : "border-gray-300",
+                                                "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                            )}
                                             placeholder=""
                                         />
                                     </label>
@@ -91,16 +87,14 @@ export default function Signin({ role }) {
                                         <input
                                             id="confirmPassword"
                                             name="confirmPassword"
-                                            type="text"
-                                            class="
-                                                mt-1
-                                                block
-                                                w-full
-                                                rounded-md
-                                                border-gray-300
-                                                shadow-sm
-                                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                            "
+                                            type="password"
+                                            onChange={updateInput}
+                                            class={classNames(
+                                                (input.password!=""&&input.password!=input.confirmPassword)
+                                                    ? "border-error"
+                                                    : "border-gray-300",
+                                                "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                            )}
                                             placeholder=""
                                         />
                                     </label>
