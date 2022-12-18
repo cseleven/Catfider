@@ -22,9 +22,12 @@ export default function Signin({ role }) {
     const signup = async (e) => {
         console.log(e.target.email.value + e.target.password.value + role)
         if(role==1){
-            let { data, error } = supabase.auth.signUp({
+            let { data, error } = supabase.auth.updateUser({
                 email: e.target.email.value,
-                password: e.target.password.value
+                password: e.target.password.value,
+                data:{
+                    role: role
+                }
             }).then(console)
         } 
         
