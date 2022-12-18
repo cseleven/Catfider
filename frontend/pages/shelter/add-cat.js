@@ -23,22 +23,6 @@ export default function AddCat() {
     const catExample = async (e) => {
         var raw = JSON.stringify({
             //"cat_id": 5,
-<<<<<<< HEAD
-            "shelter_id": 3,
-            "age": 2,
-            "cat_name": "ขนมจีบ",
-            "sex": "male",
-            "breed": "สีสวาด",
-            "color": "ส้ม",
-            "sterile": false,
-            "vaccine": true,
-            "detail": "น้องเป็นแมวอารมณ์ดี เป็นมิตรกับสิ่งแวดล้อม",
-            "cat_picture": "www.google.com",
-            "status": false,
-            
-
-
-=======
             "login_id": user.id,
             "cat_name": e.target.cat_name.value,
             "sex": e.target.sex.value,
@@ -52,7 +36,6 @@ export default function AddCat() {
             "age": e.target.age.value,
             "age_unit": e.target.age_unit.value,
             "congenital_disease": e.target.congenital_disease.value
->>>>>>> jee2
         });
 
         var myheader = {

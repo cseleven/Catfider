@@ -57,7 +57,7 @@ export default function ShelterForm() {
                 <p class="text-[20px] font-normal text-center pt-2 text-iris">สำหรับมูลนิธิ</p>
             </div>
 
-            <form onSubmit={ShelterForm}>
+            <form onSubmit={ShelterForm} method="POST">
                 <div class="bg-gray-200">
                     <div class="container mx-auto flex justify-around">
 

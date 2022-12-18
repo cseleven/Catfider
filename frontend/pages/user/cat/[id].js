@@ -49,7 +49,7 @@ import Router from 'next/router';
   // }
 
 const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
-    return !condition ? (
+    return condition ? (
         <div class="grid mb-8 md:place-content-end md:mr-20">
           <button type="button" onClick={()=>Router.push({
               pathname: '/user/queue',
@@ -78,6 +78,8 @@ export default function CatProfile() {
     detail:"แมวจรลายสลิดที่ชอบกินขนมแมวเลียเป็นชีวิตจิตใจ มีอาการบาดเจ็บที่ขาข้างซ้าย ชอบทำหน้าแปลกๆ และนอนกลิ้งไปมา", status:true,
     age:4.5, sex:"เพศเมีย", breed:"ไทย", color:"ขาวดำ", disease:"ไม่มี", hold:true, shelter:"มูลนิธิบ้านรักแมว",day: "22/12/2022", time : "10.00-11.00 น.", สถานที่ : "มูลนิธิบ้านรักแมว"
   }
+
+  
 
   useEffect(() => setLoading(false), [])
 

@@ -24,12 +24,11 @@ export default function Queue() {
     }, [session])
 
     //fetch data
-    const fetchCat = async (e) => {
+    const postQueueCat = async (e) => {
 
         var raw = JSON.stringify({
-
-            "cat_id": e.target.cat_id.value,
-            "user_id": user.id,
+            "cat_id": id,
+            "login_id": user.id,
             "queue_date": e.target.queue_date.value,
             "queue_time": e.target.queue_time.value
         });
@@ -56,13 +55,6 @@ export default function Queue() {
         }
 
     };
-
-    const updateInput = e => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        })
-    }
 
     return (
         <div class="container">
@@ -113,7 +105,7 @@ export default function Queue() {
                         <div class="text-sm font-light text-gray-600">มูลนิธิหรือสถานสงเคราะห์</div>
 
                     </div>
-                    <form onSubmit={fetchCat}>
+                    <form onSubmit={postQueueCat} method="POST">
                         <div class="w-[803px] h-[407px] bg-white rounded-t shadow-md px-7 py-6 space-y-2.5 ml-28">
                             <label class="block w-1/3">
                                 <span class=" flex text-gray-700">รหัสแมว
@@ -130,7 +122,6 @@ export default function Queue() {
                                             border-gray-300
                                             shadow-sm
                                             bg-gray-200
-<<<<<<< HEAD
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             placeholder-gray-500
                                         "
@@ -147,26 +138,10 @@ export default function Queue() {
                                         class="
                                             block
                                             w-full
-=======
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                    value="1210"
-                                    disabled readonly
-                                />
-                            </label>
-                            <label class="block w-2/3">
-                                <span class=" flex text-gray-700">ชื่อน้องแมว
-                                    <span class="text-error font-light">*</span>
-                                </span>
-                                <input
-                                    type="text"
-                                    class="text-gray-500 text-base font-normal rounded-lg 
-                                        w-full
->>>>>>> backend
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
                                             bg-gray-200
-<<<<<<< HEAD
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-500
@@ -184,26 +159,10 @@ export default function Queue() {
                                         class="
                                             block
                                             w-full
-=======
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                    value="มะลิ"
-                                    disabled readonly
-                                />
-                            </label>
-                            <label class="block w-2/3">
-                                <span class=" flex text-gray-700">ชื่อมูลนิธิ
-                                    <span class="text-error font-light">*</span>
-                                </span>
-                                <input
-                                    type="text"
-                                    class="text-gray-500 text-base font-normal rounded-lg 
-                                        w-full
->>>>>>> backend
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
                                             bg-gray-200
-<<<<<<< HEAD
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-500
@@ -222,23 +181,6 @@ export default function Queue() {
                                         name="queue_date"
                                         type="date"
                                         class="
-=======
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                    value="ชิ่อมูลนิธิ"
-                                    disabled readonly
-                                />
-                            </label>
-
-                            <label class="block">
-                                <span class=" flex text-gray-700">เลือกวัน
-                                    <span class="text-error font-light">*</span>
-                                </span>
-                                <input
-                                    id="queue_date"
-                                    name="queue_date"
-                                    type="date"
-                                    class="
->>>>>>> backend
                                         block
                                         w-full
                                         rounded-md
@@ -271,10 +213,10 @@ export default function Queue() {
                                         "
                                 >
                                     <option>เลือกช่วงเวลา</option>
-                                    <option value="9.00-10.00">9.00-10.00 น.</option>
-                                    <option value="10.00-11.00">10.00-11.00 น.</option>
-                                    <option value="11.00-12.00">11.00-12.00 น.</option>
-                                    <option value="14.00-15.00">14.00-15.00 น.</option>
+                                    <option value={1}>9.00-10.00 น.</option>
+                                    <option value={2}>10.00-11.00 น.</option>
+                                    <option value={3}>11.00-12.00 น.</option>
+                                    <option value={4}>14.00-15.00 น.</option>
                                 </select>
                             </label>
                         </div>

@@ -2246,7 +2246,7 @@ export default function FormAdopt() {
             {/*section 5*/}
             <div class="w-screen h-[30rem]">
                 <button type="button"
-                    class="flex rounded-lg bg-salmon text-white rounded text-lg mx-auto my-12 px-7 py-2 gap-3"
+                    class="flex rounded-lg bg-salmon text-white text-lg mx-auto my-12 px-7 py-2 gap-3"
                     onClick={() => createPdf()}>
                     <Image src={vectorprinter} placeholder="blur" />
                     พิมพ์เอกสาร
