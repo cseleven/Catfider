@@ -73,7 +73,7 @@ export default function Queue() {
             </Head>
 
             {/*section 1*/}
-            <div class="w-screen h-[171px]">
+            <div class="h-[171px]">
                 <div class="flex my-8">
                     <nav class="flex mx-28" aria-label="Breadcrumb">
                         <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -105,16 +105,16 @@ export default function Queue() {
             </div>
 
             {/*section 2*/}
-            <div class="w-screen h-[560px] bg-light-salmon py-6">
-                <div class="flex">
-                    <div class="ml-28">
+            <div class="h-[560px] bg-light-salmon py-6">
+                <div class="flex mx-28">
+                    <div>
                         <div class="text-2xl font-normal text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon">จองคิวแมว</div>
                         <div class="text-sm font-light text-gray-600 pt-1.5">เลือกช่วงเวลาเพื่อไปนัดดูแมวกับทาง</div>
                         <div class="text-sm font-light text-gray-600">มูลนิธิหรือสถานสงเคราะห์</div>
 
                     </div>
                     <form onSubmit={fetchCat}>
-                        <div class="w-[803px] h-[407px] bg-white rounded-t shadow-md px-7 py-6 space-y-2.5 ml-28">
+                        <div class="w-[803px] h-[407px] bg-white rounded-t shadow-md px-7 py-6 space-y-2.5 mx-28">
                             <label class="block w-1/3">
                                 <span class=" flex text-gray-700">รหัสแมว
                                     <span class="text-error font-light">*</span>
@@ -130,26 +130,9 @@ export default function Queue() {
                                             border-gray-300
                                             shadow-sm
                                             bg-gray-200
-<<<<<<< HEAD
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                            placeholder-gray-500
-                                        "
-                                        value={id}
-                                        placeholder={id}
-                                    />
-                                </label>
-                                <label class="block w-2/3">
-                                    <span class=" flex text-gray-700">ชื่อน้องแมว
-                                        <span class="text-error font-light">*</span>
-                                    </span>
-                                    <input
-                                        type="text"
-                                        class="
-                                            block
-                                            w-full
-=======
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                    value="1210"
+                                    value={id}
+                                    placeholder={id}
                                     disabled readonly
                                 />
                             </label>
@@ -161,32 +144,13 @@ export default function Queue() {
                                     type="text"
                                     class="text-gray-500 text-base font-normal rounded-lg 
                                         w-full
->>>>>>> backend
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
                                             bg-gray-200
-<<<<<<< HEAD
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                            font-normal
-                                            placeholder-gray-500
-                                        "
-                                        value={name}
-                                        placeholder={name}
-                                    />
-                                </label>
-                                <label class="block w-2/3">
-                                    <span class=" flex text-gray-700">ชื่อมูลนิธิ
-                                        <span class="text-error font-light">*</span>
-                                    </span>
-                                    <input
-                                        type="text"
-                                        class="
-                                            block
-                                            w-full
-=======
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                    value="มะลิ"
+                                    value={name}
+                                    placeholder={name}
                                     disabled readonly
                                 />
                             </label>
@@ -198,33 +162,13 @@ export default function Queue() {
                                     type="text"
                                     class="text-gray-500 text-base font-normal rounded-lg 
                                         w-full
->>>>>>> backend
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
                                             bg-gray-200
-<<<<<<< HEAD
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                            font-normal
-                                            placeholder-gray-500
-                                        "
-                                        value={shelter}
-                                        placeholder={shelter}
-                                    />
-                                </label>
-
-                                <label class="block">
-                                    <span class=" flex text-gray-700">เลือกวัน
-                                        <span class="text-error font-light">*</span>
-                                    </span>
-                                    <input
-                                        id="queue_date"
-                                        name="queue_date"
-                                        type="date"
-                                        class="
-=======
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                    value="ชิ่อมูลนิธิ"
+                                    value={shelter}
+                                    placeholder={shelter}
                                     disabled readonly
                                 />
                             </label>
@@ -238,7 +182,6 @@ export default function Queue() {
                                     name="queue_date"
                                     type="date"
                                     class="
->>>>>>> backend
                                         block
                                         w-full
                                         rounded-md
@@ -251,7 +194,7 @@ export default function Queue() {
                                     placeholder="เลือกวัน"
                                 />
                             </label>
-                            <label class="block mr-64">
+                            <label class="block ">
                                 <span class=" flex text-gray-700">เลือกเวลา
                                     <span class="text-error font-light">*</span>
                                 </span>
@@ -278,8 +221,8 @@ export default function Queue() {
                                 </select>
                             </label>
                         </div>
-                        <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
-                            <div class="w-screen h-[30rem] py-3">
+                        <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md mx-28">
+                            <div class="h-[30rem] py-3">
                                 <button type="submit"
                                     class="flex bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]"
                                 >
@@ -290,9 +233,9 @@ export default function Queue() {
                         </div>
                     </form>
                 </div>
-                <div class="w-10/12 h-0.5 bg-gray-200 mt-7 ml-28" />
+                <div class="w-10/12 h-0.5 bg-gray-200 mt-7 mx-28" />
             </div>
-            <div class="w-screen h-[15rem]" />
+            <div class="h-[15rem]" />
         </div >
     )
 }
