@@ -12,7 +12,7 @@ const LogIn = () => {
     let { data, error } = await supabase.auth.signInWithPassword({
       email: e.target.email.value,
       password: e.target.password.value
-    }).then(console.log("data:"+data))
+    }).then(console.log("data:"+ data))
   }
 
   //น่าจะทำใหม่แบบเขียนเอง
