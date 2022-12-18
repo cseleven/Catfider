@@ -1,7 +1,17 @@
+<<<<<<< HEAD
+import { useSession, useUser } from '@supabase/auth-helpers-react'
+import { useEffect, useState } from 'react'
+import { useRouter } from "next/router";
+import Image from 'next/image'
+import catProfile1 from '../../../public/index/cat-profile1.png'
+
+const urlpic = "https://images.unsplash.com/photo-1615789591457-74a63395c990"
+=======
 import { useEffect, useState } from 'react'
 import Loading from "../../../components/loading";
 import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
+>>>>>>> a333707f5afa7d2eb54650124231e960ac9c9606
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

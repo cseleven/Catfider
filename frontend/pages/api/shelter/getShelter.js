@@ -11,6 +11,7 @@ export default async function handler(req, res) {
     //query
     const { data } = await supabase.from('shelter_profile').select()
     .eq('shelter_id', shelter_id)
+    console.log("SELECT SHELTER SUCESS")
     res.status(200).json(data)
   } else {
     res.status(400).json("Shelter ID Not Found")
@@ -20,7 +21,7 @@ export default async function handler(req, res) {
   //check user_id exist
 async function checkShelterId(shelter_id, response) {
   //query
-  const { data, error } = await supabase.from('shelter_profile').select().eq('shelter_id', shelter_id)
+  const { data, error } = await supabase.from('shelter_profile').select('*').eq('shelter_id', shelter_id)
   if ( data == "" ) {
     //shelter_id does not exist
     response = false
