@@ -2,14 +2,10 @@ import { supabase } from "../../supabase"
 
 export default async function handler(req, res) {
 
-  //add edit delete
-
-  //call parameter from body
-  //"queue_date": "2022-12-09T07:36:58.793+00:00"
   const {
-    shelter_id, cat_id, cat_name, sex,
-    breed, color, sterile, vaccine,
-    detail, cat_picture, status, age,
+    shelter_id, cat_name, sex, age_unit,
+    breed, color, sterile, vaccine, congenital_disease,
+    detail, cat_picture, status, age
   } = req.body
 
   //check shelter id
@@ -34,6 +30,9 @@ export default async function handler(req, res) {
         cat_picture: cat_picture,
         status: status,
         age: age,
+        age_unit: age_unit,
+        congenital_disease: congenital_disease
+
       }])
 
     //print data
