@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import vectorprinter from '../public/form-adopt/vector-printer.png'
-import logo from '../public/form-adopt/logocat.jpg'
+
 import { useEffect, useState } from 'react';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -28,6 +28,7 @@ export default function FormAdopt() {
     const [loading, setLoading] = useState(true);
     const [input, setInput] = useState({});
 
+
     useEffect(() => {
         fetchFormAdopt()
     }, [])
@@ -43,36 +44,13 @@ export default function FormAdopt() {
         }
     };
 
-    const postExample = async (event) => {
-        var raw = JSON.stringify(input);
-
-        var myheader = {
-            'Content-Type': 'application/json'
-        };
-
-
-        var requestOptions = {
-            method: 'POST',
-            headers: myheader,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        try {
-            setLoading(true);
-            let response = await fetch("/api/postexample", requestOptions);
-            let data = await response.json();
-            console.log("response : " + JSON.stringify(data));
-        } finally {
-            setLoading(false);
-        }
-    };
-
     const updateInput = e => {
         setInput({
             ...input,
             [e.target.name]: e.target.value
         })
+        console.log(JSON.stringify(input));
+
     }
 
 
@@ -129,7 +107,7 @@ export default function FormAdopt() {
                     columns: [
                         {
                             ul: [
-                                { text: 'ชื่อ: ' + input.name, listType: 'none' },
+                                { text: 'ชื่อ: ' + input.nametitle + ' ' + input.name, listType: 'none' },
                             ]
                         },
                         {
@@ -169,7 +147,7 @@ export default function FormAdopt() {
                     columns: [
                         {
                             ul: [
-                                { text: 'ที่อยู่อาศัยปัจจุบัน: ', listType: 'none' },
+                                { text: 'ที่อยู่อาศัยปัจจุบัน: ' + input.house, listType: 'none' },
                             ]
                         },
                         {
@@ -729,12 +707,8 @@ export default function FormAdopt() {
 
 
 
-
-
-
-
-
     return (
+
         <div class="container">
             <Head>
                 <title>Cat Finder</title>
@@ -744,7 +718,7 @@ export default function FormAdopt() {
 
 
             {/*form*/}
-            <form onSubmit={postExample}>
+            <form >
 
                 {/*section 1*/}
                 <div class="w-screen h-[22rem]">
@@ -756,6 +730,7 @@ export default function FormAdopt() {
                                 <span class="text-error font-light">*</span>
                             </span>
                             <select
+                                onChange={updateInput}
                                 class="
                                             block
                                             w-full
@@ -768,9 +743,7 @@ export default function FormAdopt() {
                                         "
                             >
                                 <option>โปรดระบุ</option>
-                                <option>Yes</option>
-                                <option>No</option>
-                                <option>Maybe</option>
+                                <option></option>
                             </select>
 
                         </label>
@@ -785,9 +758,13 @@ export default function FormAdopt() {
                         <div class="mt-8 ">
                             <div class="grid grid-cols-1 gap-6">
                                 <div class="flex space-x-7">
+
                                     <label class="block">
                                         <span class="text-black/[0.7] font-normal">คำนำหน้า</span>
                                         <select
+                                            onChange={updateInput}
+                                            name="nametitle"
+                                            id="nametitle"
                                             class="
                                             block
                                             w-full
@@ -799,11 +776,13 @@ export default function FormAdopt() {
                                             text-gray-900 font-light
                                         "
                                         >
-                                            <option>นาย</option>
-                                            <option>นาง</option>
-                                            <option>นางสาว</option>
+                                            <option value="นาย">โปรดระบุ</option>
+                                            <option value="นาย">นาย</option>
+                                            <option value="นาง">นาง</option>
+                                            <option value="นางสาว">นางสาว</option>
                                         </select>
                                     </label>
+
                                     <label class="block basis-1/4">
                                         <span class=" flex text-gray-700 ">ชื่อจริง
                                             <span class="text-error font-light">*</span>
@@ -920,6 +899,7 @@ export default function FormAdopt() {
                                     <label class="block">
                                         <span class="text-black/[0.7] font-normal">เพศ</span>
                                         <select
+                                            onChange={updateInput}
                                             class="
                                             block
                                             w-full
@@ -931,9 +911,10 @@ export default function FormAdopt() {
                                             text-gray-900 font-light
                                         "
                                         >
-                                            <option>ชาย</option>
-                                            <option>หญิง</option>
-                                            <option>ไม่ระบุ</option>
+                                            <option value="นาย">โปรดระบุ</option>
+                                            <option value="ชาย">ชาย</option>
+                                            <option value="หญิง">หญิง</option>
+                                            <option value="ไม่ระบุ">ไม่ระบุ</option>
                                         </select>
                                     </label>
                                 </div>
@@ -942,123 +923,60 @@ export default function FormAdopt() {
                                         <span class="text-error font-light">*</span>
                                     </span>
 
-                                    <div class="block pt-2">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="house"
-                                                id="house"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">บ้านส่วนตัว</span>
-                                        </label>
+                                    <div class="flex items-center">
+                                        <input
+                                            onChange={updateInput}
+                                            name="house"
+                                            id="house"
+                                            type="radio"
+                                            value="บ้านส่วนตัว"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">บ้านส่วนตัว</label>
                                     </div>
-
-                                    <div class="block pt-2">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="renthouse"
-                                                id="renthouse"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">บ้านเช่า</span>
-                                        </label>
+                                    <div class="flex items-center">
+                                        <input
+                                            onChange={updateInput}
+                                            name="house"
+                                            id="renthouse"
+                                            type="radio"
+                                            value="บ้านเช่า"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">บ้านเช่า</label>
                                     </div>
-
-                                    <div class="block pt-2">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="apartment"
-                                                id="apartment"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">อพาร์ทเมนท์</span>
-                                        </label>
+                                    <div class="flex items-center">
+                                        <input
+                                            onChange={updateInput}
+                                            name="house"
+                                            id="apartment"
+                                            type="radio"
+                                            value="อพาร์ทเมนท์"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">อพาร์ทเมนท์</label>
                                     </div>
-
-                                    <div class="block pt-2">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="condo"
-                                                id="condo"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">คอนโด</span>
-                                        </label>
+                                    <div class="flex items-center">
+                                        <input
+                                            onChange={updateInput}
+                                            name="house"
+                                            id="condo"
+                                            type="radio"
+                                            value="คอนโด"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">คอนโด</label>
                                     </div>
-
-                                    <div class="block pt-2">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="otheraddress"
-                                                id="otheraddress"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">อื่นๆ</span>
-                                        </label>
+                                    <div class="flex items-center">
+                                        <input
+                                            onChange={updateInput}
+                                            name="house"
+                                            id="otheraddress"
+                                            type="radio"
+                                            value="อื่นๆ"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">อื่นๆ</label>
                                     </div>
-
                                     <label class="block basis-1/4">
                                         <input
+                                            disabled={(input.house !== "อื่นๆ") ? true : false}
+                                            onChange={updateInput}
                                             name="otheraddress-detail"
                                             id="otheraddress-detail"
                                             type="text"
@@ -1068,6 +986,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200
                                             focus:border-indigo-300 
                                             focus:ring 
                                             focus:ring-indigo-200 
@@ -1080,58 +999,39 @@ export default function FormAdopt() {
                                     </label>
                                 </div>
 
-                                <span class=" flex text-gray-700">อาศัยอยู่กับ
-                                    <span class="text-error font-light">*</span>
-                                </span>
-                                <div class="block ml-36 font-light">
-                                    <label class="inline-flex items-center">
+                                <div>
+                                    <span class=" flex text-gray-700">อาศัยอยู่กับ
+                                        <span class="text-error font-light">*</span>
+                                    </span>
+                                    <div class="flex items-center ml-36">
                                         <input
+                                            onChange={updateInput}
                                             name="alone"
                                             id="alone"
-                                            type="checkbox"
-                                            class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                            checked
-                                        />
-                                        <span class="ml-2">คนเดียว</span>
-                                    </label>
-                                </div>
-                                <div class="block ml-36 font-light">
-                                    <label class="inline-flex items-center">
+                                            type="radio"
+                                            value="คนเดียว"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">คนเดียว</label>
+                                    </div>
+                                    <div class="flex items-center ml-36 mt-5">
                                         <input
-                                            name="family"
+                                            onChange={updateInput}
+                                            name="alone"
                                             id="family"
-                                            type="checkbox"
-                                            class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                            checked
-                                        />
-                                        <span class="ml-2">ครอบครัว</span>
-                                    </label>
+                                            type="radio"
+                                            value="ครอบครัว"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">ครอบครัว</label>
+                                    </div>
                                 </div>
+
                                 <div class="flex space-x-7 ml-60">
                                     <label class="block basis-1/4">
                                         <span class=" flex text-gray-700">จำนวนสมาชิก (รวมตัวเอง)
                                         </span>
                                         <input
+                                            disabled={(input.alone !== "ครอบครัว") ? true : false}
+                                            onChange={updateInput}
                                             name="familymembercount"
                                             id="familymembercount"
                                             type="text"
@@ -1141,6 +1041,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1153,6 +1054,8 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">สมาชิกในครอบครัว
                                         </span>
                                         <input
+                                            disabled={(input.alone !== "ครอบครัว") ? true : false}
+                                            onChange={updateInput}
                                             name="familymember"
                                             id="familymember"
                                             type="text"
@@ -1162,6 +1065,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1170,33 +1074,24 @@ export default function FormAdopt() {
                                         />
                                     </label>
                                 </div>
+
                                 <div class="flex space-x-11">
-                                    <div class="block ml-36 font-light">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="otherrelationship"
-                                                id="otherrelationship"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">อื่นๆ</span>
-                                        </label>
+                                    <div class="flex items-center ml-36">
+                                        <input
+                                            onChange={updateInput}
+                                            name="alone"
+                                            id="otherrelationship"
+                                            type="radio"
+                                            value="อื่นๆ"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio-2" class="ml-2 text-sm font-light text-black">อื่นๆ</label>
                                     </div>
                                     <label class="block basis-1/4">
                                         <input
-                                            name="otherrelationship-detail"
-                                            id="otherrelationship--detail"
+                                            disabled={(input.alone !== "อื่นๆ") ? true : false}
+                                            onChange={updateInput}
+                                            name="otherrelationshipdetail"
+                                            id="otherrelationshipdetail"
                                             type="text"
                                             class="
                                             block
@@ -1204,6 +1099,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200
                                             focus:border-indigo-300 
                                             focus:ring 
                                             focus:ring-indigo-200 
@@ -1221,8 +1117,10 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">จำนวนสมาชิก (รวมตัวเอง)
                                         </span>
                                         <input
-                                            name="otherrelationship-count"
-                                            id="otherrelationship-count"
+                                            disabled={(input.alone !== "อื่นๆ") ? true : false}
+                                            onChange={updateInput}
+                                            name="otherrelationshipcount"
+                                            id="otherrelationshipcount"
                                             type="text"
                                             class="
                                             block
@@ -1230,6 +1128,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1241,8 +1140,10 @@ export default function FormAdopt() {
                                         <span class=" flex text-gray-700">ความสัมพันธ์ที่เกี่ยวข้อง
                                         </span>
                                         <input
-                                            name="otherrelationship-member"
-                                            id="otherrelationship-member"
+                                            disabled={(input.alone !== "อื่นๆ") ? true : false}
+                                            onChange={updateInput}
+                                            name="otherrelationshipmember"
+                                            id="otherrelationshipmember"
                                             type="text"
                                             class="
                                             block
@@ -1250,6 +1151,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1258,6 +1160,8 @@ export default function FormAdopt() {
                                         />
                                     </label>
                                 </div>
+
+
                                 <div class="flex space-x-4">
                                     <span class="text-black/[0.7] font-normal">รายละเอียดที่อยู่</span>
                                     <label class="block basis-2/12 pl-7">
@@ -1508,53 +1412,26 @@ export default function FormAdopt() {
                                 </div>
                                 <p class="text-black text-[24px] font-normal pt-7">1.2 ข้อมูลที่อยู่ที่จะนำแมวไปเลี้ยง</p>
                                 <div class="flex">
-                                    <div class="block ml-36 font-light">
-
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="sameaddress"
-                                                id="sameaddress"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2">ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1</span>
-                                        </label>
+                                    <div class="flex items-center ml-36">
+                                        <input
+                                            onChange={updateInput}
+                                            name="sameaddress"
+                                            id="sameaddress"
+                                            type="radio"
+                                            value="ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1</label>
                                     </div>
-
-                                    <div class="block ml-36 font-light">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="notsameaddress"
-                                                id="notsameaddress"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2">ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1</span>
-                                        </label>
+                                    <div class="flex items-center ml-36">
+                                        <input
+                                            onChange={updateInput}
+                                            name="sameaddress"
+                                            id="notsameaddress"
+                                            type="radio"
+                                            value="ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1 (ข้ามหัวข้อ 1.2)</label>
                                     </div>
-
                                 </div>
                                 <div class="flex space-x-4">
                                     <span class="text-black/[0.7] font-normal">รายละเอียดที่อยู่</span>
@@ -1563,6 +1440,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
                                             name="nhousenumber"
                                             id="nhousenumber"
@@ -1573,6 +1451,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1586,6 +1465,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
                                             name="nmoo"
                                             id="nmoo"
@@ -1596,6 +1476,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1609,6 +1490,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
                                             name="nvillage"
                                             id="nvillage"
@@ -1619,6 +1501,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1631,6 +1514,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
                                             name="nfloor"
                                             id="nfloor"
@@ -1641,6 +1525,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1653,6 +1538,7 @@ export default function FormAdopt() {
                                         <span class="text-gray-700">เลขที่ห้อง
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
                                             name="nroomnumber"
                                             id="nroomnumber"
@@ -1663,6 +1549,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1678,6 +1565,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
                                             name="nalley"
                                             id="nalley"
@@ -1688,6 +1576,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1701,6 +1590,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
                                             name="nroad"
                                             id="nroad"
@@ -1711,6 +1601,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1724,6 +1615,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
                                             name="nsubdistrict"
                                             id="nsubdistrict"
@@ -1734,6 +1626,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1748,6 +1641,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
                                             name="ndistrict"
                                             id="ndistrict"
@@ -1758,6 +1652,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1771,6 +1666,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
                                             name="nprovince"
                                             id="nprovince"
@@ -1781,6 +1677,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1794,6 +1691,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            disabled={(input.sameaddress === "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? true : false}
                                             onChange={updateInput}
                                             name="nzipcode"
                                             id="nzipcode"
@@ -1804,6 +1702,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1831,6 +1730,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1854,6 +1754,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
@@ -1967,8 +1868,8 @@ export default function FormAdopt() {
                                         </span>
                                         <input
                                             onChange={updateInput}
-                                            name="namepersonrelationship"
-                                            id="namepersonrelationship"
+                                            name="nameperson-relationship"
+                                            id="nameperson-relationship"
                                             type="text"
                                             class="
                                             block
@@ -2013,123 +1914,59 @@ export default function FormAdopt() {
                                     <span class=" flex text-gray-700 pt-2">อาชีพปัจจุบัน
                                         <span class="text-error font-light">*</span>
                                     </span>
-                                    <div class="block pt-2">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="gov-officer"
-                                                id="gov-officer"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">ข้าราชการ</span>
-                                        </label>
+                                    <div class="flex items-center">
+                                        <input
+                                            onChange={updateInput}
+                                            name="govofficer"
+                                            id="govofficer"
+                                            type="radio"
+                                            value="ข้าราชการ"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">ข้าราชการ</label>
                                     </div>
-
-                                    <div class="block pt-2">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="enterprise"
-                                                id="enterprise"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">เอกชน/รัฐวิสาหกิจ</span>
-                                        </label>
+                                    <div class="flex items-center">
+                                        <input
+                                            onChange={updateInput}
+                                            name="govofficer"
+                                            id="enterprise"
+                                            type="radio"
+                                            value="เอกชน/รัฐวิสาหกิจ"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">เอกชน/รัฐวิสาหกิจ</label>
                                     </div>
-
-                                    <div class="block pt-2">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="private"
-                                                id="private"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">ธุรกิจส่วนตัว</span>
-                                        </label>
+                                    <div class="flex items-center">
+                                        <input
+                                            onChange={updateInput}
+                                            name="govofficer"
+                                            id="private"
+                                            type="radio"
+                                            value="ธุรกิจส่วนตัว"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">ธุรกิจส่วนตัว</label>
                                     </div>
-
-                                    <div class="block pt-2">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="employee"
-                                                id="employee"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">ลูกจ้าง</span>
-                                        </label>
+                                    <div class="flex items-center">
+                                        <input
+                                            onChange={updateInput}
+                                            name="govofficer"
+                                            id="employee"
+                                            type="radio"
+                                            value="ลูกจ้าง"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">ลูกจ้าง</label>
                                     </div>
-
-                                    <div class="block pt-2">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="othercareer"
-                                                id="othercareer"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">อื่นๆ</span>
-                                        </label>
+                                    <div class="flex items-center">
+                                        <input
+                                            onChange={updateInput}
+                                            name="govofficer"
+                                            id="othercareer"
+                                            type="radio"
+                                            value="อื่นๆ"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">อื่นๆ</label>
                                     </div>
-
                                     <label class="block basis-1/4">
                                         <input
+                                            disabled={(input.govofficer !== "อื่นๆ") ? true : false}
                                             onChange={updateInput}
                                             name="othercareer-detail"
                                             id="othercareer-detail"
@@ -2140,6 +1977,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
+                                            disabled:bg-gray-200 
                                             focus:border-indigo-300 
                                             focus:ring 
                                             focus:ring-indigo-200 
@@ -2180,6 +2018,7 @@ export default function FormAdopt() {
                                             <span class="text-error font-light">*</span>
                                         </span>
                                         <input
+                                            onChange={updateInput}
                                             name="relationcompany"
                                             id="relationcompany"
                                             type="text"
@@ -2251,55 +2090,32 @@ export default function FormAdopt() {
                                     <span class=" flex text-gray-700">ประวัติการเลี้ยงแมว
                                         <span class="text-error font-light">*</span>
                                     </span>
-                                    <div class="block pl-8">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="usedtopet"
-                                                id="usedtopet"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">เคยเลี้ยง</span>
-                                        </label>
+                                    <div class="flex items-center pl-8">
+                                        <input
+                                            onChange={updateInput}
+                                            name="usedtopet"
+                                            id="usedtopet"
+                                            type="radio"
+                                            value="เคยเลี้ยง"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">เคยเลี้ยง</label>
                                     </div>
-                                    <div class="block">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="dontusedtopet"
-                                                id="dontusedtopet"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">ไม่เคยเลี้ยง</span>
-                                        </label>
+                                    <div class="flex items-center">
+                                        <input
+                                            onChange={updateInput}
+                                            name="usedtopet"
+                                            id="dontusedtopet"
+                                            type="radio"
+                                            value="ไม่เคยเลี้ยง"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">ไม่เคยเลี้ยง</label>
                                     </div>
                                 </div>
                                 <div class="flex space-x-4 px-52">
                                     <label class="block basis-2/12">
                                         <span class="text-gray-700">จำนวนแมว</span>
                                         <input
+                                            disabled={(input.usedtopet === "ไม่เคยเลี้ยง") ? true : false}
                                             onChange={updateInput}
                                             name="countcat"
                                             id="countcat"
@@ -2310,7 +2126,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            disabled:bg-gray-200 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
                                         "
@@ -2320,6 +2136,7 @@ export default function FormAdopt() {
                                     <label class="block basis-5/12">
                                         <span class=" flex text-gray-700">สายพันธุ์</span>
                                         <input
+                                            disabled={(input.usedtopet === "ไม่เคยเลี้ยง") ? true : false}
                                             onChange={updateInput}
                                             name="species"
                                             id="species"
@@ -2330,7 +2147,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            disabled:bg-gray-200 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
                                         "
@@ -2338,59 +2155,37 @@ export default function FormAdopt() {
                                         />
                                     </label>
                                 </div>
-                                <div class="flex space-x-20">
+
+                                <div class="flex space-x-12">
                                     <span class=" flex text-gray-700">มีสัตว์เลี้ยงชนิดอื่น
                                         <span class="text-error font-light">*</span>
                                     </span>
-                                    <div class="block">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="haveanimal"
-                                                id="haveanimal"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">มี</span>
-                                        </label>
+                                    <div class="flex items-center pl-8">
+                                        <input
+                                            onChange={updateInput}
+                                            name="haveanimal"
+                                            id="haveanimal"
+                                            type="radio"
+                                            value="มี"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">มี</label>
                                     </div>
-                                    <div class="block">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="donthaveanimal"
-                                                id="donthaveanimal"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">ไม่มี</span>
-                                        </label>
+                                    <div class="flex items-center pl-10">
+                                        <input
+                                            onChange={updateInput}
+                                            name="haveanimal"
+                                            id="donthaveanimal"
+                                            type="radio"
+                                            value="ไม่มี"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">ไม่มี</label>
                                     </div>
                                 </div>
                                 <div class="flex space-x-4 px-52">
                                     <label class="block basis-2/12">
                                         <span class="text-gray-700">จำนวน</span>
                                         <input
+                                            disabled={(input.haveanimal === "ไม่มี") ? true : false}
                                             onChange={updateInput}
                                             name="countanimal"
                                             id="countanimal"
@@ -2401,7 +2196,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            disabled:bg-gray-200 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
                                         "
@@ -2411,6 +2206,7 @@ export default function FormAdopt() {
                                     <label class="block basis-5/12">
                                         <span class=" flex text-gray-700">ชนิดสัตว์</span>
                                         <input
+                                            disabled={(input.haveanimal === "ไม่มี") ? true : false}
                                             onChange={updateInput}
                                             name="speciesanimal"
                                             id="speciesanimal"
@@ -2421,7 +2217,7 @@ export default function FormAdopt() {
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            disabled:bg-gray-200 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
                                         "
@@ -2429,74 +2225,59 @@ export default function FormAdopt() {
                                         />
                                     </label>
                                 </div>
+
                                 <div class="flex space-x-10">
                                     <span class=" flex text-gray-700 pt-2">การเลี้ยงแมวปัจจุบัน
                                         <span class="text-error font-light pt-2">*</span>
                                     </span>
-                                    <div class="block pl-8 pt-2">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="presentpet"
-                                                id="presentpet"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">เลี้ยงอยู่</span>
-                                        </label>
-                                    </div>
-                                    <div class="block pt-2">
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                name="pastpet"
-                                                id="pastpet"
-                                                type="checkbox"
-                                                class="
-                                                        rounded-full
-                                                        border-gray-300
-                                                        shadow-sm
-                                                        accent-salmon
-                                                        focus:border-indigo-300
-                                                        focus:ring
-                                                        focus:ring-offset-0
-                                                        focus:ring-indigo-200
-                                                        focus:ring-opacity-50
-                                                        "
-                                                checked
-                                            />
-                                            <span class="ml-2 font-light">ไม่ได้เลี้ยง</span>
-                                        </label>
-                                    </div>
-                                    <label class="block basis-4/12">
+
+                                    <div class="flex items-center pl-8">
                                         <input
                                             onChange={updateInput}
-                                            name="pastpetdetail"
-                                            id="pastpetdetail"
-                                            type="text"
-                                            class="
+                                            name="presentpet"
+                                            id="presentpet"
+                                            type="radio"
+                                            value="เลี้ยงอยู่"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">เลี้ยงอยู่</label>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <input
+                                            onChange={updateInput}
+                                            name="presentpet"
+                                            id="pastpet"
+                                            type="radio"
+                                            value="ไม่ได้เลี้ยง"
+                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">ไม่ได้เลี้ยง</label>
+                                    </div>
+
+                                    <div class="items-center">
+                                        <label class="block basis-4/12">
+                                            <input
+                                                disabled={(input.presentpet === "เลี้ยงอยู่") ? true : false}
+                                                onChange={updateInput}
+                                                name="pastpetdetail"
+                                                id="pastpetdetail"
+                                                type="text"
+                                                class="
                                             block
                                             w-full
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            disabled:bg-gray-200 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-300
                                         "
-                                            placeholder="สาเหตุ"
-                                        />
-                                    </label>
+                                                placeholder="สาเหตุ"
+                                            />
+                                        </label>
+                                    </div>
+
                                 </div>
+
                                 {/*section 4*/}
                                 <p class="text-[24px] font-normal text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon pt-8">ตอนที่ 3 รับอุปการะ และส่งมอบ</p>
                                 <label class="block pl-24 flex-initial w-[400px]">
@@ -2526,17 +2307,16 @@ export default function FormAdopt() {
                         </div>
                     </div>
                 </div>
-            </form>
-
+            </form >
             {/*section 5*/}
-            <div class="w-screen h-[30rem]">
+            <div div class="w-screen h-[30rem]" >
                 <button type="button"
                     class="flex rounded-lg bg-salmon text-white rounded text-lg mx-auto my-12 px-7 py-2 gap-3"
                     onClick={() => createPdf()}>
                     <Image src={vectorprinter} placeholder="blur" />
                     พิมพ์เอกสาร
                 </button>
-            </div>
+            </div >
         </div >
     )
 }
