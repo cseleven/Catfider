@@ -44,9 +44,6 @@ export default async function handler(req, res) {
 
 }
 
-
-
-
 //check user_id exist
 async function checkShelterId(shelter_id, response) {
   //query
