@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 import Signin from '../../components/sigin'
+=======
+>>>>>>> jee2
 import { useSession, useUser } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
 
 export default function ShelterForm() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> jee2
     const user = useUser()
     const session = useSession()
     const [loading, setLoading] = useState(true)
@@ -10,6 +17,7 @@ export default function ShelterForm() {
     // const [id, setId] = useState(0)
 
     useEffect(() => {
+<<<<<<< HEAD
         ShelterForm()
     }, [])
 
@@ -30,6 +38,25 @@ export default function ShelterForm() {
             "donate_number1": "151-0-04118-2",
             "donate_name2": "กรุงไทย",
             "donate_number2": "151-0-04118-3"
+=======
+    }, [])
+
+    const ShelterForm = async (e) => {
+        var raw = JSON.stringify({
+            "login_id": user.id,
+            "shelter_name": e.target.shelter_name.value,
+            "website_url": e.target.website_url.value,
+            "email": e.target.email.value,
+            "address": e.target.address1.value+" "+e.target.address2.value+" "+e.target.address3.value+" "+e.target.address4.value,
+            "location_url": e.target.location_url.value,
+            "contact_name": e.target.contact_name.value,
+            "contact_lastname": e.target.contact_lastname.value,
+            "contact_phone": e.target.contact_phone.value,
+            "donate_name1": e.target.donate_name1.value,
+            "donate_number1": e.target.donate_number1.value,
+            "donate_name2": e.target.donate_name2.value,
+            "donate_number2": e.target.donate_number2.value
+>>>>>>> jee2
 
         });
 
@@ -54,15 +81,18 @@ export default function ShelterForm() {
             setLoading(false);
         }
     };
+<<<<<<< HEAD
 
+=======
+>>>>>>> jee2
     return (
-        <div class="h-[87vh]">
+        <div class="h-auto">
             <div class="w-screen h-[20rem]">
                 <p class="text-[48px] font-normal text-center pt-[7rem]">สมัครสมาชิก</p>
                 <p class="text-[20px] font-normal text-center pt-2 text-iris">สำหรับมูลนิธิ</p>
             </div>
 
-            <form action="#" method="POST">
+            <form onSubmit={ShelterForm}>
                 <div class="bg-gray-200">
                     <div class="container mx-auto flex justify-around">
 
@@ -82,6 +112,8 @@ export default function ShelterForm() {
                                                 มูลนิธิ
                                             </span>
                                             <input
+                                                id="shelter_name"
+                                                name="shelter_name"
                                                 type="text"
                                                 class="
                                                 mt-1
@@ -105,6 +137,8 @@ export default function ShelterForm() {
                                                 http://
                                             </span>
                                             <input
+                                                id="website_url"
+                                                name="website_url"
                                                 type="text"
                                                 class="
                                                 mt-1
@@ -126,6 +160,8 @@ export default function ShelterForm() {
                                         <div class="flex w-full group">
                                             <label for="firstname" class="text-sm col-span-6 sm:col-span-3">ชื่อธนาคาร (1)
                                                 <input
+                                                    id="donate_name1"
+                                                    name="donate_name1"
                                                     type="text"
                                                     class="
                                                     mt-1
@@ -144,6 +180,8 @@ export default function ShelterForm() {
                                         <div class="flex w-full group">
                                             <label for="firstname" class="text-sm col-span-6 sm:col-span-3">หมายเลขบัญชี (1)
                                                 <input
+                                                    id="donate_number1"
+                                                    name="donate_number1"
                                                     type="text"
                                                     class="
                                                     mt-1
@@ -164,6 +202,8 @@ export default function ShelterForm() {
                                         <div class="relative z-0 mb-6 w-full group">
                                             <label for="firstname" class="text-sm col-span-6 sm:col-span-3">ชื่อธนาคาร (2)
                                                 <input
+                                                    id="donate_name2"
+                                                    name="donate_name2"
                                                     type="text"
                                                     class="
                                                     mt-1
@@ -181,6 +221,8 @@ export default function ShelterForm() {
                                         <div class="relative z-0 mb-6 w-full group">
                                             <label for="firstname" class="text-sm col-span-6 sm:col-span-3">หมายเลขบัญชี (2)
                                                 <input
+                                                    id="donate_number2"
+                                                    name="donate_number2"
                                                     type="text"
                                                     class="
                                                     mt-1
@@ -202,16 +244,13 @@ export default function ShelterForm() {
                         </div>
                     </div>
                 </div>
-            </form>
 
-            <div class="hidden xs:block bg-gray-200" aria-hidden="true">
-                <div class="py-5">
-                    <div class="border-t border-gray-300"></div>
+                <div class="hidden xs:block bg-gray-200" aria-hidden="true">
+                    <div class="py-5">
+                        <div class="border-t border-gray-300"></div>
+                    </div>
                 </div>
-            </div>
 
-
-            <form action="#" method="POST">
                 <div class="bg-gray-200">
                     <div class="container mx-auto flex justify-around">
 
@@ -228,6 +267,8 @@ export default function ShelterForm() {
                                         <div class="flex w-full group">
                                             <label for="firstname" class="text-sm col-span-6 sm:col-span-3">ชื่อ
                                                 <input
+                                                    id="contact_name"
+                                                    name="contact_name"
                                                     type="text"
                                                     class="
                                                     mt-1
@@ -245,6 +286,8 @@ export default function ShelterForm() {
                                         <div class="flex w-full group">
                                             <label for="firstname" class="text-sm col-span-6 sm:col-span-3">นามสกุล
                                                 <input
+                                                    id="contact_lastname"
+                                                    name="contact_lastname"
                                                     type="text"
                                                     class="
                                                     mt-1
@@ -263,6 +306,8 @@ export default function ShelterForm() {
                                     <label class="block">
                                         <span class="text-gray-700">Email address</span>
                                         <input
+                                            id="email"
+                                            name="email"
                                             type="text"
                                             class="
                                             mt-1
@@ -279,6 +324,8 @@ export default function ShelterForm() {
                                     <label class="block">
                                         <span class="text-gray-700">เบอร์ติดต่อ</span>
                                         <input
+                                            id="contact_phone"
+                                            name="contact_phone"
                                             type="text"
                                             class="
                                             mt-1
@@ -295,6 +342,8 @@ export default function ShelterForm() {
                                     <label class="block">
                                         <span class="text-gray-700">ที่อยู่มูลนิธิ</span>
                                         <input
+                                            id="address1"
+                                            name="address1"
                                             type="text"
                                             class="
                                             mt-1
@@ -313,6 +362,8 @@ export default function ShelterForm() {
                                         <div class="flex w-full group">
                                             <label for="firstname" class="text-sm col-span-6 sm:col-span-3">อำเภอ
                                                 <input
+                                                    id="address2"
+                                                    name="address2"
                                                     type="text"
                                                     class="
                                                     mt-1
@@ -330,6 +381,8 @@ export default function ShelterForm() {
                                         <div class="flex w-full group">
                                             <label for="firstname" class="text-sm col-span-6 sm:col-span-3">จังหวัด
                                                 <input
+                                                    id="address3"
+                                                    name="address3"
                                                     type="text"
                                                     class="
                                                     mt-1
@@ -347,6 +400,8 @@ export default function ShelterForm() {
                                         <div class="flex w-full group">
                                             <label for="firstname" class="text-sm col-span-6 sm:col-span-3">รหัสไปรษณีย์
                                                 <input
+                                                    id="address4"
+                                                    name="address4"
                                                     type="text"
                                                     class="
                                                     mt-1
@@ -366,6 +421,8 @@ export default function ShelterForm() {
                                     <label class="block">
                                         <span class="text-gray-700">ลิงก์ google map (https://)</span>
                                         <input
+                                            id="location_url"
+                                            name="location_url"
                                             type="text"
                                             class="
                                             mt-1
@@ -386,7 +443,7 @@ export default function ShelterForm() {
                 </div>
 
                 <div class="container mx-auto flex justify-end">
-                    <button class="rounded-[4px] bg-salmon text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">ยืนยัน</button>
+                    <button type="submit" class="rounded-[4px] bg-salmon text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">ยืนยัน</button>
                 </div>
 
 
