@@ -20,33 +20,33 @@ import Router from 'next/router';
 //   }, [])
 
 
-//   const catExample = async () => {
-//     var raw = JSON.stringify({
-//       "cat_id": 1
+//   // const catExample = async () => {
+//   //   var raw = JSON.stringify({
+//   //     "cat_id": 1
 
-//     });
+  //   });
 
-//     var myheader = {
-//       'Content-Type': 'application/json'
-//     };
+  //   var myheader = {
+  //     'Content-Type': 'application/json'
+  //   };
 
 
-//     var requestOptions = {
-//       method: 'POST',
-//       headers: myheader,
-//       body: raw,
-//       redirect: 'follow'
-//     };
+  //   var requestOptions = {
+  //     method: 'POST',
+  //     headers: myheader,
+  //     body: raw,
+  //     redirect: 'follow'
+  //   };
 
-//     try {
-//       setLoading(true);
-//       let response = await fetch("/api/cat/userview/profileCat", requestOptions);
-//       let data = await response.json();
-//       console.log("response : " + JSON.stringify(data));
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
+  //   try {
+  //     setLoading(true);
+  //     let response = await fetch("/api/cat/userview/profileCat", requestOptions);
+  //     let data = await response.json();
+  //     console.log("response : " + JSON.stringify(data));
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
 
 const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
     return !condition ? (
@@ -68,7 +68,7 @@ const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) 
           <button type="button" class="rounded-[4px] bg-gray-400 text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">จองคิวดูแมว</button>
         </div>
     )
-}
+};
 
 export default function CatProfile() {
   const [loading, setLoading] = useState(true);
