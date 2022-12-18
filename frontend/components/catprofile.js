@@ -3,7 +3,7 @@ import Vaccine from "/public/cat/vaccine.png";
 import Scissors from "/public/cat/scissors.png";
 import Loading from './loading';
 
-export default function Catprofile({pic, map, vaccine, sterile, bank}) {
+export default function Catprofile({pic, map, vaccine, sterile, bank1, donate_number1, bank2, donate_number2}) {
     return (   
         <div class="flex justify-start min-h-min my-10 md:space-x-4 lg:space-x-9 flex-col md:flex-row">
             <div class="md:basis-1/3 w-48 h-48 md:h-[390px] md:w-full bg-cover rounded-full m-auto md:m-0 md:rounded-lg" style={{"background-image": "url("+pic+")"}}/>
@@ -25,9 +25,8 @@ export default function Catprofile({pic, map, vaccine, sterile, bank}) {
                     </div>
                     <div class="basis-2/4 grid place-content-center lg:place-content-start lg:min-w-[341px] border-2 border-gray-200 rounded-md ">
                         <h5 class="mx-auto lg:mx-10 lg:mt-6">ช่องทางบริจาคแก่มูลนิธิ</h5>
-                        {bank.map((item)=>(
-                            <h6 class="mx-auto">{item}</h6>
-                        ))}
+                        <h6 class="mx-auto">{bank1} {donate_number1}</h6>
+                        <h6 class="mx-auto">{bank2} {donate_number2}</h6>
                     </div>
                 </div>
             </div>
