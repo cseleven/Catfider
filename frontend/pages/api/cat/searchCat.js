@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     //filtering cat 
 
     const { page_number, cat_id, sex, breed, color, 
-            status, shelter_id } = req.body
+            status, shelter_name } = req.body
     
     
     //check cat id
@@ -26,7 +26,7 @@ export default async function handler(req, res) {
             if (breed) { query = query.eq('breed', breed) }
             if (color) { query = query.eq('color', color) } 
             if (status) { query = query.eq('status', status) }
-            if (shelter_id) { query = query.eq('shelter_id', shelter_id) }
+            if (shelter_name) { query = query.eq('shelter_name', shelter_name) }
             
             const { data, error } = await query
 
