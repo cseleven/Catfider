@@ -213,10 +213,10 @@ export default function Queue() {
                                         "
                                 >
                                     <option>เลือกช่วงเวลา</option>
-                                    <option value={1}>9.00-10.00 น.</option>
-                                    <option value={2}>10.00-11.00 น.</option>
-                                    <option value={3}>11.00-12.00 น.</option>
-                                    <option value={4}>14.00-15.00 น.</option>
+                                    <option value="9.00-10.00">9.00-10.00 น.</option>
+                                    <option value="10.00-11.00">10.00-11.00 น.</option>
+                                    <option value="11.00-12.00">11.00-12.00 น.</option>
+                                    <option value="14.00-15.00">14.00-15.00 น.</option>
                                 </select>
                             </label>
                         </div>

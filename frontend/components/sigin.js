@@ -25,9 +25,7 @@ export default function Signin({ role }) {
             let { data, error } = supabase.auth.signUp({
                 email: e.target.email.value,
                 password: e.target.password.value
-            }).then(()=>Router.push({
-              pathname: '/signin/login'
-            }))
+            }).then(console)
         } 
         
         if(role==1) {
@@ -60,7 +58,7 @@ export default function Signin({ role }) {
                                             type="text"
                                             onChange={updateInput}
                                             class={classNames(
-                                                (input.email=="")
+                                                (!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(input.email)))
                                                     ? "border-error"
                                                     : "border-gray-300",
                                                 "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"

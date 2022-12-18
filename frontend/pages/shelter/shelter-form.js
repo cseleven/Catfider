@@ -9,7 +9,33 @@ export default function ShelterForm() {
     // const [id, setId] = useState(0)
 
     useEffect(() => {
+        createProfile()
     }, [])
+
+    const createProfile = async () => {
+        const user = useUser()
+        var raw = JSON.stringify({ "login_id": user.id });
+
+        var myheader = {
+            'Content-Type': 'application/json'
+        };
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myheader,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            setLoading(true);
+            let response = await fetch("/api/shelter/createShelter", requestOptions);
+            let data = await response.json();
+            console.log("response : " + JSON.stringify(data));
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const ShelterForm = async (e) => {
         var raw = JSON.stringify({
