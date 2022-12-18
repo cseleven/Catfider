@@ -5,6 +5,7 @@ export default function Signin({ role }) {
 
     //func call Auth Signin Supabase
     const signup = async (e) => {
+        console.log(e.target.email.value+e.target.password.value+role)
         const { data, error } = supabase.auth.updateUser({
             email: e.target.email.value,
             password: e.target.password.value,
