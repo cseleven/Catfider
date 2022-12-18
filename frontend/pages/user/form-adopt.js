@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import vectorprinter from '../public/form-adopt/vector-printer.png'
+import vectorprinter from '../../public/form-adopt/vector-printer.png'
 
 import { useEffect, useState } from 'react';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -137,7 +137,7 @@ export default function FormAdopt() {
                         },
                         {
                             ul: [
-                                { text: 'เพศ: ', listType: 'none' },
+                                { text: 'เพศ: ' + input.sex, listType: 'none' },
                             ]
                         }
                     ]
@@ -145,16 +145,49 @@ export default function FormAdopt() {
                 //checkbox
                 {
                     columns: [
+                        ...(input.alone == "อื่นๆ") ? [
+                            {
+                                ul: [
+                                    { text: 'ที่อยู่อาศัยปัจจุบัน: ' + input.house + ' ' + input.otheraddressdetail, listType: 'none' },
+                                ]
+                            },
+
+                        ] : [],
+
+                        ...(input.alone !== "อื่นๆ") ? [
+                            {
+                                ul: [
+                                    { text: 'ที่อยู่อาศัยปัจจุบัน: ' + input.house, listType: 'none' },
+                                ]
+                            },
+
+                        ] : [],
+
                         {
-                            ul: [
-                                { text: 'ที่อยู่อาศัยปัจจุบัน: ' + input.house, listType: 'none' },
-                            ]
+                            columns: [
+
+                                ...(input.alone == "อื่นๆ") ? [
+                                    {
+                                        ul: [
+                                            { text: 'อาศัยอยู่กับ: ' + input.alone + ' ' + input.otherreladetail, listType: 'none' },
+                                        ]
+                                    },
+
+                                ] : [],
+
+                                ...(input.alone !== "อื่นๆ") ? [
+                                    {
+                                        ul: [
+                                            { text: 'อาศัยอยู่กับ: ' + input.alone, listType: 'none' },
+                                        ]
+                                    },
+
+                                ] : [],
+
+                            ],
+                            margin: [0, 0, 0, 5]
                         },
-                        {
-                            ul: [
-                                { text: 'อาศัยอยู่กับ: ', listType: 'none' },
-                            ]
-                        },
+
                         {
                             ul: [
                                 { text: 'จำนวนสมาชิก(รวมตัวเอง): ' + input.familymembercount, listType: 'none' },
@@ -190,6 +223,13 @@ export default function FormAdopt() {
                                 { text: 'หมู่: ' + input.moo, listType: 'none' },
                             ]
                         },
+
+                    ]
+                },
+
+                {
+                    columns: [
+
                         {
                             ul: [
                                 { text: 'หมู่บ้าน/อาคาร: ' + input.village, listType: 'none' },
@@ -260,25 +300,38 @@ export default function FormAdopt() {
                 {
                     columns: [
                         // ติ้กถูก
+                        ...(input.sameaddress == "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? [
+                            {
+                                ul: [
+                                    { text: '√  ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1 (ข้ามหัวข้อที่ 1.2)', listType: 'none' },
+                                ]
+                            },
+                            {
+                                ul: [
+                                    { text: '   ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1 ', listType: 'none', preserveLeadingSpaces: true },
+                                ]
+                            }
+                        ] : [],
 
-                        {
-                            ul: [
-                                { text: 'ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1', listType: 'none' },
-                            ]
-                        },
-                        {
-                            ul: [
-                                { text: 'ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1 ', listType: 'none' },
-                            ]
-                        },
-                        {
-                            ul: [
-                                { text: ' ', listType: 'none' },
-                            ]
-                        },
+                        ...(input.sameaddress !== "ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1") ? [
+                            {
+                                ul: [
+                                    { text: '  ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1 (ข้ามหัวข้อที่ 1.2)', listType: 'none' },
+                                ]
+                            },
+                            {
+                                ul: [
+                                    { text: ' √  ไม่ใช่ที่อยู่อาศัยเดียวกันกับหัวข้อ 1.1 ', listType: 'none', preserveLeadingSpaces: true },
+                                ]
+                            }
+                        ] : [],
 
                     ],
+                    margin: [0, 0, 0, 5]
                 },
+
+
+
 
                 //ไม่ใช่ที่อยู่เดียวกัน
                 {
@@ -290,7 +343,9 @@ export default function FormAdopt() {
                         },
                         {
                             ul: [
-                                { text: 'บ้านเลขที่: ' + input.nhousenumber, listType: 'none' },
+                                {
+                                    text: 'บ้านเลขที่: ' + input.nhousenumber, listType: 'none'
+                                },
                             ]
                         },
                         {
@@ -298,6 +353,14 @@ export default function FormAdopt() {
                                 { text: 'หมู่: ' + input.nmoo, listType: 'none' },
                             ]
                         },
+
+                    ]
+                },
+
+
+                {
+                    columns: [
+
                         {
                             ul: [
                                 { text: 'หมู่บ้าน/อาคาร: ' + input.nvillage, listType: 'none' },
@@ -315,6 +378,7 @@ export default function FormAdopt() {
                         },
                     ]
                 },
+
 
                 {
                     columns: [
@@ -443,13 +507,29 @@ export default function FormAdopt() {
 
                 {
                     columns: [
-                        {
-                            ul: [
-                                { text: 'อาชีพปัจจุบัน: ', listType: 'none' },
-                            ]
-                        },
-                    ]
+
+                        ...(input.govofficer == "อื่นๆ") ? [
+                            {
+                                ul: [
+                                    { text: 'อาชีพปัจจุบัน: ' + input.govofficer + ' ' + input.othercareerdetail, listType: 'none' },
+                                ]
+                            },
+
+                        ] : [],
+
+                        ...(input.alone !== "อื่นๆ") ? [
+                            {
+                                ul: [
+                                    { text: 'อาชีพปัจจุบัน: ' + input.govofficer, listType: 'none' },
+                                ]
+                            },
+
+                        ] : [],
+
+                    ],
+                    margin: [0, 0, 0, 5]
                 },
+
 
                 {
                     columns: [
@@ -507,75 +587,135 @@ export default function FormAdopt() {
 
                 },
                 //ติ้กถูก
-
                 {
                     columns: [
+                        // ติ้กถูก
                         {
                             ul: [
                                 { text: 'ประวัติการเลี้ยงแมว', listType: 'none' },
                             ]
                         },
-                        {
-                            ul: [
-                                { text: 'เคยเลี้ยง', listType: 'none' },
-                                { text: 'จำนวนแมว: ' + input.countcat, listType: 'none' },
-                                { text: ' สายพันธุ์: ' + input.species, listType: 'none' },
+                        ...(input.usedtopet == "เคยเลี้ยง") ? [
+                            {
+                                ul: [
+                                    { text: '√  เคยเลี้ยง', listType: 'none' },
+                                    { text: 'จำนวนแมว: ' + input.countcat, listType: 'none' },
+                                    { text: 'สายพันธุ์: ' + input.species, listType: 'none' },
 
-                            ]
-                        },
-                        {
-                            ul: [
-                                { text: 'ไม่เคยเลี้ยง', listType: 'none' },
-                            ]
-                        },
+                                ]
+                            },
+                            {
+                                ul: [
+                                    { text: 'ไม่เคยเลี้ยง', listType: 'none' },
+                                ]
+                            },
+                        ] : [],
+
+                        ...(input.sameaddress !== "เคยเลี้ยง") ? [
+                            {
+                                ul: [
+                                    { text: 'เคยเลี้ยง', listType: 'none' },
+                                    { text: 'จำนวนแมว: ' + input.countcat, listType: 'none' },
+                                    { text: 'สายพันธุ์: ' + input.species, listType: 'none' },
+
+                                ]
+                            },
+                            {
+                                ul: [
+                                    { text: '√  ไม่เคยเลี้ยง', listType: 'none' },
+                                ]
+                            },
+                        ] : [],
+
                     ],
                     margin: [0, 0, 0, 5]
                 },
 
                 {
                     columns: [
+                        // ติ้กถูก
                         {
                             ul: [
                                 { text: 'มีสัตว์เลี้ยงชนิดอื่น', listType: 'none' },
                             ]
                         },
-                        {
-                            ul: [
-                                { text: 'มี', listType: 'none' },
-                                { text: 'จำนวน: ' + input.countanimal, listType: 'none' },
-                                { text: 'ชนิดสัตว์: ' + input.speciesanimal, listType: 'none' },
-                            ]
-                        },
-                        {
-                            ul: [
-                                { text: 'ไม่มี', listType: 'none' },
-                            ]
-                        },
+                        ...(input.haveanimal == "มี") ? [
+                            {
+                                ul: [
+                                    { text: '√  มี', listType: 'none' },
+                                    { text: 'จำนวน: ' + input.countanimal, listType: 'none' },
+                                    { text: 'ชนิดสัตว์: ' + input.speciesanimal, listType: 'none' },
+                                ]
+                            },
+                            {
+                                ul: [
+                                    { text: 'ไม่มี', listType: 'none' },
+                                ]
+                            },
+                        ] : [],
+
+                        ...(input.haveanimal !== "มี") ? [
+                            {
+                                ul: [
+                                    { text: 'มี', listType: 'none' },
+                                    { text: 'จำนวน: ' + input.countanimal, listType: 'none' },
+                                    { text: 'ชนิดสัตว์: ' + input.speciesanimal, listType: 'none' },
+                                ]
+                            },
+                            {
+                                ul: [
+                                    { text: '√  ไม่มี', listType: 'none' },
+                                ]
+                            },
+                        ] : [],
+
                     ],
                     margin: [0, 0, 0, 5]
                 },
 
+
                 {
                     columns: [
+                        // ติ้กถูก
                         {
                             ul: [
                                 { text: 'การเลี้ยงแมวปัจจุบัน', listType: 'none' },
                             ]
                         },
-                        {
-                            ul: [
-                                { text: 'เลี้ยงอยู่', listType: 'none' },
-                            ]
-                        },
-                        {
-                            ul: [
-                                { text: 'ไม่ได้เลี้ยง', listType: 'none' },
-                                { text: 'สาเหตุ: ' + input.pastpetdetail, listType: 'none' },
-                            ]
-                        },
+                        ...(input.presentpet == "เลี้ยงอยู่") ? [
+                            {
+                                ul: [
+                                    { text: '√  เลี้ยงอยู่', listType: 'none' },
+                                ]
+                            },
+                            {
+                                ul: [
+                                    { text: 'ไม่ได้เลี้ยง', listType: 'none' },
+                                    { text: 'สาเหตุ: ' + input.pastpetdetail, listType: 'none' },
+                                ]
+                            },
+                        ] : [],
+
+                        ...(input.presentpet !== "เลี้ยงอยู่") ? [
+                            {
+                                ul: [
+                                    { text: 'เลี้ยงอยู่', listType: 'none' },
+                                ]
+                            },
+                            {
+                                ul: [
+                                    { text: '√  ไม่ได้เลี้ยง', listType: 'none' },
+                                    { text: 'สาเหตุ: ' + input.pastpetdetail, listType: 'none' },
+                                ]
+                            },
+                        ] : [],
+
                     ],
-                    margin: [0, 0, 0, 8]
+                    margin: [0, 0, 0, 5]
                 },
+
+
+
 
                 {
                     text:
@@ -900,6 +1040,8 @@ export default function FormAdopt() {
                                         <span class="text-black/[0.7] font-normal">เพศ</span>
                                         <select
                                             onChange={updateInput}
+                                            name="sex"
+                                            id="sex"
                                             class="
                                             block
                                             w-full
@@ -918,6 +1060,7 @@ export default function FormAdopt() {
                                         </select>
                                     </label>
                                 </div>
+
                                 <div class="flex space-x-7">
                                     <span class=" flex text-gray-700 pt-2">ที่อยู่อาศัยปัจจุบัน
                                         <span class="text-error font-light">*</span>
@@ -963,24 +1106,26 @@ export default function FormAdopt() {
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">คอนโด</label>
                                     </div>
-                                    <div class="flex items-center">
-                                        <input
-                                            onChange={updateInput}
-                                            name="house"
-                                            id="otheraddress"
-                                            type="radio"
-                                            value="อื่นๆ"
-                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">อื่นๆ</label>
-                                    </div>
-                                    <label class="block basis-1/4">
-                                        <input
-                                            disabled={(input.house !== "อื่นๆ") ? true : false}
-                                            onChange={updateInput}
-                                            name="otheraddress-detail"
-                                            id="otheraddress-detail"
-                                            type="text"
-                                            class="
+
+                                    <div class="flex space-x-11">
+                                        <div class="flex items-center">
+                                            <input
+                                                onChange={updateInput}
+                                                name="house"
+                                                id="otheraddress"
+                                                type="radio"
+                                                value="อื่นๆ"
+                                                class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                            <label for="default-radio" class="ml-2 text-sm font-light text-black">อื่นๆ</label>
+                                        </div>
+                                        <label class="block basis-2/4">
+                                            <input
+                                                disabled={(input.house !== "อื่นๆ") ? true : false}
+                                                onChange={updateInput}
+                                                name="otheraddressdetail"
+                                                id="otheraddressdetail"
+                                                type="text"
+                                                class="
                                             block
                                             w-full
                                             rounded-md
@@ -994,9 +1139,10 @@ export default function FormAdopt() {
                                             font-normal
                                             placeholder-gray-300
                                         "
-                                            placeholder="อื่นๆ"
-                                        />
-                                    </label>
+                                                placeholder="อื่นๆ"
+                                            />
+                                        </label></div>
+
                                 </div>
 
                                 <div>
@@ -1075,7 +1221,7 @@ export default function FormAdopt() {
                                     </label>
                                 </div>
 
-                                <div class="flex space-x-11">
+                                <div class="flex space-x-11 pr-4">
                                     <div class="flex items-center ml-36">
                                         <input
                                             onChange={updateInput}
@@ -1954,24 +2100,26 @@ export default function FormAdopt() {
                                             class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                         <label for="default-radio" class="ml-2 text-sm font-light text-black">ลูกจ้าง</label>
                                     </div>
-                                    <div class="flex items-center">
-                                        <input
-                                            onChange={updateInput}
-                                            name="govofficer"
-                                            id="othercareer"
-                                            type="radio"
-                                            value="อื่นๆ"
-                                            class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                        <label for="default-radio" class="ml-2 text-sm font-light text-black">อื่นๆ</label>
-                                    </div>
-                                    <label class="block basis-1/4">
-                                        <input
-                                            disabled={(input.govofficer !== "อื่นๆ") ? true : false}
-                                            onChange={updateInput}
-                                            name="othercareer-detail"
-                                            id="othercareer-detail"
-                                            type="text"
-                                            class="
+
+                                    <div class="flex space-x-11">
+                                        <div class="flex items-center">
+                                            <input
+                                                onChange={updateInput}
+                                                name="govofficer"
+                                                id="othercareer"
+                                                type="radio"
+                                                value="อื่นๆ"
+                                                class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                            <label for="default-radio" class="ml-2 text-sm font-light text-black">อื่นๆ</label>
+                                        </div>
+                                        <label class="block basis-2/4">
+                                            <input
+                                                disabled={(input.govofficer !== "อื่นๆ") ? true : false}
+                                                onChange={updateInput}
+                                                name="othercareerdetail"
+                                                id="othercareerdetail"
+                                                type="text"
+                                                class="
                                             block
                                             w-full
                                             rounded-md
@@ -1985,10 +2133,12 @@ export default function FormAdopt() {
                                             font-normal
                                             placeholder-gray-300
                                         "
-                                            placeholder="อื่นๆ"
-                                        />
-                                    </label>
+                                                placeholder="อื่นๆ"
+                                            />
+                                        </label></div>
                                 </div>
+
+
                                 <div class="flex space-x-4">
                                     <span class="text-black/[0.7] font-normal">ข้อมูลบริษัทเบื้องต้น</span>
                                     <label class="block basis-2/6 pl-14">
@@ -2309,7 +2459,7 @@ export default function FormAdopt() {
                 </div>
             </form >
             {/*section 5*/}
-            <div div class="w-screen h-[30rem]" >
+            <div div div div div class="w-screen h-[30rem]" >
                 <button type="button"
                     class="flex rounded-lg bg-salmon text-white rounded text-lg mx-auto my-12 px-7 py-2 gap-3"
                     onClick={() => createPdf()}>
