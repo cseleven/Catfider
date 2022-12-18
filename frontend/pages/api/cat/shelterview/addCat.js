@@ -37,7 +37,7 @@ export default async function handler(req, res) {
       }])
 
     //print data
-    res.status(200).json("Insert Data Success!")
+    res.status(200).json("Insert Cat Success!")
 
   }
 

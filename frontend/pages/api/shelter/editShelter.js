@@ -45,7 +45,7 @@ export default async function handler(req, res) {
                 
                 //check error
                 if (er) throw er
-                console.log("Edit Data Success!")
+                console.log("Insert Shelter Success!")
 
                 //query data 
                 const { data, error } = await supabase.from('shelter_profile').select().eq('shelter_id', shelter_id)

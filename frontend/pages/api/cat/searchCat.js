@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     //filtering cat 
 
     const { page_number, cat_id, sex, breed, color, 
-            sterile, vaccine, age, status, shelter_id } = req.body
+            status, shelter_id } = req.body
     
     
     //check cat id
@@ -18,19 +18,16 @@ export default async function handler(req, res) {
         console.log("Cat ID Found!")
         let query = supabase
             .from('cat_profile')
-            .select('cat_id, cat_name, sex, breed, color, cat_picture, detail, shelter_id, shelter_profile(shelter_name)')
-            //.range(9 * (page_number - 1), (9 * page_number) - 1)
+            .select('cat_id, cat_name, sex, breed, color, cat_picture, detail, status, shelter_id, shelter_profile(shelter_name)')
+            .range(9 * (page_number - 1), (9 * page_number) - 1)
         
             if(cat_id) { query = query.eq('cat_id', cat_id)}
             if (sex) { query = query.eq('sex', sex) }
             if (breed) { query = query.eq('breed', breed) }
-            if (color) { query = query.eq('color', color) }
-            if (sterile) { query = query.eq('sterile', sterile) }
-            if (vaccine) { query = query.eq('vaccine', vaccine) }
-            if (age) { query = query.eq('age', age) }
+            if (color) { query = query.eq('color', color) } 
             if (status) { query = query.eq('status', status) }
             if (shelter_id) { query = query.eq('shelter_id', shelter_id) }
-        
+            
             const { data, error } = await query
 
         if (error) {
@@ -42,7 +39,6 @@ export default async function handler(req, res) {
     }
 
 }
-
 
 //check user_id exist
 async function checkCatId(cat_id, response) {

@@ -41,6 +41,7 @@ export default function AllCat() {
     var raw = JSON.stringify({
       "page_number" : "",
       "cat_id": 1,
+      "sex" : "",
       "breed" : "",
       "color" : "",
       "status" : ""
