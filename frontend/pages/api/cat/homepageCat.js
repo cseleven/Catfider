@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     let query = supabase
         .from('cat_profile')
         .select('cat_id, cat_name, detail, sex, breed, color, cat_picture, status, shelter_id, shelter_profile(shelter_name)')
-        .eq("status", false)
+        .eq("status", true)
         .order("cat_id")
         .limit(number)
 
