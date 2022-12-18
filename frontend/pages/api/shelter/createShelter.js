@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     //call parameter from body
     const { login_id } = req.body
 
-    //check user id
+    //check login id
     var LoginID = await checkLoginId(login_id)
     if (!LoginID) {
         console.log("Login ID not matched!")
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
 }
 
 
-//check user_id exist
+//check login_id exist
 async function checkLoginId(login_id, response) {
     //query
     const { data, error } = await supabase.from('user_profile').select()
