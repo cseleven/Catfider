@@ -4,7 +4,7 @@ import { supabase } from "../supabase"
 export default async function handler(req, res) {
 
   //call parameter from body
-  const { queue_id, user_id, queue_status } = req.body
+  const { queue_id, login_id, queue_status } = req.body
 
   //check queue id exist
   var queue = checkQueueId(queue_id)
@@ -12,16 +12,20 @@ export default async function handler(req, res) {
     console.log("Queue ID Invalid!")
     res.status(400).json("Queue ID Invalid!")
   } else {
-    //check user id role
-    var role = await checkUserId(user_id)
-    if (!role) {
+    //check login id role
+    var userID = await checkUserId(login_id)
+    if (!userID) {
       console.log("User ID Invalid!")
       res.status(400).json("User ID Invalid!")
     } else {
-      //check queue with user_id 
-      var shelterID = await checkQueueOwner(queue_id)
-      console.log(shelterID)
-      if (shelterID == user_id) {
+      //check queue with login_id 
+      var shelter = await checkQueueOwner(queue_id)
+      console.log("queue own by shelter : ", shelter)
+
+      var shelter_id = await getShelterID(login_id)
+      console.log("shelter id form login id : " , shelter_id)
+
+      if (shelter == shelter_id) {
         //edit
         const { er } = await supabase.from('queue').update([
           {
@@ -38,27 +42,18 @@ export default async function handler(req, res) {
 }
 
 //check user_id exist
-async function checkUserId(user_id, response) {
+async function checkUserId(login_id, response) {
   //query
-  const { data, error } = await supabase.from('user_profile').select().eq('user_id', user_id)
-  if ( data == "" ) {
+  const { data, error } = await supabase.from('shelter_profile').select().eq('login_id', login_id)
+  console.log(data)
+  if ( data == "" || data == null ) {
     //user_id does not exist
     response = false
   } else {
     //user_id exist
-    const query = data?.map(({ user_role }) => ({ user_role }))
-    //console.log("user role ", query)
-    //convert to string
-    const userRole = JSON.stringify(query)
-    const role = userRole.split(':')[1].split('}]')[0]
-    //check user id = shelter
-    if ( role === "1" ) {
-      response = true
-    } else {
-      response = false
-    }
+    response = true 
   }
-  //console.log("user id ", response)
+
   return response
 }
   
@@ -66,7 +61,7 @@ async function checkUserId(user_id, response) {
 async function checkQueueId(queue_id, response) {
   //query
   const { data, error } = await supabase.from('queue').select().eq('queue_id', queue_id)
-  if ( data == "" ) {
+  if ( data == "" || data == null ) {
     //queue_id does not exist
     response = false
   } else {
@@ -74,17 +69,36 @@ async function checkQueueId(queue_id, response) {
     response = true
   }
 
-  //print result
   return response
 }
 
 //check queue_id exist
-async function checkQueueOwner(queue_id, shelterID) {
+async function checkQueueOwner(queue_id, shelter_id) {
   //query
   const { data, error } = await supabase.from('queue').select().eq('queue_id', queue_id)
   const query = data?.map(({ shelter_id }) => ({ shelter_id }))
-  const shelterquery = JSON.stringify(query)
-  shelterID = shelterquery.split(':')[1].split('}]')[0]
-  console.log(shelterID)
-  return shelterID
+  if ( query == "" || query == null) {
+    shelter_id = null
+  } else {
+    const shelterquery = JSON.stringify(query)
+    shelter_id = shelterquery.split(':')[1].split('}]')[0]
+  }
+  console.log(shelter_id)
+  return shelter_id
+}
+
+//check shelter_id exist
+async function getShelterID(login_id, shelter_id) {
+  //query
+  const { data } = await supabase.from('shelter_profile').select().eq('login_id', login_id)
+  if ( data == "" || data == null) {
+    //shelter_id does not exist
+    shelter_id = null
+  } else {
+    const query = data?.map(({ shelter_id }) => ({ shelter_id }))
+    const json = JSON.stringify(query)
+    shelter_id = json.split(':')[1].split('}]')[0]
+  }
+  console.log("shelter id : ", shelter_id)
+  return shelter_id
 }
