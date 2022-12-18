@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import printer from '../public/print-formadopt/printer.png'
+import printer from '../../public/print-formadopt/printer.png'
 
 export default function PrintFormAdopt() {
     return (
@@ -22,8 +22,7 @@ export default function PrintFormAdopt() {
                 <Image class="mx-auto pt-20" src={printer} placeholder="blur"/>
                 <p class="text-gray-500 text-normal text-2xl text-center pt-9">สร้างเอกสารสำเร็จ</p>
                 <button type="button"
-                    class="flex rounded-lg bg-salmon text-white font-normal rounded-full text-lg mx-auto mt-9 px-5 py-2"
-                    onClick={() => supabase.auth.signOut()}>
+                    class="flex rounded-lg bg-salmon text-white font-normal rounded-full text-lg mx-auto mt-9 px-5 py-2">
                     ออกจากหน้านี้
                 </button>
             </div>
