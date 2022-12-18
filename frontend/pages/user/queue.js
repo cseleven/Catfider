@@ -130,6 +130,7 @@ export default function Queue() {
                                             border-gray-300
                                             shadow-sm
                                             bg-gray-200
+<<<<<<< HEAD
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             placeholder-gray-500
                                         "
@@ -146,10 +147,26 @@ export default function Queue() {
                                         class="
                                             block
                                             w-full
+=======
+                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    value="1210"
+                                    disabled readonly
+                                />
+                            </label>
+                            <label class="block w-2/3">
+                                <span class=" flex text-gray-700">ชื่อน้องแมว
+                                    <span class="text-error font-light">*</span>
+                                </span>
+                                <input
+                                    type="text"
+                                    class="text-gray-500 text-base font-normal rounded-lg 
+                                        w-full
+>>>>>>> backend
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
                                             bg-gray-200
+<<<<<<< HEAD
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-500
@@ -167,10 +184,26 @@ export default function Queue() {
                                         class="
                                             block
                                             w-full
+=======
+                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    value="มะลิ"
+                                    disabled readonly
+                                />
+                            </label>
+                            <label class="block w-2/3">
+                                <span class=" flex text-gray-700">ชื่อมูลนิธิ
+                                    <span class="text-error font-light">*</span>
+                                </span>
+                                <input
+                                    type="text"
+                                    class="text-gray-500 text-base font-normal rounded-lg 
+                                        w-full
+>>>>>>> backend
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
                                             bg-gray-200
+<<<<<<< HEAD
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                                             font-normal
                                             placeholder-gray-500
@@ -189,6 +222,23 @@ export default function Queue() {
                                         name="queue_date"
                                         type="date"
                                         class="
+=======
+                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    value="ชิ่อมูลนิธิ"
+                                    disabled readonly
+                                />
+                            </label>
+
+                            <label class="block">
+                                <span class=" flex text-gray-700">เลือกวัน
+                                    <span class="text-error font-light">*</span>
+                                </span>
+                                <input
+                                    id="queue_date"
+                                    name="queue_date"
+                                    type="date"
+                                    class="
+>>>>>>> backend
                                         block
                                         w-full
                                         rounded-md

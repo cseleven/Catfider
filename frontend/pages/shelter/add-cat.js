@@ -23,6 +23,22 @@ export default function AddCat() {
     const catExample = async (e) => {
         var raw = JSON.stringify({
             //"cat_id": 5,
+<<<<<<< HEAD
+            "shelter_id": 3,
+            "age": 2,
+            "cat_name": "ขนมจีบ",
+            "sex": "male",
+            "breed": "สีสวาด",
+            "color": "ส้ม",
+            "sterile": false,
+            "vaccine": true,
+            "detail": "น้องเป็นแมวอารมณ์ดี เป็นมิตรกับสิ่งแวดล้อม",
+            "cat_picture": "www.google.com",
+            "status": false,
+            
+
+
+=======
             "login_id": user.id,
             "cat_name": e.target.cat_name.value,
             "sex": e.target.sex.value,
@@ -36,6 +52,7 @@ export default function AddCat() {
             "age": e.target.age.value,
             "age_unit": e.target.age_unit.value,
             "congenital_disease": e.target.congenital_disease.value
+>>>>>>> jee2
         });
 
         var myheader = {
@@ -114,7 +131,7 @@ export default function AddCat() {
                         <div class="text-sm font-light text-gray-600">สำหรับแสดงส่วนของโปรไฟล์</div>
                     </div>
 
-                    <form action="#" method="POST">
+                    <form onSubmit={catExample}>
                         <div class="w-[803px] h-[1200px] bg-white rounded-t shadow-md px-7 py-6 space-y-3 ml-28">
                             <label class="block w-2/3">
                                 <span class=" flex text-gray-700">ชื่อน้องแมว
@@ -401,7 +418,7 @@ export default function AddCat() {
                         </div>
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
                             <div class="w-screen h-[30rem] py-3">
-                                <button type="button"
+                                <button type="submit"
                                     class="flex rounded-lg bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]">
                                     ยืนยัน
                                 </button>

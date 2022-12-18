@@ -2,14 +2,7 @@ import { useSession, useUser } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
 
 
-// function MyCat() {
-//     return (
-//       <h2>แมวของฉัน</h2>
-      
-//     )
-// }
-  
-export default function MyCat () {
+  export default function MyCat () {
   const user = useUser()
   const session = useSession()
   const [loading, setLoading] = useState(true)
@@ -20,23 +13,11 @@ export default function MyCat () {
     catExample()
   }, [])
 
-  //fetch data
-  const fetchCat = async () => {
-    try {
-      setLoading(true)
-      //call page/api/queue/apiname
-      let response = await fetch("/api/cat/searchCat").then(console.log("welcome to add cat"))
-      let data = await response.json()
-      console.log("response : " + JSON.stringify(data))
-      setCat(data)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const catExample = async () => {
     var raw = JSON.stringify({
-      "cat_id": 5
+      "shelter_id": 2,
+      "page_number":1
 
     });
 
