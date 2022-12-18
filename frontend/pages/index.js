@@ -22,7 +22,37 @@ import Loading from '../components/loading'
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
-  useEffect(() => setLoading(false), [])
+  useEffect(() => {
+    catExample()
+    setLoading(false)}, [])
+
+  const catExample = async () => {
+    var raw = JSON.stringify({
+      "number": 3
+
+    });
+
+    var myheader = {
+      'Content-Type': 'application/json'
+    };
+
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myheader,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/homepageCat", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div class="container">
@@ -178,15 +208,6 @@ export default function Home() {
           <div class="w-screen h-[35rem]">
             <p class="text-[40px] text-black/[0.8] font-medium text-center pt-[200px]">ยังมีน้องแมวที่ต้องการความรักจากคุณ</p>
             <button class="rounded-lg bg-salmon text-white text-2xl mt-[40px] ml-[620px] px-20 py-[8px]">สมัครสมาชิก</button>
-          </div>
-
-          {/*section 7*/}
-          <div class="w-screen h-[35rem] bg-bright-salmon">
-            <div class="flex text-[30px] text-black font-normal">
-              <p class="pl-[900px] pt-[70px]">About</p>
-              <p class="pl-[100px] pt-[70px]">Help</p>
-              <p class="pl-[100px] pt-[70px]">Contact</p>
-            </div>
           </div>
 
           {/*img backgroud*/}

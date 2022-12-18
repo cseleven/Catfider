@@ -3,31 +3,81 @@ import { supabase } from "../supabase"
 export default async function handler(req, res) {
 
   //call parameter from body
-  //"queue_date": "2022-12-09T07:36:58.793+00:00"
-  const {queue_id} = req.body
-
-  //query data 
+  const { queue_id, login_id } = req.body
   
-  const { data, error } = await supabase.from('queue').select().eq('queue_id', queue_id)
-  if (error) throw error
+  var query = supabase.from('queue').select()
 
-  //store data to local variable 
-  const query = data?.map(({queue_id, cat_id}) => ({
-    queue_id,
-    cat_id
-  }))
-  console.log("data : ", query)
-  console.log("Query Data Success!")
+  //check role
+  var user_id = await getUserId(login_id)
+  var shelter_id = await getShelterID(login_id)
 
-  /*const { data, error } = await supabase.from('user_profile').select().eq('user_id', 5)
-  if (data == "") {
-    console.log("here")
-  }*/
+  //role = shelter
+  if (shelter_id != null) {
+    if (queue_id == null && login_id != null) {
+      //get all
+      query = query.eq('shelter_id', shelter_id)
+    } else if (queue_id != null && login_id != null) {
+      //get one
+      query = query.eq('shelter_id', shelter_id).eq('queue_id', queue_id)
+    } else {
+      res.status(400).json("Data Not Found")
+    }
+  } 
+  
+  //role = user
+  if (user_id != null) {
+    if (queue_id == null && login_id != null) {
+      //get all
+      query = query.eq('user_id', user_id)
+    } else if (queue_id != null && login_id != null) {
+      //get one
+      query = query.eq('user_id', user_id).eq('queue_id', queue_id)
+    } else {
+      res.status(400).json("Data Not Found")
+    }
+  }
 
   //print data
-  console.log(data)  
-  res.status(200).json("Query Data Success!")
+  const { data } = await query
+  if (data == "") {
+    res.status(400).json("Data Not Found")
+  }
+  res.status(200).json(data)
+}
+  
+//check user_id exist
+async function getUserId(login_id, user_id) {
+  //query
+  const { data } = await supabase.from('user_profile').select().eq('login_id', login_id)
+  console.log(data)
+  if ( data == "" || data == null) {
+    //user_id does not exist
+    user_id = null
+  } else {
+    const query = data?.map(({ user_id }) => ({ user_id }))
+    const json = JSON.stringify(query)
+    user_id = json.split(':')[1].split('}]')[0]
+  }
+  console.log("user id ", user_id)
+  return user_id
+}
+
+//check shelter_id exist
+async function getShelterID(login_id, shelter_id) {
+  //query
+  const { data } = await supabase.from('shelter_profile').select().eq('login_id', login_id)
+  console.log(data)
+  if ( data == "" || data == null) {
+    //shelter_id does not exist
+    shelter_id = null
+  } else {
+    const query = data?.map(({ shelter_id }) => ({ shelter_id }))
+    const json = JSON.stringify(query)
+    shelter_id = json.split(':')[1].split('}]')[0]
+  }
+  console.log("shelter id ", shelter_id)
+  return shelter_id
 }
 
 
-  
+

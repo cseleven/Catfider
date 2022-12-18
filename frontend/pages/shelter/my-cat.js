@@ -1,7 +1,60 @@
-function MyCat() {
-    return (
+import { useSession, useUser } from '@supabase/auth-helpers-react'
+import { useEffect, useState } from 'react'
+
+
+  export default function MyCat () {
+  const user = useUser()
+  const session = useSession()
+  const [loading, setLoading] = useState(true)
+  const [cat, setCat] = useState(null)
+  // const [id, setId] = useState(0)
+
+  useEffect(() => {
+    catExample()
+  }, [])
+
+
+  const catExample = async () => {
+    var raw = JSON.stringify({
+      "login_id": "fadadb65-080e-4be8-a3dc-163df80e0918",
+      "page_number":1
+
+    });
+
+    var myheader = {
+      'Content-Type': 'application/json'
+    };
+
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myheader,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
       <h2>แมวของฉัน</h2>
-    )
+      
+     )
+
 }
-  
-export default MyCat
+
+
+
+
+
+
+
+
+
