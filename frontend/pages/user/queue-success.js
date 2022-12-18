@@ -48,7 +48,7 @@ export default function QueueSuccess() {
                 <Image class="mx-auto pt-32" src={iconCheck} placeholder="blur" />
                 <p class="text-gray-500 text-normal text-2xl text-center pt-9">จองคิวดูแมวเรียบร้อยแล้ว</p>
                 <button type="button"
-                    class="flex rounded-lg bg-salmon text-white rounded-full text-lg font-normal mx-auto mt-9 px-5 py-2">
+                    class="flex rounded-lg bg-salmon text-white text-lg font-normal mx-auto mt-9 px-5 py-2">
                     ออกจากหน้านี้
                 </button>
             </div>

@@ -1,11 +1,8 @@
-import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
-import Account from '../../components/account'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 
 const LogIn = () => {
-  const session = useSession()
   const supabase = useSupabaseClient()
 
   const signin = async(e) => {
@@ -14,7 +11,6 @@ const LogIn = () => {
       password: e.target.password.value
     }).then(console.log("data:"+data))
   }
-
 
   //น่าจะทำใหม่แบบเขียนเอง
   return (

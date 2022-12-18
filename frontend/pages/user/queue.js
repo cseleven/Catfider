@@ -123,13 +123,31 @@ export default function Queue() {
                                     id="cat_id"
                                     name="cat_id"
                                     type="text"
-                                    class="text-gray-500 text-base font-normal rounded-lg 
+                                    class="text-gray-500 text-base font-normal
                                         block
                                             w-full
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
                                             bg-gray-200
+<<<<<<< HEAD
+                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            placeholder-gray-500
+                                        "
+                                        value={id}
+                                        placeholder={id}
+                                    />
+                                </label>
+                                <label class="block w-2/3">
+                                    <span class=" flex text-gray-700">ชื่อน้องแมว
+                                        <span class="text-error font-light">*</span>
+                                    </span>
+                                    <input
+                                        type="text"
+                                        class="
+                                            block
+                                            w-full
+=======
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                     value="1210"
                                     disabled readonly
@@ -143,10 +161,30 @@ export default function Queue() {
                                     type="text"
                                     class="text-gray-500 text-base font-normal rounded-lg 
                                         w-full
+>>>>>>> backend
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
                                             bg-gray-200
+<<<<<<< HEAD
+                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            font-normal
+                                            placeholder-gray-500
+                                        "
+                                        value={name}
+                                        placeholder={name}
+                                    />
+                                </label>
+                                <label class="block w-2/3">
+                                    <span class=" flex text-gray-700">ชื่อมูลนิธิ
+                                        <span class="text-error font-light">*</span>
+                                    </span>
+                                    <input
+                                        type="text"
+                                        class="
+                                            block
+                                            w-full
+=======
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                     value="มะลิ"
                                     disabled readonly
@@ -160,10 +198,31 @@ export default function Queue() {
                                     type="text"
                                     class="text-gray-500 text-base font-normal rounded-lg 
                                         w-full
+>>>>>>> backend
                                             rounded-md
                                             border-gray-300
                                             shadow-sm
                                             bg-gray-200
+<<<<<<< HEAD
+                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                            font-normal
+                                            placeholder-gray-500
+                                        "
+                                        value={shelter}
+                                        placeholder={shelter}
+                                    />
+                                </label>
+
+                                <label class="block">
+                                    <span class=" flex text-gray-700">เลือกวัน
+                                        <span class="text-error font-light">*</span>
+                                    </span>
+                                    <input
+                                        id="queue_date"
+                                        name="queue_date"
+                                        type="date"
+                                        class="
+=======
                                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                     value="ชิ่อมูลนิธิ"
                                     disabled readonly
@@ -179,6 +238,7 @@ export default function Queue() {
                                     name="queue_date"
                                     type="date"
                                     class="
+>>>>>>> backend
                                         block
                                         w-full
                                         rounded-md
@@ -221,7 +281,7 @@ export default function Queue() {
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
                             <div class="w-screen h-[30rem] py-3">
                                 <button type="submit"
-                                    class="flex rounded-lg bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]"
+                                    class="flex bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]"
                                 >
                                     ยืนยัน
                                 </button>
