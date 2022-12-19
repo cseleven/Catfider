@@ -41,20 +41,14 @@ export default function MyCat() {
       let response = await fetch("/api/cat/userview/showmyCat", requestOptions);
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
+      setCat(data)
     } finally {
       setLoading(false);
     }
   };
   return (
     <div>
-      {/*{!loading ? (<Loading />) : (
-        <div>
-          {cat.map((item) => (
-            <HomecardCatprofile imgcat={catProfile1} statuscat="ว่าง" namecat="มะลิ (#1210)" detail="แม่มะลิ แมวจรพันธุ์ไทย สีขาวดำ นิสัยเป็นมิตร ใจดีกับแมวเด็ก..." tagbreed="พันธุ์ไทย" tagcolor="ขาวดำ" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
-          ))}
-        </div>
-          )}*/}
-
+      {!loading ? (<Loading />) : (
       <div>
         <nav class="flex mx-28 mt-9" aria-label="Breadcrumb">
           <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -126,11 +120,15 @@ export default function MyCat() {
         </form>
 
         <div className="grid grid-cols-3 justify-items-center gap-6 ml-24 mr-7 mt-9">
-          <HomecardCatprofile imgcat={catProfile1} statuscat="จองคิว" namecat="มะลิ (#1210)" detail="แม่มะลิ แมวจรพันธุ์ไทย สีขาวดำ นิสัยเป็นมิตร ใจดีกับแมวเด็ก..." tagbreed="พันธุ์ไทย" tagcolor="ขาวดำ" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
+          {cat.map((item)=>(
+                <HomecardCatprofile item={item} />
+          ))}
+          {/* <HomecardCatprofile imgcat={catProfile1} statuscat="จองคิว" namecat="มะลิ (#1210)" detail="แม่มะลิ แมวจรพันธุ์ไทย สีขาวดำ นิสัยเป็นมิตร ใจดีกับแมวเด็ก..." tagbreed="พันธุ์ไทย" tagcolor="ขาวดำ" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
           <HomecardCatprofile imgcat={catProfile2} statuscat="มีบ้าน" namecat="มะระ (#1211)" detail="แมวพันธุ์วิเชียรมาศ ตาสวย น้องกำพร้าแม่ เป็นแมวหลงทาง ขาซ้ายบาดเจ็บ..." tagbreed="วิเชียรมาศ" tagcolor="ลายแต้ม" tagsex="เพศเมีย" fund="มูลนิธิแมวหลง" />
-          <HomecardCatprofile imgcat={catProfile3} statuscat="มีบ้าน" namecat="มะไฟ (#1212)" detail="มะไฟ แมวขี้เล่น ปัจจุบันกำพร้าเจ้าของ เหมาะกับคนมีเวลา..." tagbreed="พันธุ์ผสม" tagcolor="เทา" tagsex="เพศผู้" fund="มูลนิธิบ้านพักเหมียว" />
+          <HomecardCatprofile imgcat={catProfile3} statuscat="มีบ้าน" namecat="มะไฟ (#1212)" detail="มะไฟ แมวขี้เล่น ปัจจุบันกำพร้าเจ้าของ เหมาะกับคนมีเวลา..." tagbreed="พันธุ์ผสม" tagcolor="เทา" tagsex="เพศผู้" fund="มูลนิธิบ้านพักเหมียว" /> */}
         </div>
       </div>
+      )}
     </div>
   )
 }

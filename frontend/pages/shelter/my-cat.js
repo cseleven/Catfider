@@ -48,6 +48,7 @@ export default function MyCat() {
       let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
+      setCat(data)
     } finally {
       setLoading(false);
     }
@@ -74,7 +75,7 @@ export default function MyCat() {
       <div class="flex mt-8">
         <p class="text-4xl text-black font-normal mx-28">แมวของฉัน</p>
         <button type="button "
-          class="flex rounded-lg bg-salmon text-white rounded text-lg ml-[890px] mb-7 px-6 py-2 gap-3">
+          class="flex rounded-lg bg-salmon text-white text-lg ml-[890px] mb-7 px-6 py-2 gap-3">
           + เพิ่มแมว
         </button>
       </div>
@@ -130,6 +131,24 @@ export default function MyCat() {
             <p class="text-sm ">สายพันธุ์</p>
             <p class="text-sm ">สถานะ</p>
           </div>
+          {cat.map((item)=>(
+            <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal text-sm">
+              <Image class="mx-7 my-4" src={catProfileAdopt2} placeholder="blur" />
+              <div class="py-4">
+                <p class="text-gray-900 text-base">{item.cat_name} <>(#</>{item.cat_id}<>)</></p>
+                <p class="text-gray-500 text-xs">วันเข้าระบบ : {item.create_date}</p>
+              </div>
+              <div class="py-4 pl-20">
+                <p class="text-gray-900 pl-[200px] text-base">{item.breed}</p>
+                <p class="text-gray-500 pl-[200px] text-xs">{item.sex}</p>
+              </div>
+              {
+                item.status?(<p class="w-9 h-7 bg-green-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-green-600 font-medium text-center pt-1">ว่าง</p>):
+                (<p class="w-9 h-7 bg-red-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-red-600 font-medium text-center pt-1">มีบ้าน</p>)
+              }
+              <button type="button" onClick={()=>Router.push({pathname: "/shelter/cat/"+item.cat_id,})} class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
+            </div>
+          ))}
           <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal">
             <Image class="mx-7 my-4" src={catProfileAdopt1} placeholder="blur" />
             <div class="py-4">

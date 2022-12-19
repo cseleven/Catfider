@@ -56,6 +56,9 @@ export default function AddCat() {
             let data = await response.json();
             console.log("response : " + JSON.stringify(data));
         } finally {
+            Router.push({
+              pathname: "/shelter/add-cat-success",
+          })
             setLoading(false);
         }
     };
@@ -402,7 +405,7 @@ export default function AddCat() {
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
                             <div class="h-[30rem] py-3">
                                 <button type="submit"
-                                    class="flex rounded-lg bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]">
+                                    class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]">
                                     ยืนยัน
                                 </button>
                             </div>

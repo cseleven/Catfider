@@ -51,6 +51,9 @@ export default function Queue() {
             let data = await response.json();
             console.log("response : " + JSON.stringify(data));
         } finally {
+           Router.push({
+              pathname: "/user/queue-success",
+            })
             setLoading(false);
         }
 
@@ -134,7 +137,7 @@ export default function Queue() {
                                 </span>
                                 <input
                                     type="text"
-                                    class="text-gray-500 text-base font-normal rounded-lg 
+                                    class="text-gray-500 text-base font-normal
                                         w-full
                                             rounded-md
                                             border-gray-300
@@ -152,7 +155,7 @@ export default function Queue() {
                                 </span>
                                 <input
                                     type="text"
-                                    class="text-gray-500 text-base font-normal rounded-lg 
+                                    class="text-gray-500 text-base font-normal
                                         w-full
                                             rounded-md
                                             border-gray-300

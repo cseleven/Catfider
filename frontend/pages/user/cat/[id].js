@@ -52,7 +52,7 @@ export default function CatProfile() {
 
   const catExample = async () => {
     var raw = JSON.stringify({
-      "cat_id": "1"
+      "cat_id": "1",
       "login_id": user.id
     });
 
