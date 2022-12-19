@@ -11,7 +11,7 @@ export default function Catprofile({pic, map, vaccine, sterile, bank1, donate_nu
                 {!map? (
                     <Loading/>
                 ):(
-                    <iframe src={map} class="basis-2/3 flex-1 min-h-[260px] border-0 rounded-lg" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"/>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.810927024412!2d100.77565737605752!3d13.729894097798276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d664988a1bedf%3A0xcc678f180e221cd0!2sKing%20Mongkut&#39;s%20Institute%20of%20Technology%20Ladkrabang!5e0!3m2!1sen!2sth!4v1671191115547!5m2!1sen!2sth" class="basis-2/3 flex-1 min-h-[260px] border-0 rounded-lg" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"/>
                 )
                 }
                 <div class="basis-1/3 flex-1 flex space-x-2 justify-between text-gray-600">
