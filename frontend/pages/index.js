@@ -1,9 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import profilePic from '../public/index/cat.png'
+import catpaws from '../public/index/cat-paws.png'
 import tickSquare from '../public/index/tick-square.png'
 import vectorHome from '../public/index/vector-home.png'
 import group1 from '../public/index/group-1.png'
+import group2 from '../public/index/group-2.png'
+import group3 from '../public/index/group-3.png'
 import vectorArrow from '../public/index/vector-arrow.png'
 import catProfile1 from '../public/index/cat-profile1.png'
 import catProfile2 from '../public/index/cat-profile2.png'
@@ -65,8 +68,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {loading ? (
-        <Loading/>
-      ):(
+        <Loading />
+      ) : (
         <div class="container">
 
           {/*section 1*/}
@@ -113,9 +116,9 @@ export default function Home() {
           <div class="w-screen h-[33rem]">
             <p class="text-center text-[36px] text-salmon pt-[24px]">ขั้นตอนรับเลี้ยง</p>
             <div class="flex space-x-10 place-content-center mt-6">
-                <Homecard img={group1} topic="ค้นหา" detail="ค้นหาน้องแมวที่คุณต้องการช่วยเหลือจากมูลนิธิ" />
-                <Homecard img={group1} topic="จองคิว" detail="จองคิวเพื่อนัดดูน้องแมวของคุณกับทางมูลนิธิหรือสงเคราะห์" />
-                <Homecard img={group1} topic="รับเลี้ยง" detail="กรอกแบบฟอร์มเพื่อขอรับอุปการะโดยไม่มีค่าใช้จ่ายใดๆ" />
+              <Homecard img={group1} topic="ค้นหา" detail="ค้นหาน้องแมวที่คุณต้องการช่วยเหลือจากมูลนิธิ" />
+              <Homecard img={group2} topic="จองคิว" detail="จองคิวเพื่อนัดดูน้องแมวของคุณกับทางมูลนิธิหรือสงเคราะห์" />
+              <Homecard img={group3} topic="รับเลี้ยง" detail="กรอกแบบฟอร์มเพื่อขอรับอุปการะโดยไม่มีค่าใช้จ่ายใดๆ" />
             </div>
             <p class="text[20px] text-salmon text-center font-normal pt-[22px]">ดูเพิ่มเติม</p>
           </div>
@@ -138,8 +141,12 @@ export default function Home() {
 
           {/*section 4*/}
           <div class="w-screen h-[28rem] grid grid-cols-2 divide-x-[3px] divide-salmon border-t-4 border-b-4 outline-[3px] border-salmon text-[36px] font-normal text-salmon text-center">
-            <td class="pt-16">มูลนิธิที่ร่วมกับเรา</td>
-            <td class="pt-16">น้องแมวที่ได้รับการช่วยเหลือ</td>
+            <td class="pt-16">มูลนิธิที่ร่วมกับเรา
+              <p class="text-8xl py-24">30</p>
+            </td>
+            <td class="pt-16">น้องแมวที่ได้รับการช่วยเหลือ
+              <p class="text-8xl py-24">238</p>
+            </td>
           </div>
 
           {/*section 5*/}
@@ -213,10 +220,15 @@ export default function Home() {
             <a href="/signin/user" class="rounded-lg bg-salmon text-white text-2xl mt-[48px]  mx-auto px-20 py-[8px]">สมัครสมาชิก</a>
           </div>
 
+          {/*section 7*/}
+          <div class="w-screen h-[20rem]"/>
+
           {/*img backgroud*/}
           <div class="w-screen">
-            <Image class="absolute mt-24 top-20 left-0 -z-40 object-none object-right" src={vectorHome} placeholder="blur"></Image>
-            <Image class="absolute top-20 right-0 object-none object-right -z-50" src={profilePic} placeholder="blur"></Image>
+            <Image class="absolute mt-24 top-20 left-0 -z-40 " src={vectorHome} placeholder="blur" />
+            <Image class="absolute top-20 right-0 -z-50" src={profilePic} placeholder="blur" />
+            <Image class="absolute w-28 h-36 top-[920px] left-48 -z-50" src={catpaws} placeholder="blur" />
+            <Image class="absolute w-28 h-36 top-[920px] right-48 -z-50" src={catpaws} placeholder="blur" />
           </div>
         </div>
       )}

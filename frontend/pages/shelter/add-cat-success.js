@@ -55,11 +55,11 @@ export default function AddCatSuccess() {
                 </div>
                 <div class="flex text-normal text-lg mt-10 ml-[600px]">
                     <button type="button"
-                        class="flex rounded-lg bg-white border-salmon border-2 text-salmon rounded-full text-lg mx-3 px-5 py-2">
+                        class="flex rounded-lg bg-white border-salmon border-2 text-salmon  text-lg mx-3 px-5 py-2">
                         + เพิ่มตัวต่อไป
                     </button>
-                    <button type="button"
-                        class="flex rounded-lg bg-salmon text-white rounded-full text-lg px-5 py-2">
+                    <button type="button" onClick={()=>Router.push({pathname: "/",})}
+                        class="flex rounded-lg bg-salmon text-white  text-lg px-5 py-2">
                         ออกจากหน้านี้
                     </button>
                 </div>
