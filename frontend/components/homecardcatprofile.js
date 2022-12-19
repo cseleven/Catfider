@@ -29,10 +29,10 @@ export default function HomecardCatprofile({ item }) {
     }, [])
     
     const checkPath = () => {
-        if(user.user_metadata.role == 2){
+        if(user?.user_metadata?.role == 2){
             setPath("/shelter/cat/")
         }
-        if(user.user_metadata.role == 1){
+        if(user?.user_metadata?.role == 1){
             setPath("/user/cat/")
         }
     }

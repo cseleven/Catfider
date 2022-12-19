@@ -131,7 +131,7 @@ export default function MyCat() {
             <p class="text-sm ">สายพันธุ์</p>
             <p class="text-sm ">สถานะ</p>
           </div>
-          {cat.map((item)=>(
+          {/*{cat.map((item)=>(
             <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal text-sm">
               <Image class="mx-7 my-4" src={catProfileAdopt2} placeholder="blur" />
               <div class="py-4">
@@ -148,7 +148,7 @@ export default function MyCat() {
               }
               <button type="button" onClick={()=>Router.push({pathname: "/shelter/cat/"+item.cat_id,})} class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
             </div>
-          ))}
+            ))}*/}
           <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal">
             <Image class="mx-7 my-4" src={catProfileAdopt1} placeholder="blur" />
             <div class="py-4">
@@ -160,7 +160,7 @@ export default function MyCat() {
               <p class="text-gray-500 pl-[200px] text-xs">เพศผู้</p>
             </div>
             <p class="w-9 h-7 bg-green-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-green-600 font-medium text-center pt-1">ว่าง</p>
-            <button class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
+            <button type="button" onClick={()=>Router.push({pathname: "/shelter/cat/"+item.cat_id,})} class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
           </div>
           <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal text-sm">
             <Image class="mx-7 my-4" src={catProfileAdopt2} placeholder="blur" />
