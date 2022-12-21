@@ -45,7 +45,7 @@ export default function CatProfile() {
 
   
   useEffect(() => {
-    console.log("session: "+user?.id)
+    console.log("login_id: "+user?.id)
     console.log("rout: "+JSON.stringify(router.query.id))
     catExample()
   }, [])

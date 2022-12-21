@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Loading from "../../../components/loading";
 import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
+import Router from 'next/router';
 
 export default function CatProfile() {
   const [loading, setLoading] = useState(true);

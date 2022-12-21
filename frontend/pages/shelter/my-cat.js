@@ -10,6 +10,7 @@ import catProfileAdopt6 from '../../public/index/cat-profile-adopt6.png'
 import previousIcon from '../../public/my-cat/previous-icon.png'
 import nextIcon from '../../public/my-cat/next-icon.png'
 import line1 from '../../public/my-cat/line.png'
+import Router from 'next/router';
 
 
 

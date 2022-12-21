@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import Loading from "../../../components/loading";
 import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { useRouter } from "next/router";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -12,6 +13,7 @@ export default function CatProfile() {
   const [loading, setLoading] = useState(true);
   const [cat, setCat] = useState(null)
   const pathname = usePathname();
+  const router = useRouter();
 
   const mock = { 
     name:"มะลิ", pic:"https://images.unsplash.com/photo-1615789591457-74a63395c990", vaccine:true, sterile:true,bank:["กสิกร 999-999-9999","กรุงไทย 888-888-888"],
@@ -21,14 +23,14 @@ export default function CatProfile() {
   }
 
   useEffect(() => {
+    console.log("rout: "+router.query.id);
     catExample()
   }, [])
 
 
   const catExample = async () => {
-    var raw = JSON.stringify({
-      "cat_id": "2"
-
+    const raw = JSON.stringify({
+      "cat_id": router.query.id,
     });
 
     var myheader = {
@@ -47,7 +49,7 @@ export default function CatProfile() {
       setLoading(true);
       let response = await fetch("/api/cat/shelterview/profileCat", requestOptions);
       let data = await response.json();
-      console.log("response : " + JSON.stringify(data));
+      console.log("cat_id: "+ raw.cat_id +" response : " + JSON.stringify(data));
       setCat(data);
     } finally {
       setLoading(false);
