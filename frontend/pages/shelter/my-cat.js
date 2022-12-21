@@ -12,6 +12,7 @@ import nextIcon from '../../public/my-cat/next-icon.png'
 import line1 from '../../public/my-cat/line.png'
 
 
+
 export default function MyCat() {
   const user = useUser()
   const session = useSession()
@@ -131,8 +132,8 @@ export default function MyCat() {
             <p class="text-sm ">สายพันธุ์</p>
             <p class="text-sm ">สถานะ</p>
           </div>
-          {cat.map((item)=>(
-            <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal text-sm">
+          {cat?.map((item)=>(
+            <div class="flex h-[80px] my-8 drop-shadow-md bg-white border-b border-gray-200 font-normal text-sm">
               <Image class="mx-7 my-4" src={catProfileAdopt2} placeholder="blur" />
               <div class="py-4">
                 <p class="text-gray-900 text-base">{item.cat_name} <>(#</>{item.cat_id}<>)</></p>
@@ -149,7 +150,7 @@ export default function MyCat() {
               <button type="button" onClick={()=>Router.push({pathname: "/shelter/cat/"+item.cat_id,})} class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
             </div>
           ))}
-          <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal">
+          {/* <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal">
             <Image class="mx-7 my-4" src={catProfileAdopt1} placeholder="blur" />
             <div class="py-4">
               <p class="text-gray-900 text-base">กีต้า (#1255)</p>
@@ -226,7 +227,7 @@ export default function MyCat() {
             </div>
             <p class="w-9 h-7 bg-red-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-red-600 font-medium text-center pt-1">มีบ้าน</p>
             <button class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
-          </div>
+          </div> */}
         </div>
       </div>
 
