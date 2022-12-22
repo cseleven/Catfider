@@ -15,7 +15,6 @@ export default function AddCat() {
     // const [id, setId] = useState(0)
 
     useEffect(() => {
-        catExample()
     }, [])
 
 
@@ -67,7 +66,7 @@ export default function AddCat() {
 
 
     return (
-        <div class="container">
+        <div class="container mx-auto">
             <Head>
                 <title>Cat Finder</title>
                 <meta name="description" content="create by eleven" />

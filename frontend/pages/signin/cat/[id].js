@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import Loading from "../../../components/loading";
 import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
-import Router from 'next/router';
+import { useRouter } from "next/router";
 
 export default function CatProfile() {
   const [loading, setLoading] = useState(true);
   const [cat, setCat] = useState(null)
+  const router = useRouter();
 
   const mock = { 
     name:"มะลิ", pic:"https://images.unsplash.com/photo-1615789591457-74a63395c990", vaccine:true, sterile:true,bank:["กสิกร 999-999-9999","กรุงไทย 888-888-888"],
@@ -21,7 +22,7 @@ export default function CatProfile() {
 
   const catExample = async () => {
     var raw = JSON.stringify({
-      "cat_id": "3"
+      "cat_id": router.query.id
 
     });
 

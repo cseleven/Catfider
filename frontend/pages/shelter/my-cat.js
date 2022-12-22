@@ -57,7 +57,7 @@ export default function MyCat() {
   };
 
   return (
-    <div>
+    <div class="container mx-auto">
       <nav class="flex mx-28 mt-9" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">
@@ -76,10 +76,10 @@ export default function MyCat() {
       </nav>
       <div class="flex mt-8">
         <p class="text-4xl text-black font-normal mx-28">แมวของฉัน</p>
-        <button type="button "
+        <a type="button " href="/shelter/add-cat"
           class="flex rounded-lg bg-salmon text-white text-lg ml-[890px] mb-7 px-6 py-2 gap-3">
           + เพิ่มแมว
-        </button>
+        </a>
       </div>
       <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28" />
 
@@ -99,7 +99,6 @@ export default function MyCat() {
                 font-normal
             "
             >
-              <option>ประเภท</option>
               <option value="สถานะ">สถานะ</option>
               <option value="สายพันธุ์">สายพันธุ์</option>
               <option value="สี หรือ ลาย"> สี หรือ ลาย</option>

@@ -12,6 +12,7 @@ function classNames(...classes) {
 export default function CatProfile() {
   const [loading, setLoading] = useState(true);
   const [cat, setCat] = useState(null)
+  const [queue, setQueue] = useState(null)
   const pathname = usePathname();
   const router = useRouter();
 
@@ -51,6 +52,7 @@ export default function CatProfile() {
       let data = await response.json();
       console.log("cat_id: "+ raw.cat_id +" response : " + JSON.stringify(data));
       setCat(data);
+      setCat(data[0].queue);
     } finally {
       setLoading(false);
     }
@@ -135,12 +137,12 @@ export default function CatProfile() {
                 </tr>
               </thead>
               <tbody>
-                {cat.map((item)=>(
+                {queue.map((item)=>(
                   <tr class="bg-white border-b  hover:bg-gray-50">
-                    <td class="px-3 py-2">{item.queue?.user_profile?.email}</td>
-                    <td class="px-3 py-2">{item.queue?.queue_date}</td>
-                    {item.queue?.queue_status ? (
-                        <td class="px-3 py-2">{item.queue?.queue_time} น.</td>
+                    <td class="px-3 py-2">{item.user_profile?.email}</td>
+                    <td class="px-3 py-2">{item.queue_date}</td>
+                    {item.queue_status ? (
+                        <td class="px-3 py-2">{item.queue_time} น.</td>
                       ):( 
                         <td class="px-3 py-2 text-error">ยกเลิก</td>
                       )}

@@ -8,9 +8,6 @@ import group1 from '../public/index/group-1.png'
 import group2 from '../public/index/group-2.png'
 import group3 from '../public/index/group-3.png'
 import vectorArrow from '../public/index/vector-arrow.png'
-import catProfile1 from '../public/index/cat-profile1.png'
-import catProfile2 from '../public/index/cat-profile2.png'
-import catProfile3 from '../public/index/cat-profile3.png'
 import heart from '../public/index/heart.png'
 import catProfileAdopt1 from '../public/index/cat-profile-adopt1.png'
 import catProfileAdopt2 from '../public/index/cat-profile-adopt2.png'
@@ -219,9 +216,6 @@ export default function Home() {
             <p class="text-[40px] text-black/[0.8] font-medium text-center pt-[200px]">ยังมีน้องแมวที่ต้องการความรักจากคุณ</p>
             <a href="/signin/user" class="rounded-lg bg-salmon text-white text-2xl mt-[48px]  mx-auto px-20 py-[8px]">สมัครสมาชิก</a>
           </div>
-
-          {/*section 7*/}
-          <div class="w-screen h-[20rem]"/>
 
           {/*img backgroud*/}
           <div class="w-screen">
