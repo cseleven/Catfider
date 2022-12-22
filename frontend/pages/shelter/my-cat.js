@@ -9,7 +9,11 @@ import catProfileAdopt5 from '../../public/index/cat-profile-adopt5.png'
 import catProfileAdopt6 from '../../public/index/cat-profile-adopt6.png'
 import previousIcon from '../../public/my-cat/previous-icon.png'
 import nextIcon from '../../public/my-cat/next-icon.png'
+import vectorprinter from '../../public/my-cat/printer.png'
 import line1 from '../../public/my-cat/line.png'
+import Router from 'next/router';
+
+
 
 
 export default function MyCat() {
@@ -27,7 +31,7 @@ export default function MyCat() {
   const catExample = async () => {
     var raw = JSON.stringify({
       "login_id": "fadadb65-080e-4be8-a3dc-163df80e0918",
-      "page_number":1
+      "page_number": 1
 
     });
 
@@ -74,10 +78,10 @@ export default function MyCat() {
       </nav>
       <div class="flex mt-8">
         <p class="text-4xl text-black font-normal mx-28">แมวของฉัน</p>
-        <button type="button "
-          class="flex rounded-lg bg-salmon text-white text-lg ml-[890px] mb-7 px-6 py-2 gap-3">
-          + เพิ่มแมว
-        </button>
+        <div>
+          <a href="/shelter/add-cat" className="rounded-lg bg-salmon text-white text-lg ml-[890px] mb-7 px-6 py-2 gap-3">
+            + เพิ่มแมว</a>
+        </div>
       </div>
       <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28" />
 
@@ -124,32 +128,53 @@ export default function MyCat() {
         </div>
       </form>
 
+      <a href="/user/form-adopt" className="flex rounded-lg bg-iris-20 border-iris-60 border-2 text-iris-100 text-sm font-normal mt-7 ml-[82rem] pt-2 pb-2 px-3 w-32 h-10">
+        <Image class="my-auto pr-1" src={vectorprinter} placeholder="blur" />
+        พิมพ์เอกสาร</a>
+
       <div class="h-[35rem]">
-        <div class="h-30rounded-t-lg drop-shadow-md bg-gray-50 ml-28 mr-28 mt-12 border-b border-gray-200">
-          <div class="flex text-gray-500 font-normal pt-3 pl-7 space-x-[28rem]">
-            <p class="text-sm ">ชื่อ</p>
-            <p class="text-sm ">สายพันธุ์</p>
-            <p class="text-sm ">สถานะ</p>
+        <div class="h-auto rounded-lg drop-shadow-md bg-gray-50 ml-28 mr-28 mt-5 border-2 border-gray-200 ">
+          {/*<div class="flex text-gray-500 font-normal pt-3 pl-7 space-x-[28rem]">*/}
+          <div class="flex text-gray-500 text-sm font-normal pt-2 pb-1">
+            <div class="w-[30rem] pl-7">
+              <p class=" ">ชื่อ</p>
+            </div>
+            <div class="w-[28rem]">
+              <p>สายพันธุ์</p>
+            </div>
+            <div class="w-[3rem]">
+              <p>สถานะ</p>
+            </div>
+            <div class="w-[10rem]"></div>
           </div>
-          {cat.map((item)=>(
-            <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal text-sm">
-              <Image class="mx-7 my-4" src={catProfileAdopt2} placeholder="blur" />
-              <div class="py-4">
-                <p class="text-gray-900 text-base">{item.cat_name} <>(#</>{item.cat_id}<>)</></p>
-                <p class="text-gray-500 text-xs">วันเข้าระบบ : {item.create_date}</p>
+
+          {cat?.map((item) => (
+            <div class="flex h-auto">
+              <div class="flex w-[30rem] bg-white border-b border-gray-200 font-normal text-sm">
+                <Image class="mt-auto mb-auto ml-4" src={catProfileAdopt2} placeholder="blur" />
+                <div class="py-3 pl-2">
+                  <p class="text-gray-900 text-base">{item.cat_name} <>(#</>{item.cat_id}<>)</></p>
+                  <p class="text-gray-500 text-xs">วันเข้าระบบ : {item.create_date}</p>
+                </div>
               </div>
-              <div class="py-4 pl-20">
-                <p class="text-gray-900 pl-[200px] text-base">{item.breed}</p>
-                <p class="text-gray-500 pl-[200px] text-xs">{item.sex}</p>
+              <div class="flex w-[28rem] bg-white border-gray-200 border-b font-normal text-sm">
+                <div class="my-auto">
+                  <p class="text-gray-900 text-base">{item.breed}</p>
+                  <p class="text-gray-500 text-xs">{item.sex}</p>
+                </div>
               </div>
-              {
-                item.status?(<p class="w-9 h-7 bg-green-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-green-600 font-medium text-center pt-1">ว่าง</p>):
-                (<p class="w-9 h-7 bg-red-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-red-600 font-medium text-center pt-1">มีบ้าน</p>)
-              }
-              <button type="button" onClick={()=>Router.push({pathname: "/shelter/cat/"+item.cat_id,})} class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
+              <div class="flex w-[3rem] bg-white border-gray-200 border-b">
+                {
+                  item.status ? (<p class="w-9 h-7 bg-green-200 rounded-[32px] my-auto text-sm text-green-600 font-medium text-center pt-1">ว่าง</p>) :
+                    (<p class="w-9 h-7 bg-red-200 rounded-[32px] my-auto text-sm text-red-600 font-medium text-center pt-1">มีบ้าน</p>)
+                }
+              </div>
+              <div class="flex w-[20rem] bg-white border-b border-gray-200">
+                <button type="button" onClick={() => Router.push({ pathname: "/shelter/cat/" + item.cat_id, })} class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
+              </div>
             </div>
           ))}
-          <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal">
+          {/* <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal">
             <Image class="mx-7 my-4" src={catProfileAdopt1} placeholder="blur" />
             <div class="py-4">
               <p class="text-gray-900 text-base">กีต้า (#1255)</p>
@@ -160,7 +185,8 @@ export default function MyCat() {
               <p class="text-gray-500 pl-[200px] text-xs">เพศผู้</p>
             </div>
             <p class="w-9 h-7 bg-green-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-green-600 font-medium text-center pt-1">ว่าง</p>
-            <button class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
+            <a href="/shelter/cat/3" className="text-sm text-indigo-600 font-normal ml-48 pt-7">
+              Edit</a>
           </div>
           <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal text-sm">
             <Image class="mx-7 my-4" src={catProfileAdopt2} placeholder="blur" />
@@ -226,7 +252,7 @@ export default function MyCat() {
             </div>
             <p class="w-9 h-7 bg-red-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-red-600 font-medium text-center pt-1">มีบ้าน</p>
             <button class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
-          </div>
+          </div> */}
         </div>
       </div>
 

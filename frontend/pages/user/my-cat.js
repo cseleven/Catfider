@@ -6,7 +6,9 @@ import catProfile1 from '../../public/index/cat-profile1.png'
 import catProfile2 from '../../public/my-cat/cat-profile1.png'
 import catProfile3 from '../../public/my-cat/cat-profile2.png'
 import petIcon from '../../public/my-cat/pet-icon.png'
-import HomecardCatprofile from '../../components/homecardcatprofile.js'
+import Homecat from '../../components/homecat.js'
+import HomecardCatprofile from '../../components/homecardcatprofile'
+import Router from 'next/router';
 
 export default function MyCat() {
   const user = useUser()
@@ -20,8 +22,7 @@ export default function MyCat() {
 
   const catExample = async () => {
     var raw = JSON.stringify({
-      "user_id": 2
-
+      "login_id": user?.id
     });
 
     var myheader = {
@@ -41,14 +42,18 @@ export default function MyCat() {
       let response = await fetch("/api/cat/userview/showmyCat", requestOptions);
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
-      setCat(data)
+      console.log("response data.queue.cat_profile : " + JSON.stringify(data.queue.cat_profile));
+      setCat(data.queue.cat_profile);
+      console.log("response cat : " + JSON.stringify(cat));
     } finally {
       setLoading(false);
     }
   };
+
+  
   return (
     <div>
-      {!loading ? (<Loading />) : (
+      {/*{!loading ? (<Loading />) : (*/}
       <div>
         <nav class="flex mx-28 mt-9" aria-label="Breadcrumb">
           <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -68,11 +73,9 @@ export default function MyCat() {
         </nav>
         <div class="flex mt-8">
           <p class="text-4xl text-black font-normal mx-28">แมวของฉัน</p>
-          <button type="button "
-            class="flex rounded-lg bg-iris-80 text-white text-lg ml-[820px] mb-6 px-6 py-2 gap-3">
-            <Image src={petIcon} placeholder="blur" />
-            ขออุปการะแมว
-          </button>
+          <a href="/user/form-adopt" className="flex rounded-lg bg-iris-80 text-white text-lg ml-[820px] mb-6 px-6 py-2 gap-3">
+          <Image src={petIcon} placeholder="blur" />
+          ขออุปการะแมว</a>
         </div>
         <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28" />
 
@@ -120,15 +123,18 @@ export default function MyCat() {
         </form>
 
         <div className="grid grid-cols-3 justify-items-center gap-6 ml-24 mr-7 mt-9">
-          {cat.map((item)=>(
+          {cat?.map((item)=>(
+            <>
+              {console.log(JSON.stringify(item))}
                 <HomecardCatprofile item={item} />
+              </>
           ))}
-          {/* <HomecardCatprofile imgcat={catProfile1} statuscat="จองคิว" namecat="มะลิ (#1210)" detail="แม่มะลิ แมวจรพันธุ์ไทย สีขาวดำ นิสัยเป็นมิตร ใจดีกับแมวเด็ก..." tagbreed="พันธุ์ไทย" tagcolor="ขาวดำ" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
-          <HomecardCatprofile imgcat={catProfile2} statuscat="มีบ้าน" namecat="มะระ (#1211)" detail="แมวพันธุ์วิเชียรมาศ ตาสวย น้องกำพร้าแม่ เป็นแมวหลงทาง ขาซ้ายบาดเจ็บ..." tagbreed="วิเชียรมาศ" tagcolor="ลายแต้ม" tagsex="เพศเมีย" fund="มูลนิธิแมวหลง" />
-          <HomecardCatprofile imgcat={catProfile3} statuscat="มีบ้าน" namecat="มะไฟ (#1212)" detail="มะไฟ แมวขี้เล่น ปัจจุบันกำพร้าเจ้าของ เหมาะกับคนมีเวลา..." tagbreed="พันธุ์ผสม" tagcolor="เทา" tagsex="เพศผู้" fund="มูลนิธิบ้านพักเหมียว" /> */}
+          <Homecat imgcat={catProfile1} placeholder="blur" statuscat="จองคิว" namecat="มะลิ (#1210)" detail="แม่มะลิ แมวจรพันธุ์ไทย สีขาวดำ นิสัยเป็นมิตร ใจดีกับแมวเด็ก..." tagbreed="พันธุ์ไทย" tagcolor="ขาวดำ" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
+          <Homecat imgcat={catProfile2} placeholder="blur" statuscat="มีบ้าน" namecat="มะระ (#1211)" detail="แมวพันธุ์วิเชียรมาศ ตาสวย น้องกำพร้าแม่ เป็นแมวหลงทาง ขาซ้ายบาดเจ็บ..." tagbreed="วิเชียรมาศ" tagcolor="ลายแต้ม" tagsex="เพศเมีย" fund="มูลนิธิแมวหลง" />
+          <Homecat imgcat={catProfile3} placeholder="blur" statuscat="มีบ้าน" namecat="มะไฟ (#1212)" detail="มะไฟ แมวขี้เล่น ปัจจุบันกำพร้าเจ้าของ เหมาะกับคนมีเวลา..." tagbreed="พันธุ์ผสม" tagcolor="เทา" tagsex="เพศผู้" fund="มูลนิธิบ้านพักเหมียว" /> 
         </div>
       </div>
-      )}
+      <div class="h-[12rem]"/>
     </div>
   )
 }

@@ -51,8 +51,8 @@ export default function Queue() {
             let data = await response.json();
             console.log("response : " + JSON.stringify(data));
         } finally {
-           Router.push({
-              pathname: "/user/queue-success",
+            Router.push({
+                pathname: "/user/queue-success",
             })
             setLoading(false);
         }
@@ -219,10 +219,12 @@ export default function Queue() {
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md mx-28">
                             <div class="h-[30rem] py-3">
                                 <button type="submit"
-                                    class="flex bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]"
-                                >
-                                    ยืนยัน
+                                    class="flex bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]">
+                                    <a href="/user/queue-success">
+                                        ยืนยัน
+                                    </a>
                                 </button>
+
                             </div>
 
                         </div>
