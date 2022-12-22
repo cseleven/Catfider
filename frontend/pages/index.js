@@ -207,7 +207,7 @@ export default function Home() {
           {/*section 6*/}
           <div class="w-screen h-[35rem]">
             <p class="text-[40px] text-black/[0.8] font-medium text-center pt-[200px]">ยังมีน้องแมวที่ต้องการความรักจากคุณ</p>
-            <button class="rounded-lg bg-salmon text-white text-2xl mt-[40px] ml-[620px] px-20 py-[8px]">สมัครสมาชิก</button>
+            <button class="mx-auto rounded-lg bg-salmon text-white text-2xl mt-[40px] ml-[620px] px-20 py-[8px]">สมัครสมาชิก</button>
           </div>
 
           {/*img backgroud*/}
