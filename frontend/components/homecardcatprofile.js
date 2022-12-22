@@ -4,6 +4,7 @@ import Router from 'next/router';
 import { useUser } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react';
 
+
 const navigation = [
   { name: "หน้าแรก", href: ["/", "/", "/"], current: true },
   { name: "ค้นหาแมว", href: ["/all-cat","/all-cat","/all-cat"], current: false },

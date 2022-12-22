@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import printer from '../../public/print-formadopt/printer.png'
+import printer from '../../public/print-formadopt/printer-success.png'
 
 export default function PrintFormAdopt() {
     return (
@@ -18,13 +18,11 @@ export default function PrintFormAdopt() {
             </div>
 
             {/*section 2 */}
-            <div class="w-screen h-[33rem] bg-light-salmon">
-                <Image class="mx-auto pt-20" src={printer} placeholder="blur"/>
+            <div class="w-screen h-[45rem] bg-light-salmon">
+                <Image class="mx-auto pt-20" src={printer} placeholder="blur" />
                 <p class="text-gray-500 text-normal text-2xl text-center pt-9">สร้างเอกสารสำเร็จ</p>
-                <button type="button" onClick={()=>Router.push({pathname: "/index",})}
-                    class="flex rounded-lg bg-salmon text-white font-normal text-lg mx-auto mt-9 px-5 py-2">
-                    ออกจากหน้านี้
-                </button>
+                <a href="/user/my-cat" className="flex rounded-full bg-salmon text-white font-normal text-lg mt-9 ml-[44rem] pt-2 pl-5 ml-1 w-36 h-12">
+                    ออกจากหน้านี้</a>
             </div>
             <div class="w-screen h-[15rem]"></div>
         </div>
