@@ -128,7 +128,7 @@ export default function CatProfile() {
             disease={cat[0].congenital_disease}
           />
           <div class="md:basis-2/5 lg:border-l-2 lg:px-6">
-            {!mock.status?(<></>):(
+            {!cat[0].status?(<></>):(
                 <ConditionalWrapper condition={cat[0].queue} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue?.queue_date} time={cat[0].queue?.queue_time} place={cat[0].shelter_profile?.address}/>
             )}
           </div>

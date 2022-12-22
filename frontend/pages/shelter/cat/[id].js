@@ -25,7 +25,9 @@ export default function CatProfile() {
 
   useEffect(() => {
     console.log("rout: "+router.query.id);
-    catExample()
+    if(router){
+      catExample()
+    }
   }, [])
 
 
@@ -50,7 +52,7 @@ export default function CatProfile() {
       setLoading(true);
       let response = await fetch("/api/cat/shelterview/profileCat", requestOptions);
       let data = await response.json();
-      console.log("cat_id: "+ raw.cat_id +" response : " + JSON.stringify(data));
+      console.log("cat_id: "+ JSON.stringify(raw) +" response : " + JSON.stringify(data));
       setCat(data);
       setCat(data[0].queue);
     } finally {

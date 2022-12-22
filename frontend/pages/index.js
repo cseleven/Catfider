@@ -71,7 +71,7 @@ export default function Home() {
 
           {/*section 1*/}
           <div class="w-screen h-[35rem] text-zinc-700">
-            <p class="absolute pt-[131px] ml-[84px] text-[48px] font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon via-bright-salmon to-salmon">Cat Fider</p>
+            <p class="absolute pt-[131px] ml-[84px] text-[48px] font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon via-bright-salmon to-salmon">Cat Finder</p>
             <div class="flex pt-[208px] ml-[85px]  font-medium ">
               <p class="text-[36px] mt-3"> ร่วมเป็น</p>
               <p class="px-5 text-[48px]  mt-0 text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon">1</p>

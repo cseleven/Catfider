@@ -40,7 +40,7 @@ export default function AllCat() {
   //search ไม่เจอลองยิง postman แล้วก็ไม่เจอ
   const fetchCat = async (param, callback) => {
     var raw = JSON.stringify({
-      "page_number" : "",
+      "page_number" : 1,
       "cat_id": 1,
       "sex" : "",
       "breed" : "",
