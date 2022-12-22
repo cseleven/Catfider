@@ -13,7 +13,7 @@ const navigation = [
 
 export default function HomecardCatprofile({ item }) {
     const user = useUser()
-    const imgcat=item.cat_picture
+    const imgcat= cat_picture
     const statuscat=item.status
     const namecat=item.cat_name
     const idcat=item.cat_id
