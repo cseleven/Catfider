@@ -1,5 +1,16 @@
 import { supabase } from "../../supabase"
 import { useEffect, useState } from 'react'
+/**
+ * @swagger
+ * /api/cat/shelterview/profileCat:
+ *   get:
+ *     description: Returns the hello world
+ *     responses:
+ *       200:
+ *         description: hello world
+ *     
+ * 
+ **/
 
 export default async function handler(req, res) {
     //get profile cat in shelter view per cat id
