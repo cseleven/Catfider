@@ -25,8 +25,10 @@ async function getdataPerDate( shelter_id, result ) {
     data,
     count
   }
-  console.log(currentDate)
+  
+  console.log("date : ", currentDate)
   console.log("count : ", count)
+  console.log("data : ", data)
   return result
 }
 
