@@ -8,7 +8,7 @@ import Catdetail from "../../../components/catdetail";
 import Router from 'next/router';
 
 const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
-    return condition == null ? (
+    return condition == null? (
         <div class="grid mb-8 md:place-content-end md:mr-20">
           <button type="button" onClick={()=>Router.push({
               pathname: '/user/queue',
@@ -128,7 +128,7 @@ export default function CatProfile() {
           />
           <div class="md:basis-2/5 lg:border-l-2 lg:px-6">
             {!cat[0].status?(<></>):(
-                <ConditionalWrapper condition={cat[0].queue} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue[0]?.queue_date} time={cat[0].queue[0]?.queue_time} place={cat[0].shelter_profile?.address}/>
+                <ConditionalWrapper condition={cat[0].queue[0]} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue[0]?.queue_date} time={cat[0].queue[0]?.queue_time} place={cat[0].shelter_profile?.address}/>
             )}
           </div>
         </div>
