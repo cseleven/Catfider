@@ -7,10 +7,6 @@ import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
 import Router from 'next/router';
 
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
     return condition ? (
         <div class="grid mb-8 md:place-content-end md:mr-20">
@@ -37,6 +33,7 @@ export default function CatProfile() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const user = useUser()
+  const session = useSession()
   const [cat, setCat] = useState(null)
   
   const mock = { 
@@ -48,17 +45,14 @@ export default function CatProfile() {
 
   
   useEffect(() => {
-    console.log("session: "+user?.id)
-    console.log("rout: "+JSON.stringify(router.query.id))
     catExample()
   }, [])
 
 
   const catExample = async () => {
-
     var raw = JSON.stringify({
-      "cat_id": router.query.id,
-      "login_id": user?.id
+      "cat_id": "1",
+      "login_id": user.id
     });
 
     var myheader = {

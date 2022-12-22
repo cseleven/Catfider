@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 
     let query = supabase
         .from('user_profile')
-        .select('user_id, queue(queue_id, cat_profile(cat_id, cat_name, sex, breed, color, detail, cat_picture, status, shelter_profile(shelter_name)))')
+        .select('user_id, queue(queue_id, cat_profile(cat_id, cat_name, sex, breed, color, detail,cat_picture, status, shelter_profile(shelter_name)))')
         .eq('user_id', user_id) 
 
     const { data, error } = await query

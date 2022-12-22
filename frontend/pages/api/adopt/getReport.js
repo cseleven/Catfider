@@ -8,9 +8,13 @@ export default async function handler(req, res) {
     //per month 
     const perMonth = await getdataPerMonth(shelter_id)
     //per year
+    const perYear = await getdataPerYear(shelter_id)
+
+
     const result = {
       perDay,
-      perMonth
+      perMonth,
+      perYear
     }
     res.status(200).json(result)
 }
@@ -30,7 +34,7 @@ async function getdataPerDate( shelter_id, result ) {
   return result
 }
 
-//get data per date 
+//get data per month 
 async function getdataPerMonth( shelter_id, result ) {
   const date = new Date()
   const currentDate = getDate(date)
@@ -45,6 +49,26 @@ async function getdataPerMonth( shelter_id, result ) {
 
   const month = currentMonth.split('-')[1]
   console.log("month : ", month)
+  console.log("count : ", count)
+  console.log("data : ", data)
+  return result
+}
+
+
+//get data per year
+async function getdataPerYear(shelter_id, result) {
+  const date = new Date()
+  const currentYear = getYear(date)
+
+  //query data
+  const { data, count } = await supabase.from('adopt').select('*', { count: 'exact' }).eq('shelter_id', shelter_id).gte('adopt_date', currentYear)
+  result = {
+    data,
+    count
+  }
+
+  const year = currentYear.split('-')[0]
+  console.log("year : ", year)
   console.log("count : ", count)
   console.log("data : ", data)
   return result
@@ -92,4 +116,23 @@ function getMonth(date){
       month = '0' + month;
 
   return [year, month, 1].join('-')
+}
+
+
+function getYear(date) {
+  var d = new Date(date),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear()
+  
+  if (day.length < 2)
+    day = '0' + day;
+  
+  if (month.length < 2)
+    month = '0' + month;
+  
+  if (year.length < 4)
+    year = '0' + year;
+
+  return [year, 1, 1].join('-')
 }
