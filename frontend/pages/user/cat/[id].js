@@ -7,7 +7,10 @@ import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
 import Router from 'next/router';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
     return condition ? (
         <div class="grid mb-8 md:place-content-end md:mr-20">
@@ -52,13 +55,8 @@ export default function CatProfile() {
 
   const catExample = async () => {
     var raw = JSON.stringify({
-<<<<<<< HEAD
-      "cat_id": "1"
-
-=======
       "cat_id": "1",
       "login_id": user.id
->>>>>>> 3718ec2e56b5e04246018b1e05a2ae1bf4ba2a93
     });
 
     var myheader = {
