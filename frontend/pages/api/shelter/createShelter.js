@@ -5,11 +5,14 @@ export default async function handler(req, res) {
     //call parameter from body
     const { login_id } = req.body
 
+    let createStatus
+
     //check login id
     var LoginID = await checkLoginId(login_id)
     if (!LoginID) {
+        createStatus = false
         console.log("Login ID not matched!")
-        res.status(200).json("Login ID not matched!")
+        res.status(200).json(createStatus)
     } else {
         console.log("Login ID matched!")
         const { error } = await supabase.from('shelter_profile').insert([
@@ -18,7 +21,9 @@ export default async function handler(req, res) {
             }
           ])
         //print data
-        res.status(200).json("Add Shelter Success!")
+        createStatus = true
+        console.log("Add Shelter Success!")
+        res.status(200).json(createStatus)
     }
 
 }

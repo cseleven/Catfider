@@ -4,8 +4,8 @@ export default async function handler(req, res) {
 
     //call parameter from body
     const { login_id } = req.body
-    var shelter_id = await getShelterID(login_id)
 
+    var shelter_id = await getShelterID(login_id)
 
     //check if shelter id exist 
     if (shelter_id != null) {

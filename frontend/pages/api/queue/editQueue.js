@@ -6,17 +6,22 @@ export default async function handler(req, res) {
   //call parameter from body
   const { queue_id, login_id, queue_status } = req.body
 
+  let editStatus 
+
   //check queue id exist
   var queue = checkQueueId(queue_id)
   if (!queue) {
+    editStatus = false
     console.log("Queue ID Invalid!")
-    res.status(400).json("Queue ID Invalid!")
+    res.status(400).json(editStatus)
   } else {
     //check login id role
     var userID = await checkUserId(login_id)
     if (!userID) {
+
+      editStatus = false
       console.log("User ID Invalid!")
-      res.status(400).json("User ID Invalid!")
+      res.status(400).json(editStatus)
     } else {
       //check queue with login_id 
       var shelter = await checkQueueOwner(queue_id)
@@ -33,9 +38,15 @@ export default async function handler(req, res) {
             update_date: new Date(),
           }
         ]).eq('queue_id', queue_id)
-        res.status(200).json("Edit Data Successful!")
+
+        editStatus = true
+        console.log("Edit Data Successful!")
+        res.status(200).json(editStatus)
       } else {
-        res.status(200).json("User ID Does Not Have Permission!")
+
+        editStatus = false
+        console.log("User ID Does Not Have Permission!")
+        res.status(400).json(editStatus)
       }
     }
   }

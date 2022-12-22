@@ -6,26 +6,38 @@ export default async function handler(req, res) {
   //call parameter from body
   const { queue_id, login_id } = req.body
 
+  let deleteStatus 
+
   //check userID exist 
   var userID = await checkUserId(login_id)
   if (!userID) {
-    res.status(400).json("User ID Not Found!")
+    deleteStatus = false
+    console.log("User ID Not Found!")
+    res.status(400).json(deleteStatus)
+
   } else {
     //check if queue id exist 
     var queueID = await checkQueueId(queue_id)
     if (!queueID) {
+      deleteStatus = false
+      console.log("ID Not Found!")
       res.status(400).json("Queue ID Not Found!")
+
     } else {
       console.log(login_id)
       var user_id = await getUserId(login_id)
       //delete
       await supabase.from('queue').delete().eq('queue_id', queue_id).eq('user_id', user_id)
       const { data } = await supabase.from('queue').select().eq('queue_id', queue_id).eq('user_id', user_id)
+
       //checl exist
       if (data != "" && data != null) {
         res.status(400).json("Delete Queue Failed!")
       }
-      res.status(200).json("Delete Queue Success!")
+
+      deleteStatus = true
+      console.log("Delete Queue Success!")
+      res.status(200).json(deleteStatus)
     }
   }
 }
