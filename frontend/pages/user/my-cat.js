@@ -123,7 +123,7 @@ export default function MyCat() {
         </form>
 
         <div className="grid grid-cols-3 justify-items-center gap-6 ml-24 mr-7 mt-9">
-          {cat.map((item)=>(
+          {cat?.map((item)=>(
             <>
               {console.log(JSON.stringify(item))}
                 <HomecardCatprofile item={item} />

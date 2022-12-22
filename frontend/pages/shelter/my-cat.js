@@ -135,36 +135,38 @@ export default function MyCat() {
       <div class="h-[35rem]">
         <div class="h-auto rounded-lg drop-shadow-md bg-gray-50 ml-28 mr-28 mt-5 border-2 border-gray-200 ">
           {/*<div class="flex text-gray-500 font-normal pt-3 pl-7 space-x-[28rem]">*/}
-          <div class="flex text-gray-500 font-normal pt-2 pb-1">
+          <div class="flex text-gray-500 text-sm font-normal pt-2 pb-1">
             <div class="w-[30rem] pl-7">
-              <p class="text-sm ">ชื่อ</p>
+              <p class=" ">ชื่อ</p>
             </div>
             <div class="w-[28rem]">
-              <p class="text-sm ">สายพันธุ์</p>
+              <p>สายพันธุ์</p>
             </div>
             <div class="w-[3rem]">
-              <p class="text-sm ">สถานะ</p>
+              <p>สถานะ</p>
             </div>
-            <div class="w-[20rem]">
-            </div>
+            <div class="w-[10rem]"></div>
           </div>
-          {cat?.map((item)=>(
-            <div class="flex h-[80px] my-8 drop-shadow-md bg-white border-b border-gray-200 font-normal text-sm">
-              <Image class="mx-7 my-4" src={catProfileAdopt2} placeholder="blur" />
-              <div class="py-4">
-                <p class="text-gray-900 text-base">{item.cat_name} <>(#</>{item.cat_id}<>)</></p>
-                <p class="text-gray-500 text-xs">วันเข้าระบบ : {item.create_date}</p>
+
+          {cat?.map((item) => (
+            <div class="flex h-auto">
+              <div class="flex w-[30rem] bg-white border-b border-gray-200 font-normal text-sm">
+                <Image class="mt-auto mb-auto ml-4" src={catProfileAdopt2} placeholder="blur" />
+                <div class="py-3 pl-2">
+                  <p class="text-gray-900 text-base">{item.cat_name} <>(#</>{item.cat_id}<>)</></p>
+                  <p class="text-gray-500 text-xs">วันเข้าระบบ : {item.create_date}</p>
+                </div>
               </div>
-              <div class="flex w-[28rem] bg-white border-b border-gray-200 font-normal text-sm">
+              <div class="flex w-[28rem] bg-white border-gray-200 border-b font-normal text-sm">
                 <div class="my-auto">
                   <p class="text-gray-900 text-base">{item.breed}</p>
                   <p class="text-gray-500 text-xs">{item.sex}</p>
                 </div>
               </div>
-              <div class="flex w-[3rem] bg-white border-b border-gray-200">
+              <div class="flex w-[3rem] bg-white border-gray-200 border-b">
                 {
-                  item.status ? (<p class="w-9 h-7 bg-green-200 rounded-[32px] my-auto text-[12px] text-green-600 font-medium text-center pt-1">ว่าง</p>) :
-                    (<p class="w-9 h-7 bg-red-200 rounded-[32px] my-auto text-[12px] text-red-600 font-medium text-center pt-1">มีบ้าน</p>)
+                  item.status ? (<p class="w-9 h-7 bg-green-200 rounded-[32px] my-auto text-sm text-green-600 font-medium text-center pt-1">ว่าง</p>) :
+                    (<p class="w-9 h-7 bg-red-200 rounded-[32px] my-auto text-sm text-red-600 font-medium text-center pt-1">มีบ้าน</p>)
                 }
               </div>
               <div class="flex w-[20rem] bg-white border-b border-gray-200">
