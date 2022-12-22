@@ -1,6 +1,16 @@
 import { supabase } from "../../supabase"
 import { useEffect, useState } from 'react'
 
+/**
+ * @swagger
+ * /api/cat/showmyCat:
+ *   post:
+ *     description: Returns the hello world
+ *     responses:
+ *       200:
+ *         description: hello world
+ */
+
 export default async function handler(req, res) {
     //get my cat in user view
     //select by shelter_id
@@ -16,7 +26,7 @@ export default async function handler(req, res) {
 
     let query = supabase
         .from('user_profile')
-        .select('user_id, queue(queue_id, cat_profile(cat_id, cat_name, sex, breed, color, cat_picture, status, shelter_profile(shelter_name)))')
+        .select('user_id, queue(queue_id, cat_profile(cat_id, cat_name, sex, breed, color, detail, cat_picture, status, shelter_profile(shelter_name)))')
         .eq('user_id', user_id) 
 
     const { data, error } = await query

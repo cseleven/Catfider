@@ -9,7 +9,35 @@ export default function ShelterForm() {
     // const [id, setId] = useState(0)
 
     useEffect(() => {
+        createProfile()
     }, [])
+
+    const createProfile = async () => {
+        const user = useUser()
+        var raw = JSON.stringify({ "login_id": "6d6b6578-bda8-4659-9ba7-9ffca9684abf" });
+
+        var myheader = {
+            'Content-Type': 'application/json'
+        };
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myheader,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        try {
+            setLoading(true);
+            let response = await fetch("/api/shelter/createShelter", requestOptions);
+            let data = await response.json();
+            useUser(data)
+            console.log("response : " + JSON.stringify(data));
+            //useUser(data)
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const ShelterForm = async (e) => {
         var raw = JSON.stringify({
@@ -57,7 +85,7 @@ export default function ShelterForm() {
                 <p class="text-[20px] font-normal text-center pt-2 text-iris">สำหรับมูลนิธิ</p>
             </div>
 
-            <form onSubmit={ShelterForm}>
+            <form onSubmit={ShelterForm} method="POST">
                 <div class="bg-gray-200">
                     <div class="container mx-auto flex justify-around">
 

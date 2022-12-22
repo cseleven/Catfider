@@ -15,7 +15,6 @@ export default function AddCat() {
     // const [id, setId] = useState(0)
 
     useEffect(() => {
-        catExample()
     }, [])
 
 
@@ -23,23 +22,7 @@ export default function AddCat() {
     const catExample = async (e) => {
         var raw = JSON.stringify({
             //"cat_id": 5,
-<<<<<<< HEAD
-            "shelter_id": 3,
-            "age": 2,
-            "cat_name": "ขนมจีบ",
-            "sex": "male",
-            "breed": "สีสวาด",
-            "color": "ส้ม",
-            "sterile": false,
-            "vaccine": true,
-            "detail": "น้องเป็นแมวอารมณ์ดี เป็นมิตรกับสิ่งแวดล้อม",
-            "cat_picture": "www.google.com",
-            "status": false,
-            
-
-
-=======
-            "login_id": user.id,
+            "login_id": "user.id",
             "cat_name": e.target.cat_name.value,
             "sex": e.target.sex.value,
             "breed": e.target.breed.value,
@@ -52,7 +35,6 @@ export default function AddCat() {
             "age": e.target.age.value,
             "age_unit": e.target.age_unit.value,
             "congenital_disease": e.target.congenital_disease.value
->>>>>>> jee2
         });
 
         var myheader = {
@@ -73,6 +55,9 @@ export default function AddCat() {
             let data = await response.json();
             console.log("response : " + JSON.stringify(data));
         } finally {
+            Router.push({
+                pathname: "/shelter/add-cat-success",
+            })
             setLoading(false);
         }
     };
@@ -81,7 +66,7 @@ export default function AddCat() {
 
 
     return (
-        <div class="container">
+        <div class="container mx-auto">
             <Head>
                 <title>Cat Finder</title>
                 <meta name="description" content="create by eleven" />
@@ -89,7 +74,7 @@ export default function AddCat() {
             </Head>
 
             {/*section 1*/}
-            <div class="w-screen h-[171px]">
+            <div class="h-[171px]">
                 <div class="flex my-8 mx-28">
                     <nav class="flex" aria-label="Breadcrumb">
                         <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -123,7 +108,7 @@ export default function AddCat() {
 
             {/*section 2*/}
 
-            <div class="w-screen h-[1350px] bg-light-salmon py-6">
+            <div class="h-auto bg-light-salmon py-6">
                 <div class="flex">
                     <div class="ml-28">
                         <div class="text-2xl font-normal text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon">ข้อมูลแมว</div>
@@ -132,7 +117,7 @@ export default function AddCat() {
                     </div>
 
                     <form onSubmit={catExample}>
-                        <div class="w-[803px] h-[1200px] bg-white rounded-t shadow-md px-7 py-6 space-y-3 ml-28">
+                        <div class="h-auto bg-white rounded-t shadow-md px-7 py-6 space-y-3 ml-28">
                             <label class="block w-2/3">
                                 <span class=" flex text-gray-700">ชื่อน้องแมว
                                     <span class="text-error font-light">*</span>
@@ -374,23 +359,23 @@ export default function AddCat() {
                             </label>
 
                             <label class="block w-full">
-                                <span class="text-gray-700">ประวัติโดยย่อ</span>
-                                <input
+
+                                <label for="message" class="block mb-2 text-base font-normal text-gray-700">ประวัติโดยย่อ</label>
+                                <textarea
                                     id="detail"
                                     name="detail"
                                     type="text"
-                                    class="
-                                            block
-                                            w-full
-                                            h-20
-                                            rounded-md
-                                            border-gray-300
-                                            shadow-sm
-                                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                            font-normal
-                                            placeholder-gray-900
-                                        "
-                                />
+                                    class="block
+                                    w-full
+                                    h-20
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    font-normal
+                                    placeholder-gray-900" >
+
+                                </textarea>
                             </label>
                             <span class="text-sm text-gray-500 font-light">เล่าเกี่ยวกับน้องแมวตัวนี้ เช่น นิสัย ของชอบ อาการบาดเจ็บ ประวัติการถ่ายพยาธิ เป็นต้น</span>
                             <span class="flex text-gray-700 text-sm text-normal pt-3">รูปภาพแมว
@@ -398,7 +383,7 @@ export default function AddCat() {
                             </span>
                             <div class="flex w-full">
                                 <Image class="pt-1 pb-1" src={changeProfile} placeholder="blur" />
-                                <label for="dropzone-file" class="bg-white font-normal border border-gray-300 text-gray-700 text-center rounded-md h-[36px] text-sm py-2 px-5 mx-6 my-2">
+                                <label for="cat_picture" class="bg-white font-normal border border-gray-300 text-gray-700 text-center rounded-md h-[36px] text-sm py-2 px-5 mx-6 my-2">
                                     <div class="flex flex-col items-center justify-center pb-6">
                                         Change
                                     </div>
@@ -406,7 +391,7 @@ export default function AddCat() {
                                 </label>
                             </div>
                             <div class="flex items-center justify-center w-full">
-                                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <label for="cat_picture" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                     <Image class="mx-auto pt-5" src={addProfile} placeholder="blur" />
                                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="text-indigo-600">Upload a file</span> or drag and drop</p>
@@ -417,10 +402,10 @@ export default function AddCat() {
                             </div>
                         </div>
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
-                            <div class="w-screen h-[30rem] py-3">
-                                <button type="submit"
-                                    class="flex rounded-lg bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]">
-                                    ยืนยัน
+                            <div class="h-[30rem] py-3">
+                                <button type="submit">
+                                    <a href="/shelter/add-cat-success" className="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]">
+                                        ยืนยัน</a>
                                 </button>
                             </div>
                         </div>
@@ -429,7 +414,7 @@ export default function AddCat() {
                 </div>
                 <div class="w-10/12 h-0.5 bg-gray-200 mx-28 my-7" />
             </div>
-            <div class="w-screen h-[20rem]" />
+            <div class="h-[20rem]" />
         </div >
     )
 }

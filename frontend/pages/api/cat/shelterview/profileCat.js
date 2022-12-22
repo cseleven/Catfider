@@ -1,5 +1,16 @@
 import { supabase } from "../../supabase"
 import { useEffect, useState } from 'react'
+/**
+ * @swagger
+ * /api/cat/shelterview/profileCat:
+ *   get:
+ *     description: Returns the hello world
+ *     responses:
+ *       200:
+ *         description: hello world
+ *     
+ * 
+ **/
 
 export default async function handler(req, res) {
     //get profile cat in shelter view per cat id
@@ -7,7 +18,7 @@ export default async function handler(req, res) {
     const { cat_id } = req.body
     let query = supabase
         .from('cat_profile')
-        .select('cat_id, cat_name, detail, age, sex, breed, color, sterile, vaccine, congenital_disease, status, cat_picture, shelter_id, shelter_profile!inner(shelter_name, donate_name1, donate_number1, donate_name2, donate_number2), queue!inner(queue_date, user_id, user_profile!inner(email), queue_status)')
+        .select('cat_id, cat_name, detail, age, sex, breed, color, sterile, vaccine, congenital_disease, status, cat_picture, shelter_id, shelter_profile(shelter_name, location_url, address, donate_name1, donate_number1, donate_name2, donate_number2), queue(queue_date, queue_time, user_id, user_profile(email), queue_status)')
         if (cat_id) { query = query.eq('cat_id', cat_id) }
 
     const { data, error } = await query

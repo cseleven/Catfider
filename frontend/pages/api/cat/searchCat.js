@@ -2,6 +2,16 @@ import { supabase } from "../supabase"
 import { useEffect, useState } from 'react'
 import { stringify } from "querystring"
 
+/**
+ * @swagger
+ * /api/cat/searchCat:
+ *   post:
+ *     description: Returns the hello world
+ *     responses:
+ *       200:
+ *         description: hello world
+ */
+
 export default async function handler(req, res) {
     //filtering cat 
 

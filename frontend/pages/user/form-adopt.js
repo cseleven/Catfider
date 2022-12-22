@@ -27,6 +27,7 @@ pdfMake.fonts = {
 export default function FormAdopt() {
     const [loading, setLoading] = useState(true);
     const [input, setInput] = useState({});
+    const [cat,setCat] = useState([]);
 
 
     useEffect(() => {
@@ -34,11 +35,29 @@ export default function FormAdopt() {
     }, [])
 
     const fetchFormAdopt = async () => {
+
+        var raw = JSON.stringify({
+            'login_id' : "113ccce3-1b58-4ce8-a5fd-cdd0426242a9"
+        });
+
+        var myheader = {
+            'Content-Type': 'application/json'
+        };
+
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myheader,
+            body: raw,
+            redirect: 'follow'
+        };
+
         try {
             setLoading(true)
-            let response = await fetch("/api/getexample");
+            let response = await fetch("http://localhost:3000/api/cat/userview/showmyCat",requestOptions);
             let data = await response.json();
             console.log("response : " + JSON.stringify(data));
+            setCat(data[0].queue)
         } finally {
             setLoading(false);
         }
@@ -743,7 +762,7 @@ export default function FormAdopt() {
 
                         {
                             ul: [
-                                { text: 'รหัสแมว: ', listType: 'none' },
+                                { text: 'รหัสแมว: '+ input.catid, listType: 'none' },
                             ]
                         },
                         {
@@ -840,7 +859,9 @@ export default function FormAdopt() {
             }
         };
         pdfMake.createPdf(docDefinition).open()
-
+        Router.push({
+            pathname: "/user/formadopt-success",
+        })
     }
 
 
@@ -871,6 +892,8 @@ export default function FormAdopt() {
                             </span>
                             <select
                                 onChange={updateInput}
+                                id ="catid"
+                                name="catid"
                                 class="
                                             block
                                             w-full
@@ -883,6 +906,11 @@ export default function FormAdopt() {
                                         "
                             >
                                 <option>โปรดระบุ</option>
+                                {
+                                    cat.map((item)=>(
+                                        <option value={item.cat_profile.cat_id}>{item.cat_profile.cat_id}</option>
+                                    ))
+                                }
                                 <option></option>
                             </select>
 
@@ -2460,6 +2488,7 @@ export default function FormAdopt() {
             </form >
             {/*section 5*/}
             <div class="w-screen h-[30rem]" >
+<<<<<<< HEAD
                 <button
 
                     type="button"
@@ -2470,6 +2499,16 @@ export default function FormAdopt() {
                     <Image src={vectorprinter} placeholder="blur" />
                     พิมพ์เอกสาร
                 </button>
+=======
+                <a href="/user/formadopt-success">
+                    <button type="button"
+                        class="flex rounded-lg bg-salmon text-white text-lg mx-auto my-12 px-7 py-2 gap-3"
+                        onClick={() => createPdf()}>
+                        <Image src={vectorprinter} placeholder="blur" />
+                        พิมพ์เอกสาร
+                    </button>
+                </a>
+>>>>>>> 4d29b91dd7756aaab6a707a97286ae3800adcea7
             </div >
         </div >
     )

@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import profilePic from '../public/index/cat.png'
+import catpaws from '../public/index/cat-paws.png'
 import tickSquare from '../public/index/tick-square.png'
 import vectorHome from '../public/index/vector-home.png'
 import group1 from '../public/index/group-1.png'
+import group2 from '../public/index/group-2.png'
+import group3 from '../public/index/group-3.png'
 import vectorArrow from '../public/index/vector-arrow.png'
-import catProfile1 from '../public/index/cat-profile1.png'
-import catProfile2 from '../public/index/cat-profile2.png'
-import catProfile3 from '../public/index/cat-profile3.png'
 import heart from '../public/index/heart.png'
 import catProfileAdopt1 from '../public/index/cat-profile-adopt1.png'
 import catProfileAdopt2 from '../public/index/cat-profile-adopt2.png'
@@ -19,9 +19,11 @@ import Homecard from '../components/homecard'
 import HomecardCatprofile from '../components/homecardcatprofile.js'
 import { useEffect, useState } from 'react'
 import Loading from '../components/loading'
+import Router from 'next/router';
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
+  const [cat, setCat] = useState([1,2,3])
   useEffect(() => {
     catExample()
     setLoading(false)}, [])
@@ -49,6 +51,7 @@ export default function Home() {
       let response = await fetch("/api/cat/homepageCat", requestOptions);
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
+      setCat(data);
     } finally {
       setLoading(false);
     }
@@ -62,13 +65,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {loading ? (
-        <Loading/>
-      ):(
+        <Loading />
+      ) : (
         <div class="container">
 
           {/*section 1*/}
           <div class="w-screen h-[35rem] text-zinc-700">
-            <p class="absolute pt-[131px] ml-[84px] text-[48px] font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon via-bright-salmon to-salmon">Cat Fider</p>
+            <p class="absolute pt-[131px] ml-[84px] text-[48px] font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon via-bright-salmon to-salmon">Cat Finder</p>
             <div class="flex pt-[208px] ml-[85px]  font-medium ">
               <p class="text-[36px] mt-3"> ร่วมเป็น</p>
               <p class="px-5 text-[48px]  mt-0 text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon">1</p>
@@ -80,7 +83,7 @@ export default function Home() {
               <p>จากมูลนิธิหรือสถานสงเคราะห์</p>
             </div>
             <div class="mx-[85px] mt-[50px] text-zinc-500">
-              <table class="table-auto">
+              <table class="table-auto mb-20">
                 <tr class="flex ">
                   <td class="flex border border-transparent pr-1">
                     <Image class="mr-5 " src={tickSquare} placeholder="blur" />
@@ -102,7 +105,7 @@ export default function Home() {
                   </td>
                 </tr>
               </table>
-              <button class="rounded-lg bg-salmon text-white text-2xl mt-[52px] px-20 py-[8px]">สมัครสมาชิก</button>
+              <a href="/signin/user" class="rounded-lg bg-salmon text-white text-2xl mt-[52px] px-20 py-[8px]">สมัครสมาชิก</a>
             </div>
           </div>
 
@@ -111,32 +114,36 @@ export default function Home() {
             <p class="text-center text-[36px] text-salmon pt-[24px]">ขั้นตอนรับเลี้ยง</p>
             <div class="flex space-x-10 place-content-center mt-6">
               <Homecard img={group1} topic="ค้นหา" detail="ค้นหาน้องแมวที่คุณต้องการช่วยเหลือจากมูลนิธิ" />
-              <Homecard img={group1} topic="จองคิว" detail="จองคิวเพื่อนัดดูน้องแมวของคุณกับทางมูลนิธิหรือสงเคราะห์" />
-              <Homecard img={group1} topic="รับเลี้ยง" detail="กรอกแบบฟอร์มเพื่อขอรับอุปการะโดยไม่มีค่าใช้จ่ายใดๆ" />
+              <Homecard img={group2} topic="จองคิว" detail="จองคิวเพื่อนัดดูน้องแมวของคุณกับทางมูลนิธิหรือสงเคราะห์" />
+              <Homecard img={group3} topic="รับเลี้ยง" detail="กรอกแบบฟอร์มเพื่อขอรับอุปการะโดยไม่มีค่าใช้จ่ายใดๆ" />
             </div>
             <p class="text[20px] text-salmon text-center font-normal pt-[22px]">ดูเพิ่มเติม</p>
           </div>
 
           {/*section 3*/}
           <div class="w-screen h-[43rem]">
-            <div class="flex front-normal px-[100px]">
+            <div class="flex front-normal justify-evenly">
               <p class="text-[36px] text-gray-600 pt-[24px]">น้องแมวหาบ้าน</p>
               <p class="text-[24px] text-black mt-3 ml-[940px]">ค้นหาแมว</p>
               <Image class="w-[16px] h-[9.99px] mt-7 ml-[12px]" src={vectorArrow} placeholder="blur" />
             </div>
             <div class="w-[1325px] h-[0.5px] bg-gray-200 opacity-75 mx-[100px] mt-[24px]" />
             <div class="w-[20px] h-[24px] opacity-75 mt-[24px]" />
-            <div class="flex space-x-40 place-content-center">
-              <HomecardCatprofile imgcat={catProfile1} statuscat="ว่าง" namecat="มะลิ (#1210)" detail="แม่มะลิ แมวจรพันธุ์ไทย สีขาวดำ นิสัยเป็นมิตร ใจดีกับแมวเด็ก..." tagbreed="พันธุ์ไทย" tagcolor="ขาวดำ" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
-              <HomecardCatprofile imgcat={catProfile2} statuscat="ว่าง" namecat="มูมู่ (#1222)" detail="มูมู่ แมวจรพันธุ์ไทย สามสี ขี้อาย ชอบมุดเล่นในกล่อง... " tagbreed="พันธุ์ไทย" tagcolor="สามสี" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
-              <HomecardCatprofile imgcat={catProfile3} statuscat="ว่าง" namecat="ต๋า (#1237)" detail="ต๋า แมวจรพันธุ์ไทย แมวส้ม นิสัยเป็นมิตร ซนมาก ร่าเริง... " tagbreed="พันธุ์ไทย" tagcolor="ส้ม" tagsex="เพศผู้" fund="มูลนิธิบ้านรักแมว" />
+            <div class="flex space-x-40 place-content-center ">
+              {cat.map((item)=>(
+                <HomecardCatprofile item={item} />
+              ))}
             </div>
           </div>
 
           {/*section 4*/}
           <div class="w-screen h-[28rem] grid grid-cols-2 divide-x-[3px] divide-salmon border-t-4 border-b-4 outline-[3px] border-salmon text-[36px] font-normal text-salmon text-center">
-            <td class="pt-16">มูลนิธิที่ร่วมกับเรา</td>
-            <td class="pt-16">น้องแมวที่ได้รับการช่วยเหลือ</td>
+            <td class="pt-16">มูลนิธิที่ร่วมกับเรา
+              <p class="text-8xl py-24">30</p>
+            </td>
+            <td class="pt-16">น้องแมวที่ได้รับการช่วยเหลือ
+              <p class="text-8xl py-24">238</p>
+            </td>
           </div>
 
           {/*section 5*/}
@@ -205,15 +212,21 @@ export default function Home() {
           </div>
 
           {/*section 6*/}
-          <div class="w-screen h-[35rem]">
+          <div class="w-screen h-[35rem] flex flex-col items-center">
             <p class="text-[40px] text-black/[0.8] font-medium text-center pt-[200px]">ยังมีน้องแมวที่ต้องการความรักจากคุณ</p>
+<<<<<<< HEAD
             <button class="mx-auto rounded-lg bg-salmon text-white text-2xl mt-[40px] ml-[620px] px-20 py-[8px]">สมัครสมาชิก</button>
+=======
+            <a href="/signin/user" class="rounded-lg bg-salmon text-white text-2xl mt-[48px]  mx-auto px-20 py-[8px]">สมัครสมาชิก</a>
+>>>>>>> 4d29b91dd7756aaab6a707a97286ae3800adcea7
           </div>
 
           {/*img backgroud*/}
           <div class="w-screen">
-            <Image class="absolute mt-24 top-20 left-0 -z-40 object-none object-right" src={vectorHome} placeholder="blur"></Image>
-            <Image class="absolute top-20 right-0 object-none object-right -z-50" src={profilePic} placeholder="blur"></Image>
+            <Image class="absolute mt-24 top-20 left-0 -z-40 " src={vectorHome} placeholder="blur" />
+            <Image class="absolute top-20 right-0 -z-50" src={profilePic} placeholder="blur" />
+            <Image class="absolute w-28 h-36 top-[920px] left-48 -z-50" src={catpaws} placeholder="blur" />
+            <Image class="absolute w-28 h-36 top-[920px] right-48 -z-50" src={catpaws} placeholder="blur" />
           </div>
         </div>
       )}
