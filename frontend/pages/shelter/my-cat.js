@@ -15,7 +15,6 @@ import Router from 'next/router';
 
 
 
-
 export default function MyCat() {
   const user = useUser()
   const session = useSession()
@@ -59,7 +58,7 @@ export default function MyCat() {
   };
 
   return (
-    <div>
+    <div class="container mx-auto">
       <nav class="flex mx-28 mt-9" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">
@@ -101,7 +100,6 @@ export default function MyCat() {
                 font-normal
             "
             >
-              <option>ประเภท</option>
               <option value="สถานะ">สถานะ</option>
               <option value="สายพันธุ์">สายพันธุ์</option>
               <option value="สี หรือ ลาย"> สี หรือ ลาย</option>

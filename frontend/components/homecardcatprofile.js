@@ -18,14 +18,15 @@ export default function HomecardCatprofile({ item }) {
     const [path,setPath]=useState("/signin/cat/")
 
     useEffect(() => {
+        console.log(user?.user_metadata.role)
         checkPath()
     }, [])
     
     const checkPath = () => {
-        if(user?.user_metadata.role == 2){
+        if(user?.user_metadata?.role == 2){
             setPath("/shelter/cat/")
         }
-        if(user?.user_metadata.role == 1){
+        if(user?.user_metadata?.role == 1){
             setPath("/user/cat/")
         }
     }

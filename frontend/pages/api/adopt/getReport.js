@@ -10,7 +10,6 @@ export default async function handler(req, res) {
     //per year
     const perYear = await getdataPerYear(shelter_id)
 
-
     const result = {
       perDay,
       perMonth,

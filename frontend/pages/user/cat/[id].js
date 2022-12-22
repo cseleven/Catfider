@@ -8,7 +8,7 @@ import Catdetail from "../../../components/catdetail";
 import Router from 'next/router';
 
 const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
-    return condition ? (
+    return condition == null? (
         <div class="grid mb-8 md:place-content-end md:mr-20">
           <button type="button" onClick={()=>Router.push({
               pathname: '/user/queue',
@@ -45,6 +45,8 @@ export default function CatProfile() {
 
   
   useEffect(() => {
+    console.log("login_id: "+user?.id)
+    console.log("rout: "+JSON.stringify(router.query.id))
     catExample()
   }, [])
 
@@ -106,10 +108,10 @@ export default function CatProfile() {
           map = {mock.map}
           vaccine={cat[0].vaccine}
           sterile={cat[0].sterile}
-          bank1={cat[0].shelter_profile.donate_name1}
-          donate_number1={cat[0].shelter_profile.donate_number1}
-          bank2={cat[0].shelter_profile.donate_name2}
-          donate_number2={cat[0].shelter_profile.donate_number2}
+          bank1={cat[0].shelter_profile?.donate_name1}
+          donate_number1={cat[0].shelter_profile?.donate_number1}
+          bank2={cat[0].shelter_profile?.donate_name2}
+          donate_number2={cat[0].shelter_profile?.donate_number2}
         />
 
         {/*section2*/}
@@ -125,8 +127,8 @@ export default function CatProfile() {
             disease={cat[0].congenital_disease}
           />
           <div class="md:basis-2/5 lg:border-l-2 lg:px-6">
-            {!mock.status?(<></>):(
-                <ConditionalWrapper condition={mock.hold} id={mock.id} name={mock.name} shelter={mock.shelter} day={mock.day} time={mock.time} place={mock.place}/>
+            {!cat[0].status?(<></>):(
+                <ConditionalWrapper condition={cat[0].queue[0]} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue[0]?.queue_date} time={cat[0].queue[0]?.queue_time} place={cat[0].shelter_profile?.address}/>
             )}
           </div>
         </div>
