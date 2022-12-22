@@ -7,7 +7,6 @@ import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
 import Router from 'next/router';
 
-
 const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
     return condition == null ? (
         <div class="grid mb-8 md:place-content-end md:mr-20">

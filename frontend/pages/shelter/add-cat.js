@@ -22,7 +22,7 @@ export default function AddCat() {
     const catExample = async (e) => {
         var raw = JSON.stringify({
             //"cat_id": 5,
-            "login_id": user.id,
+            "login_id": "user.id",
             "cat_name": e.target.cat_name.value,
             "sex": e.target.sex.value,
             "breed": e.target.breed.value,
@@ -56,8 +56,8 @@ export default function AddCat() {
             console.log("response : " + JSON.stringify(data));
         } finally {
             Router.push({
-              pathname: "/shelter/add-cat-success",
-          })
+                pathname: "/shelter/add-cat-success",
+            })
             setLoading(false);
         }
     };
@@ -403,9 +403,9 @@ export default function AddCat() {
                         </div>
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
                             <div class="h-[30rem] py-3">
-                                <button type="submit"
-                                    class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]">
-                                    ยืนยัน
+                                <button type="submit">
+                                    <a href="/shelter/add-cat-success" className="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]">
+                                        ยืนยัน</a>
                                 </button>
                             </div>
                         </div>

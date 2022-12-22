@@ -14,7 +14,7 @@ export default function ShelterForm() {
 
     const createProfile = async () => {
         const user = useUser()
-        var raw = JSON.stringify({ "login_id": user.id });
+        var raw = JSON.stringify({ "login_id": "6d6b6578-bda8-4659-9ba7-9ffca9684abf" });
 
         var myheader = {
             'Content-Type': 'application/json'
@@ -31,7 +31,9 @@ export default function ShelterForm() {
             setLoading(true);
             let response = await fetch("/api/shelter/createShelter", requestOptions);
             let data = await response.json();
+            useUser(data)
             console.log("response : " + JSON.stringify(data));
+            //useUser(data)
         } finally {
             setLoading(false);
         }

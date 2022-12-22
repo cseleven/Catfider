@@ -4,8 +4,10 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
 import Loading from '../components/loading'
-import HomecardCatprofile from '../components/homecardcatprofile'
+import HomecardCatprofile from '../components/homecardcatprofile.js'
 import catProfile1 from '../public/index/cat-profile1.png'
+import Homecat from '../components/homecat'
+import Router from 'next/router';
 
 export default function AllCat() {
   const user = useUser()
@@ -14,7 +16,7 @@ export default function AllCat() {
   const [cat, setCat] = useState(null)
   const [id, setId] = useState(0)
 
-  
+
 
   useEffect(() => {
     fetchCat()
@@ -70,15 +72,15 @@ export default function AllCat() {
       setLoading(false);
     }
   };
-  
- 
+
+
   return (
     <div class="container mx-auto">
       {loading ? (
-        <Loading/>
-      ):(
+        <Loading />
+      ) : (
         <div>
-          <nav class="flex" aria-label="Breadcrumb">
+          <nav class="flex mx-28 mt-9" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
               <li class="inline-flex items-center">
                 <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">

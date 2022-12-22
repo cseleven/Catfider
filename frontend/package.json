@@ -20,8 +20,12 @@
     "eslint-config-next": "13.0.4",
     "jsonwebtoken": "^8.5.1",
     "next": "13.0.4",
+<<<<<<< HEAD
     "next-swagger-doc": "^0.3.6",
     "pdfmake": "^0.2.6",
+=======
+    "pdfmake": "^0.2.7",
+>>>>>>> main
     "puppeteer": "^19.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
