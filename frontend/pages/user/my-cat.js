@@ -22,9 +22,7 @@ export default function MyCat() {
 
   const catExample = async () => {
     var raw = JSON.stringify({
-      //"user_id": 2
-      "login_id":"113ccce3-1b58-4ce8-a5fd-cdd0426242a9"
-
+      "login_id": user?.id
     });
 
     var myheader = {
@@ -44,7 +42,9 @@ export default function MyCat() {
       let response = await fetch("/api/cat/userview/showmyCat", requestOptions);
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
-      setCat(data)
+      console.log("response data.queue.cat_profile : " + JSON.stringify(data.queue.cat_profile));
+      setCat(data.queue.cat_profile);
+      console.log("response cat : " + JSON.stringify(cat));
     } finally {
       setLoading(false);
     }
@@ -123,8 +123,11 @@ export default function MyCat() {
         </form>
 
         <div className="grid grid-cols-3 justify-items-center gap-6 ml-24 mr-7 mt-9">
-          {cat?.map((item)=>(
+          {cat.map((item)=>(
+            <>
+              {console.log(JSON.stringify(item))}
                 <HomecardCatprofile item={item} />
+              </>
           ))}
           <Homecat imgcat={catProfile1} placeholder="blur" statuscat="จองคิว" namecat="มะลิ (#1210)" detail="แม่มะลิ แมวจรพันธุ์ไทย สีขาวดำ นิสัยเป็นมิตร ใจดีกับแมวเด็ก..." tagbreed="พันธุ์ไทย" tagcolor="ขาวดำ" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
           <Homecat imgcat={catProfile2} placeholder="blur" statuscat="มีบ้าน" namecat="มะระ (#1211)" detail="แมวพันธุ์วิเชียรมาศ ตาสวย น้องกำพร้าแม่ เป็นแมวหลงทาง ขาซ้ายบาดเจ็บ..." tagbreed="วิเชียรมาศ" tagcolor="ลายแต้ม" tagsex="เพศเมีย" fund="มูลนิธิแมวหลง" />
