@@ -841,8 +841,8 @@ export default function FormAdopt() {
         };
         pdfMake.createPdf(docDefinition).open()
         Router.push({
-              pathname: "/user/formadopt-success",
-          })
+            pathname: "/user/formadopt-success",
+        })
     }
 
 
@@ -2462,12 +2462,14 @@ export default function FormAdopt() {
             </form >
             {/*section 5*/}
             <div class="w-screen h-[30rem]" >
-                <button type="button"
-                    class="flex rounded-lg bg-salmon text-white text-lg mx-auto my-12 px-7 py-2 gap-3"
-                    onClick={() => createPdf()}>
-                    <Image src={vectorprinter} placeholder="blur" />
-                    พิมพ์เอกสาร
-                </button>
+                <a href="/user/formadopt-success">
+                    <button type="button"
+                        class="flex rounded-lg bg-salmon text-white text-lg mx-auto my-12 px-7 py-2 gap-3"
+                        onClick={() => createPdf()}>
+                        <Image src={vectorprinter} placeholder="blur" />
+                        พิมพ์เอกสาร
+                    </button>
+                </a>
             </div >
         </div >
     )

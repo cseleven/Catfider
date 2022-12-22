@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Loading from "../../../components/loading";
 import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
+import { useRouter, usePathname } from 'next/navigation';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -10,6 +11,7 @@ function classNames(...classes) {
 export default function CatProfile() {
   const [loading, setLoading] = useState(true);
   const [cat, setCat] = useState(null)
+  const pathname = usePathname();
 
   const mock = { 
     name:"มะลิ", pic:"https://images.unsplash.com/photo-1615789591457-74a63395c990", vaccine:true, sterile:true,bank:["กสิกร 999-999-9999","กรุงไทย 888-888-888"],

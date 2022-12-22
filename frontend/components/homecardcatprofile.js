@@ -4,16 +4,9 @@ import Router from 'next/router';
 import { useUser } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react';
 
-const navigation = [
-  { name: "หน้าแรก", href: ["/", "/", "/"], current: true },
-  { name: "ค้นหาแมว", href: ["/all-cat","/all-cat","/all-cat"], current: false },
-  { name: "แมวของฉัน", href: ["/signin/login","/user/my-cat","/shelter/my-cat"], current: false },
-  { name: "ลิ้งค์ในเว็บ", href: ["/list","/list","/list"], current: false },
-];
-
 export default function HomecardCatprofile({ item }) {
     const user = useUser()
-    const imgcat=item.cat_picture
+    const imgcat= cat_picture
     const statuscat=item.status
     const namecat=item.cat_name
     const idcat=item.cat_id
@@ -29,10 +22,17 @@ export default function HomecardCatprofile({ item }) {
     }, [])
     
     const checkPath = () => {
-        if(user.user_metadata.role == 2){
+<<<<<<< HEAD
+        if(user?.user_metadata?.role == 2){
             setPath("/shelter/cat/")
         }
-        if(user.user_metadata.role == 1){
+        if(user?.user_metadata?.role == 1){
+=======
+        if(user?.user_metadata.role == 2){
+            setPath("/shelter/cat/")
+        }
+        if(user?.user_metadata.role == 1){
+>>>>>>> ed790e1121224d401877d6fe38499c340b8b758d
             setPath("/user/cat/")
         }
     }

@@ -221,7 +221,7 @@ export default function Home() {
           </div>
 
           {/*section 7*/}
-          <div class="w-screen h-[20rem]"/>
+          <div class="w-screen h-[7rem]"/>
 
           {/*img backgroud*/}
           <div class="w-screen">
