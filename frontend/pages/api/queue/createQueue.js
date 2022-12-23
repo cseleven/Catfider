@@ -1,5 +1,45 @@
 import { supabase } from "../supabase"
 
+//http://localhost:3000/api-doc
+
+/**
+ * @swagger
+* /queue/createQueue:
+*    post: 
+*      tags:
+*        - queue
+*      summary: create queue for user
+*      description: create queue for user
+*      operationId: createQueue
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/QueueCreateRequest'
+*      responses:
+*        '200':
+*          description: Create Successful
+*        '400':
+*          description: Create Failed Due to Incorrect Input
+* components:
+*  schemas:
+*    QueueCreateRequest:
+*      type: object
+*      properties:
+*        cat_id:
+*          type: integer
+*          example: 0
+*        login_id:
+*          type: string
+*          example: "0fb8be3d-e566-4c87-8f1b-553d6dcf2ca3"
+*        queue_date:
+*          type: string
+*          format: date-time
+*          example: "2022-12-23"
+*        queue_time:
+*          type: string
+*          example: "09.00-10.00"
+ */
 export default async function handler(req, res) {
 
   //call parameter from body
