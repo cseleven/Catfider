@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react'
 *    post:
 *      tags:
 *        - cat-user
-*      summary: get profile cat shelterview
-*      description: get profile cat shelterview
+*      summary: get profile cat userview
+*      description: get profile cat userview
 *      operationId: showmyCat Userview
 *      requestBody:
 *        content:
