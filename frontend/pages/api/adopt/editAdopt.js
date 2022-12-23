@@ -1,5 +1,40 @@
 import { supabase } from "../supabase"
 
+/**
+ * @swagger
+* /api/adopt/editAdopt:
+*    post:
+*      tags:
+*        - adopt
+*      summary: edit adopt for shelter
+*      description: edit adopt for shelter
+*      operationId: editAdopt
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/AdoptEditRequest'
+*      responses:
+*        '200':
+*          description: Edit Successful
+*        '400':
+*          description: Edit Failed Due to Incorrect Input
+* components:
+*  schemas:
+*    AdoptEditRequest:
+*      type: object
+*      properties:
+*        adopt_id:
+*          type: integer
+*          example: 0
+*        login_id:
+*          type: string
+*          example: fadadb65-080e-4be8-a3dc-163df80e0918
+*        queue_status:
+*          type: boolean
+*          example: true
+*/    
+
 //edit for shelter
 export default async function handler(req, res) {
 
@@ -8,6 +43,8 @@ export default async function handler(req, res) {
   console.log(adopt_id)
   console.log(adopt_status)
   console.log(login_id)
+
+  let editStatus
 
   var shelter_id = await getShelterID(login_id)
   console.log("shelter id : ", shelter_id)
@@ -34,14 +71,21 @@ export default async function handler(req, res) {
         status: false,
         update_date: new Date(),
       }]).eq('cat_id', cat_id)
-      res.status(200).json("Edit Successful!")
+
+      editStatus = true
+      console.log("Edit Successful!")
+      res.status(200).json(editStatus)
     } else {
       //shelter id != shelter id in adopt
-      res.status(400).json("This ShelterID Does Not Have Permission!")
+      editStatus = false
+      console.log("This ShelterID Does Not Have Permission!")
+      res.status(400).json(editStatus)
     }
   } else {
     //queue_id does not exist
-    res.status(400).json("Adopt ID not found!")
+    editStatus = false
+    console.log("Adopt ID not found!")
+    res.status(400).json(editStatus)
   }
 }
 

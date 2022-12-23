@@ -1,5 +1,67 @@
 import { supabase } from "../supabase"
 
+/**
+ * @swagger
+* /api/shelter/editShelter:
+*    post:
+*      tags:
+*        - shelter
+*      summary: edit shelter for shelter
+*      description: edit shelter for shelter
+*      operationId: editShelter
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/ShelterEditRequest'
+*      responses:
+*        '200':
+*          description: Edit Successful
+*        '400':
+*          description: Edit Failed Due to Incorrect Input
+* components:
+*  schemas:
+*    ShelterEditRequest:
+*      type: object
+*      properties:
+*        login_id:
+*          type: string
+*          example: fadadb65-080e-4be8-a3dc-163df80e0918
+*        shelter_name:
+*          type: string
+*          example: meow
+*        website_url:
+*          type: string
+*          example: www
+*        email:
+*          type: string
+*          example: '@gmail'
+*        address:
+*          type: string
+*          example: location
+*        contact_name:
+*          type: string
+*          example: meow
+*        contact_lastname:
+*          type: string
+*          example: meow
+*        contact_phone:
+*          type: string
+*          example: 09x-xxx-xxxx
+*        donate_name1:
+*          type: string
+*          example: meow
+*        donate_number1:
+*          type: string
+*          example: meow
+*        donate_name2:
+*          type: string
+*          example: meow
+*        donate_number2:
+*          type: string
+*          example: meow
+*/
+
 //edit from client
 export default async function handler(req, res) {
 

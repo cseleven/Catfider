@@ -7,49 +7,8 @@ import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
 import Router from 'next/router';
 
-// export default function CatProfile() {
-//   const router = useRouter();
-//   const user = useUser()
-//   const session = useSession()
-//   const [loading, setLoading] = useState(true)
-//   const [cat, setCat] = useState(null)
-
-
-//   useEffect(() => {
-//     catExample()
-//   }, [])
-
-
-//   // const catExample = async () => {
-//   //   var raw = JSON.stringify({
-//   //     "cat_id": 1
-
-  //   });
-
-  //   var myheader = {
-  //     'Content-Type': 'application/json'
-  //   };
-
-
-  //   var requestOptions = {
-  //     method: 'POST',
-  //     headers: myheader,
-  //     body: raw,
-  //     redirect: 'follow'
-  //   };
-
-  //   try {
-  //     setLoading(true);
-  //     let response = await fetch("/api/cat/userview/profileCat", requestOptions);
-  //     let data = await response.json();
-  //     console.log("response : " + JSON.stringify(data));
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
-
 const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
-    return !condition ? (
+    return condition == null? (
         <div class="grid mb-8 md:place-content-end md:mr-20">
           <button type="button" onClick={()=>Router.push({
               pathname: '/user/queue',
@@ -74,7 +33,6 @@ export default function CatProfile() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const user = useUser()
-  const session = useSession()
   const [cat, setCat] = useState(null)
   
   const mock = { 
@@ -84,40 +42,43 @@ export default function CatProfile() {
     age:4.5, sex:"เพศเมีย", breed:"ไทย", color:"ขาวดำ", disease:"ไม่มี", hold:true, shelter:"มูลนิธิบ้านรักแมว",day: "22/12/2022", time : "10.00-11.00 น.", สถานที่ : "มูลนิธิบ้านรักแมว"
   }
 
-
-    useEffect(() => {
-      catExample()
-    }, [])
+  
+  useEffect(() => {
+    console.log("login_id: "+user?.id)
+    console.log("rout: "+JSON.stringify(router.query.id))
+    catExample()
+  }, [])
 
 
   const catExample = async () => {
-      var raw = JSON.stringify({
-        "cat_id": "3"
 
-  });
+    var raw = JSON.stringify({
+      "cat_id": router.query.id,
+      "login_id": user?.id
+    });
 
-  var myheader = {
-    'Content-Type': 'application/json'
-  };
+    var myheader = {
+      'Content-Type': 'application/json'
+    };
 
 
-  var requestOptions = {
-    method: 'POST',
-    headers: myheader,
-    body: raw,
-    redirect: 'follow'
-  };
+    var requestOptions = {
+      method: 'POST',
+      headers: myheader,
+      body: raw,
+      redirect: 'follow'
+    };
 
-  try {
-    setLoading(true);
-    let response = await fetch("/api/cat/userview/profileCat", requestOptions);
-    let data = await response.json();
-    console.log("response : " + JSON.stringify(data));
-    setCat(data);
-  } finally {
-    setLoading(false);
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/userview/profileCat", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+      setCat(data);
+    } finally {
+      setLoading(false);
+    }
   }
-}
 
   return (
   <div>
@@ -147,10 +108,10 @@ export default function CatProfile() {
           map = {mock.map}
           vaccine={cat[0].vaccine}
           sterile={cat[0].sterile}
-          bank1={cat[0].shelter_profile.donate_name1}
-          donate_number1={cat[0].shelter_profile.donate_number1}
-          bank2={cat[0].shelter_profile.donate_name2}
-          donate_number2={cat[0].shelter_profile.donate_number2}
+          bank1={cat[0].shelter_profile?.donate_name1}
+          donate_number1={cat[0].shelter_profile?.donate_number1}
+          bank2={cat[0].shelter_profile?.donate_name2}
+          donate_number2={cat[0].shelter_profile?.donate_number2}
         />
 
         {/*section2*/}
@@ -166,8 +127,8 @@ export default function CatProfile() {
             disease={cat[0].congenital_disease}
           />
           <div class="md:basis-2/5 lg:border-l-2 lg:px-6">
-            {!mock.status?(<></>):(
-                <ConditionalWrapper condition={mock.hold} id={mock.id} name={mock.name} shelter={mock.shelter} day={mock.day} time={mock.time} place={mock.place}/>
+            {!cat[0].status?(<></>):(
+                <ConditionalWrapper condition={cat[0].queue[0]} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue[0]?.queue_date} time={cat[0].queue[0]?.queue_time} place={cat[0].shelter_profile?.address}/>
             )}
           </div>
         </div>

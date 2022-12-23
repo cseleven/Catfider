@@ -1,11 +1,40 @@
 import { supabase } from "../supabase"
 
+/**
+ * @swagger
+* /api/shelter/deleteShelter:
+*    post:
+*      tags:
+*        - shelter
+*      summary: delete shelter for user
+*      description: delete shelter for user
+*      operationId: deleteShelter
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/ShelterDeleteRequest'
+*      responses:
+*        '200':
+*          description: Delete Successful
+*        '400':
+*          description: Delete Failed Due to Incorrect Input
+* components:
+*  schemas:
+*    ShelterDeleteRequest:
+*      type: object
+*      properties:
+*        login_id:
+*          type: string
+*          example: 0fb8be3d-e566-4c87-8f1b-553d6dcf2ca3
+*/
+
 export default async function handler(req, res) {
 
     //call parameter from body
     const { login_id } = req.body
-    var shelter_id = await getShelterID(login_id)
 
+    var shelter_id = await getShelterID(login_id)
 
     //check if shelter id exist 
     if (shelter_id != null) {

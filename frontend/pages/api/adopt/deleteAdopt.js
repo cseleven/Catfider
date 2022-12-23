@@ -1,20 +1,60 @@
 import { supabase } from "../supabase"
 
+/**
+ * @swagger
+* /api/adopt/deleteAdopt:
+*    post:
+*      tags:
+*        - adopt
+*      summary: delete adopt for user
+*      description: delete adopt for user
+*      operationId: deleteAdopt
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/AdoptDeleteRequest'
+*      responses:
+*        '200':
+*          description: Delete Successful
+*        '400':
+*          description: Delete Failed Due to Incorrect Input
+* components:
+*  schemas:
+*    AdoptDeleteRequest:
+*      type: object
+*      properties:
+*        adopt_id:
+*          type: integer
+*          example: 0
+*        login_id:
+*          type: string
+*          example: 0fb8be3d-e566-4c87-8f1b-553d6dcf2ca3
+*/    
+
 //delete for user
 export default async function handler(req, res) {
 
   //call parameter from body
   const { adopt_id, login_id } = req.body
 
+  let deleteStatus
+
   //check userID exist 
   var userID = await checkUserId(login_id)
   if (!userID) {
-    res.status(400).json("User ID Not Found!")
+
+    deleteStatus = false
+    console.log("User ID Not Found!")
+    res.status(400).json(deleteStatus)
   } else {
     //check if queue id exist 
     var adoptID = await checkAdoptId(adopt_id)
     if (!adoptID) {
-      res.status(400).json("Adopt ID Not Found!")
+
+      deleteStatus = false
+      console.log("Adopt ID Not Found!")
+      res.status(400).json(deleteStatus)
     } else {
       console.log(login_id)
       var user_id = await getUserId(login_id)
@@ -23,9 +63,15 @@ export default async function handler(req, res) {
       const { data } = await supabase.from('adopt').select().eq('adopt_id', adopt_id).eq('user_id', user_id)
       //checl exist
       if (data != "" && data != null) {
-        res.status(400).json("Delete Adopt Failed!")
+
+        deleteStatus = false
+        console.log("Adopt ID Not Found!")
+        res.status(400).json(deleteStatus)
       }
-      res.status(200).json("Delete Adopt Success!")
+
+      deleteStatus = true
+      console.log("Delete Adopt Success!")
+      res.status(200).json(deleteStatus)
     }
   }
 }

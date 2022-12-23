@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import Loading from "../../../components/loading";
 import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
+import { usePathname } from 'next/navigation';
+import { useRouter } from "next/router";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -10,6 +12,9 @@ function classNames(...classes) {
 export default function CatProfile() {
   const [loading, setLoading] = useState(true);
   const [cat, setCat] = useState(null)
+  const [queue, setQueue] = useState(null)
+  const pathname = usePathname();
+  const router = useRouter();
 
   const mock = { 
     name:"มะลิ", pic:"https://images.unsplash.com/photo-1615789591457-74a63395c990", vaccine:true, sterile:true,bank:["กสิกร 999-999-9999","กรุงไทย 888-888-888"],
@@ -19,14 +24,16 @@ export default function CatProfile() {
   }
 
   useEffect(() => {
-    catExample()
+    console.log("rout: "+router.query.id);
+    if(router){
+      catExample()
+    }
   }, [])
 
 
   const catExample = async () => {
-    var raw = JSON.stringify({
-      "cat_id": "2"
-
+    const raw = JSON.stringify({
+      "cat_id": router.query.id,
     });
 
     var myheader = {
@@ -45,8 +52,9 @@ export default function CatProfile() {
       setLoading(true);
       let response = await fetch("/api/cat/shelterview/profileCat", requestOptions);
       let data = await response.json();
-      console.log("response : " + JSON.stringify(data));
+      console.log("cat_id: "+ JSON.stringify(raw) +" response : " + JSON.stringify(data));
       setCat(data);
+      setCat(data[0].queue);
     } finally {
       setLoading(false);
     }
@@ -131,21 +139,17 @@ export default function CatProfile() {
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white border-b  hover:bg-gray-50">
-                  <td class="px-3 py-2">jack.cooper@example.com</td>
-                  <td class="px-3 py-2">22/12/2022</td>
-                  <td class="px-3 py-2">10.00-11.00 น.</td>
-                </tr>
-                <tr class="bg-white border-b  hover:bg-gray-50">
-                  <td class="px-3 py-2">user.person@example.com</td>
-                  <td class="px-3 py-2">15/12/2022</td>
-                  <td class="px-3 py-2 text-error">ยกเลิก</td>
-                </tr >
-                <tr class="bg-white border-b  hover:bg-gray-50">
-                  <td class="px-3 py-2">iris.sri@example.com</td>
-                  <td class="px-3 py-2">8/12/2022</td>
-                  <td class="px-3 py-2">10.00-11.00 น.</td>
-                </tr>
+                {queue.map((item)=>(
+                  <tr class="bg-white border-b  hover:bg-gray-50">
+                    <td class="px-3 py-2">{item.user_profile?.email}</td>
+                    <td class="px-3 py-2">{item.queue_date}</td>
+                    {item.queue_status ? (
+                        <td class="px-3 py-2">{item.queue_time} น.</td>
+                      ):( 
+                        <td class="px-3 py-2 text-error">ยกเลิก</td>
+                      )}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

@@ -1,22 +1,62 @@
 import { supabase } from "../supabase"
 
+/**
+ * @swagger
+* /api/queue/editQueue:
+*    post:
+*      tags:
+*        - queue
+*      summary: edit queue for shelter
+*      description: edit queue for shelter
+*      operationId: editQueue
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/QueueEditRequest'
+*      responses:
+*        '200':
+*          description: Edit Successful
+*        '400':
+*          description: Edit Failed Due to Incorrect Input
+* components:
+*  schemas:
+*    QueueEditRequest:
+*      type: object
+*      properties:
+*        queue_id:
+*          type: integer
+*          example: 0
+*        login_id:
+*          type: string
+*          example: fadadb65-080e-4be8-a3dc-163df80e0918
+*        queue_status:
+*          type: boolean
+*          example: true
+ */
+
 //edit for shelter
 export default async function handler(req, res) {
 
   //call parameter from body
   const { queue_id, login_id, queue_status } = req.body
 
+  let editStatus 
+
   //check queue id exist
   var queue = checkQueueId(queue_id)
   if (!queue) {
+    editStatus = false
     console.log("Queue ID Invalid!")
-    res.status(400).json("Queue ID Invalid!")
+    res.status(400).json(editStatus)
   } else {
     //check login id role
     var userID = await checkUserId(login_id)
     if (!userID) {
+
+      editStatus = false
       console.log("User ID Invalid!")
-      res.status(400).json("User ID Invalid!")
+      res.status(400).json(editStatus)
     } else {
       //check queue with login_id 
       var shelter = await checkQueueOwner(queue_id)
@@ -33,9 +73,15 @@ export default async function handler(req, res) {
             update_date: new Date(),
           }
         ]).eq('queue_id', queue_id)
-        res.status(200).json("Edit Data Successful!")
+
+        editStatus = true
+        console.log("Edit Data Successful!")
+        res.status(200).json(editStatus)
       } else {
-        res.status(200).json("User ID Does Not Have Permission!")
+
+        editStatus = false
+        console.log("User ID Does Not Have Permission!")
+        res.status(400).json(editStatus)
       }
     }
   }
