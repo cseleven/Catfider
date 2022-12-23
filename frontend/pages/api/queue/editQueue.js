@@ -1,40 +1,5 @@
 import { supabase } from "../supabase"
 
-/**
- * @swagger
-* /queue/editQueue:
-*    post:
-*      tags:
-*        - queue
-*      summary: edit queue for shelter
-*      description: edit queue for shelter
-*      operationId: editQueue
-*      requestBody:
-*        content:
-*          application/json:
-*            schema:
-*              $ref: '#/components/schemas/QueueEditRequest'
-*      responses:
-*        '200':
-*          description: Edit Successful
-*        '400':
-*          description: Edit Failed Due to Incorrect Input
-* components:
-*  schemas:
-*    QueueEditRequest:
-*      type: object
-*      properties:
-*        queue_id:
-*          type: integer
-*          example: 0
-*        login_id:
-*          type: string
-*          example: fadadb65-080e-4be8-a3dc-163df80e0918
-*        queue_status:
-*          type: boolean
-*          example: true
- */
-
 //edit for shelter
 export default async function handler(req, res) {
 
