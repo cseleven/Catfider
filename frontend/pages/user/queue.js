@@ -187,6 +187,7 @@ export default function Queue() {
                                         placeholder-gray-500
                                         "
                                     placeholder="เลือกวัน"
+                                    required
                                 />
                             </label>
                             <label class="block ">
@@ -207,6 +208,7 @@ export default function Queue() {
                                             text-gray-500 
                                             font-normal
                                         "
+                                        required
                                 >
                                     <option>เลือกช่วงเวลา</option>
                                     <option value="9.00-10.00">9.00-10.00 น.</option>
@@ -220,9 +222,7 @@ export default function Queue() {
                             <div class="h-[30rem] py-3">
                                 <button type="submit"
                                     class="flex bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]">
-                                    <a href="/user/queue-success">
-                                        ยืนยัน
-                                    </a>
+                                    ยืนยัน
                                 </button>
 
                             </div>
