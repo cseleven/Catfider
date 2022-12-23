@@ -64,6 +64,72 @@ export default function MyCat() {
     }
   };
 
+  const searchCat = async (e) => {
+    var cookie = getCookie("supabase-auth-token")
+    var token = cookie.split('"')[1]
+    var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+
+    var sby = e.target.searchBy.value;
+    var sbar = e.target.searchBar.value;
+    var bef = { 
+      "login_id":id,
+      "page_number" : 1,
+    };
+
+    if(sby == "status"){
+      bef = {
+        ...bef,
+        "status" : sbar,
+      }
+    }
+
+    if(sby == "breed"){
+      bef = {
+        ...bef,
+        "breed" : sbar,
+      }
+    }
+
+    if(sby == "color"){
+      bef = {
+        ...bef,
+        "color" : sbar,
+      }
+    }
+
+    if(sby == "cat_id"){
+      bef = {
+        ...bef,
+        "cat_id" : sbar,
+      }
+    }
+
+    var raw = JSON.stringify(bef);
+    
+
+    var myheader = {
+      'Content-Type': 'application/json'
+    };
+
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myheader,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/searchCat", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+      setCat(data);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div class="container mx-auto">
       <nav class="flex mx-28 mt-9" aria-label="Breadcrumb">
@@ -91,12 +157,13 @@ export default function MyCat() {
       </div>
       <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28" />
 
-      <form>
+      <form onSubmit={searchCat} method="POST">
         <div class="flex mt-9">
           <label class="block ml-44">
             <select
               type="search"
               id="search-dropdown"
+              name="searchBy"
               class="
                 block
                 rounded-l-md
@@ -117,14 +184,13 @@ export default function MyCat() {
             <input
               type="search"
               id="search-dropdown"
+              name="searchBar"
               class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 
               focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               placeholder="พิมพ์ค้นหาที่นี่"
               required
             />
-            <button type="submit"
-              class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-salmon rounded-r-lg border 
-              focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-salmon rounded-r-lg border focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
               <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
               </path>
               </svg>

@@ -8,6 +8,8 @@ import HomecardCatprofile from '../components/homecardcatprofile.js'
 import catProfile1 from '../public/index/cat-profile1.png'
 import Homecat from '../components/homecat'
 import Router from 'next/router';
+import previousIcon from '../public/my-cat/previous-icon.png'
+import nextIcon from '../public/my-cat/next-icon.png'
 
 export default function AllCat() {
   const user = useUser()
@@ -39,16 +41,69 @@ export default function AllCat() {
   //   }
   // }, [session])
 
-  //search ไม่เจอลองยิง postman แล้วก็ไม่เจอ
-  const fetchCat = async (param, callback) => {
+  const fetchCat = async () => {
     var raw = JSON.stringify({
       "page_number" : 1,
-      "cat_id": 1,
-      "sex" : "",
-      "breed" : "",
-      "color" : "",
-      "status" : ""
     });
+
+    var myheader = {
+      'Content-Type': 'application/json'
+    };
+
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myheader,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/searchCat", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+      setCat(data);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const searchCat = async (e) => {
+    var sby = e.target.searchBy.value;
+    var sbar = e.target.searchBar.value;
+    var bef = { "page_number" : 1,};
+
+    if(sby == "status"){
+      bef = {
+        ...bef,
+        "status" : sbar,
+      }
+    }
+
+    if(sby == "breed"){
+      bef = {
+        ...bef,
+        "breed" : sbar,
+      }
+    }
+
+    if(sby == "color"){
+      bef = {
+        ...bef,
+        "color" : sbar,
+      }
+    }
+
+    if(sby == "cat_id"){
+      bef = {
+        ...bef,
+        "cat_id" : sbar,
+      }
+    }
+
+    var raw = JSON.stringify(bef);
+    
 
     var myheader = {
       'Content-Type': 'application/json'
@@ -98,12 +153,13 @@ export default function AllCat() {
           </nav>
           <p class="py-7 text-[36px] text-center text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon">น้องแมวหาบ้าน</p>
           <hr/>
-            <form>
+            <form onSubmit={searchCat} method="POST">
               <div class="flex mt-9">
                 <label class="block ml-44">
                   <select
                     type="search"
                     id="search-dropdown"
+                    name="searchBy"
                     class="
                         block
                         rounded-l-md
@@ -124,14 +180,13 @@ export default function AllCat() {
                   <input
                     type="search"
                     id="search-dropdown"
+                    name="searchBar"
                     class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 
                       focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     placeholder="พิมพ์ค้นหาที่นี่"
                     required
                   />
-                  <button type="submit"
-                    class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-salmon rounded-r-lg border 
-                      focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                  <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-salmon rounded-r-lg border focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
                     </path>
                     </svg>
@@ -143,6 +198,22 @@ export default function AllCat() {
             { cat.map((item)=>(
               <HomecardCatprofile item={item}  />
             ))}
+          </div>
+
+          <div class="flex w-[20rem] h-12 rounded-lg border-2 border-paw font-normal text-base text-paw mx-auto px-4 space-x-5">
+            <button type="button "
+              class="flex">
+              <Image class="pt-3" src={previousIcon} placeholder="blur"></Image>
+              <p class="pl-3 pt-3"> Previous   </p>
+            </button>
+            <p class="pt-3"> 1 </p>
+            <p class="pt-3"> 2 </p>
+            <p class="pt-3"> 3 </p>
+            <button type="button "
+              class="flex">
+              <p class="pr-3 pt-3">   Next </p>
+              <Image class="pt-4" src={nextIcon} placeholder="blur"></Image>
+            </button>
           </div>
         </div>
       )}

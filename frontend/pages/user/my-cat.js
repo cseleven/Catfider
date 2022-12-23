@@ -15,33 +15,12 @@ import { getCookie } from 'cookies-next';
 
 
 
-function MyCat() {
+export default function MyCat() {
   
   const session = useSession()
   const [loading, setLoading] = useState(true)
   const [cat, setCat] = useState(null)
-  //const user = supabase.auth.getUser(getCookie("supabase-auth-token"))
-  //let [cat, setCat] = useState([{"cat_picture":catProfile1, "status":true, "cat_name":"loading", "item.cat_id":0, "detail":"-", "breed":"-", "color":"-", "sex":"-", "shelter_profile":{"shelter_name":"-"}}])
-
   
-  // var raw = JSON.stringify({
-  //     'login_id' : "113ccce3-1b58-4ce8-a5fd-cdd0426242a9"
-  //   });
-    
-  // var myheader = {
-  //     'Content-Type': 'application/json'
-  //   };
-
-
-  //   var requestOptions = {
-  //     method: 'POST',
-  //     headers: myheader,
-  //     body: raw,
-  //     redirect: 'follow'
-  //   };
-
-    //const { cat, error, isLoading } = useSWR("/api/cat/userview/showmyCat", requestOptions);
-
   useEffect(() => {
     catExample()
   }, [session])
@@ -83,41 +62,71 @@ function MyCat() {
     }
   };
 
-  // const catExample = async () => {
-  //   var raw = JSON.stringify({
-  //     'login_id' : "113ccce3-1b58-4ce8-a5fd-cdd0426242a9"
-  //   });
+  const searchCat = async (e) => {
+    var cookie = getCookie("supabase-auth-token")
+    var token = cookie.split('"')[1]
+    var{ data: { user:{id} },}= await supabase.auth.getUser(token)
 
-  //   var myheader = {
-  //     'Content-Type': 'application/json'
-  //   };
+    var sby = e.target.searchBy.value;
+    var sbar = e.target.searchBar.value;
+    var bef = { 
+      "login_id":id,
+      "page_number" : 1,
+    };
+
+    if(sby == "status"){
+      bef = {
+        ...bef,
+        "status" : sbar,
+      }
+    }
+
+    if(sby == "breed"){
+      bef = {
+        ...bef,
+        "breed" : sbar,
+      }
+    }
+
+    if(sby == "color"){
+      bef = {
+        ...bef,
+        "color" : sbar,
+      }
+    }
+
+    if(sby == "cat_id"){
+      bef = {
+        ...bef,
+        "cat_id" : sbar,
+      }
+    }
+
+    var raw = JSON.stringify(bef);
+    
+
+    var myheader = {
+      'Content-Type': 'application/json'
+    };
 
 
-  //   var requestOptions = {
-  //     method: 'POST',
-  //     headers: myheader,
-  //     body: raw,
-  //     redirect: 'follow'
-  //   };
+    var requestOptions = {
+      method: 'POST',
+      headers: myheader,
+      body: raw,
+      redirect: 'follow'
+    };
 
-  //   try {
-  //     setLoading(true);
-  //     console.log("raw: "+JSON.stringify(raw))
-  //     let response = await fetch("/api/cat/userview/showmyCat", requestOptions);
-  //     let data = await response.json();
-  //     //console.log("response : " + JSON.stringify(data));
-  //     console.log("data : " + JSON.stringify(data[0].queue));
-  //     setCat(data[0].queue);
-  //     // if(data[0].queue!=null){
-  //     //   console.log("data : " + data[0].queue);
-  //     //   setCat(data[0].queue);
-  //     // } 
-  //     //console.log("response cat : " + JSON.stringify(cat));
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/searchCat", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+      setCat(data);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   return (
     <div class="container mx-auto">
@@ -147,12 +156,13 @@ function MyCat() {
           </div>
           <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28" />
 
-          <form class="lg:mx-28 lg:max-w-10/12">
+          <form class="lg:mx-28 lg:max-w-10/12" onSubmit={searchCat} method="POST">
             <div class="flex mt-9">
               <label class="block ml-44">
                 <select
                   type="search"
                   id="search-dropdown"
+                  name="searchBy"
                   class="
                       block
                       rounded-l-md
@@ -173,14 +183,13 @@ function MyCat() {
                 <input
                   type="search"
                   id="search-dropdown"
+                  name="searchBar"
                   class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 
                     focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                   placeholder="พิมพ์ค้นหาที่นี่"
                   required
                 />
-                <button type="submit"
-                  class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-salmon rounded-r-lg border 
-                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-salmon rounded-r-lg border focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                   <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
                   </path>
                   </svg>
@@ -204,54 +213,3 @@ function MyCat() {
   )
 
 }
-
-async function idUser(){
-  return "113ccce3-1b58-4ce8-a5fd-cdd0426242a9"
-}
-
-export async function getStaticProps() {
-
-// const {useSession} = await import('@supabase/auth-helpers-react');
-//  const session = useSession()
-
-//  const {
-//     data: { session },
-//   } = await supabase.auth.getSession()
-  //const { user } = await supabase.auth.api.getUserByCookie(req);
-
-  var user = await supabase.auth.getUser("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjcxODMxMDUwLCJzdWIiOiIxMTNjY2NlMy0xYjU4LTRjZTgtYTVmZC1jZGQwNDI2MjQyYTkiLCJlbWFpbCI6IjYzMDUwMTQ2QGttaXRsLmFjLnRoIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJyb2xlIjoxLCJ1c2VyX21ldGFkYXRhIjp7InJvbGUiOjF9fSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTY3MTgyNzQ1MH1dLCJzZXNzaW9uX2lkIjoiNTE0ZDQ1ZmItMWZjYS00NTI2LTg5NzEtZmIwNDc3YzUxYzdiIn0.hQLDedmc9Z9eDKWReOTOJ0GbNtxp1rTN1sUJl5KTZK4")
-
-  var raw = JSON.stringify({
-      'login_id' : "113ccce3-1b58-4ce8-a5fd-cdd0426242a9"
-    });
-
-    var myheader = {
-      'Content-Type': 'application/json'
-    };
-
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myheader,
-      body: raw,
-      redirect: 'follow'
-    };
-
-  let response = await fetch("http://localhost:3000/api/cat/userview/showmyCat", requestOptions);
-      let data = await response.json();
-      console.log("user : "+JSON.stringify(user) );
-      // console.log("response : " + JSON.stringify(data));
-      // console.log("data : " + JSON.stringify(data[0].queue));
-    let cat = data[0].queue;
-    //  console.log("cat : " + JSON.stringify(data[0].queue));
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      cat,
-    },
-  }
-
-}
-
-export default MyCat;
