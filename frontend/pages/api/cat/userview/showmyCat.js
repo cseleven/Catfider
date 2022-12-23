@@ -1,6 +1,16 @@
 import { supabase } from "../../supabase"
 import { useEffect, useState } from 'react'
 
+/**
+ * @swagger
+ * /api/cat/showmyCat:
+ *   post:
+ *     description: Returns the hello world
+ *     responses:
+ *       200:
+ *         description: hello world
+ */
+
 export default async function handler(req, res) {
     //get my cat in user view
     //select by shelter_id

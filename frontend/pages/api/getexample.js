@@ -1,3 +1,12 @@
+/**
+ * @swagger
+ * /api/getexample:
+ *   get:
+ *     description: Returns the hello world
+ *     responses:
+ *       200:
+ *         description: hello world
+ */
 export default async function handler(req, res) {
   const data = {
     topic1: "Email address",
