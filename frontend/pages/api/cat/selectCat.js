@@ -1,6 +1,7 @@
 import { supabase } from "../supabase"
 import { useEffect, useState } from 'react'
 
+//ไม่ได้ใช้ เอาไว้เทสเรียกจากจำนวนหน้า
 export default async function handler(req, res) {
 //per cat_id
     const { page_number} = req.body

@@ -1,5 +1,71 @@
 import { supabase } from "../supabase"
 
+/**
+ * @swagger
+* /api/shelter/getShelter:
+*    post:
+*      tags:
+*        - shelter
+*      summary: get shelter for both user shelter
+*      description: get shelter for both user shelter
+*      operationId: getShelter
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/ShelterGetRequest'
+*      responses:
+*        '200':
+*          description: Get Successful
+*          content:
+*            application/json:
+*              schema:
+*                $ref: '#/components/schemas/ShelterGetResponse'
+*        '400':
+*          description: Get Failed Due to Incorrect Input
+* components:
+*  schemas:
+*    ShelterGetRequest:
+*      type: object
+*      properties:
+*        login_id:
+*          type: string
+*          example: "fadadb65-080e-4be8-a3dc-163df80e0918"
+*    ShelterGetResponse:
+*      type: object
+*      properties:
+*        adopt_id:
+*          type: integer
+*          example: 0
+*        queue_id:
+*          type: integer
+*          example: 0
+*        cat_id:
+*          type: integer
+*          example: 0
+*        shelter_id:
+*          type: integer
+*          example: 0
+*        user_id:
+*          type: integer
+*          example: 0
+*        create_date:
+*          type: string
+*          format: date-time
+*          example: '2022-12-07 19:00:30.540431+00'
+*        update_date:
+*          type: string
+*          format: date-time
+*          example: '2022-12-07 19:00:30.540431+00'
+*        adopt_date:
+*          type: string
+*          format: date-time
+*          example: '2022-12-23'
+*        adopt_status:
+*          type: boolean
+*          example: true
+*/
+
 export default async function handler(req, res) {
 
   //call parameter from body
