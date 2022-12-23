@@ -26,7 +26,7 @@ import { supabase } from "../supabase"
 *      properties:
 *        queue_id:
 *          type: integer
-*          example: 0
+*          example: 1
 *        adopt_date:
 *          type: string
 *          format: date-time

@@ -26,10 +26,10 @@ import { supabase } from "../supabase"
 *      properties:
 *        queue_id:
 *          type: integer
-*          example: 0
+*          example: 1
 *        login_id:
 *          type: string
-*          example: 0fb8be3d-e566-4c87-8f1b-553d6dcf2ca3
+*          example: "0fb8be3d-e566-4c87-8f1b-553d6dcf2ca3"
  */
 
 //delete for user

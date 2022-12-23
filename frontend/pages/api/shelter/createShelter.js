@@ -26,7 +26,7 @@ import { supabase } from "../supabase"
 *      properties:
 *        login_id:
 *          type: string
-*          example: 0fb8be3d-e566-4c87-8f1b-553d6dcf2ca3
+*          example: "fadadb65-080e-4be8-a3dc-163df80e0918"
 */
 
 export default async function handler(req, res) {

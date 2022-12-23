@@ -30,7 +30,7 @@ import { supabase } from "../supabase"
 *      properties:
 *        login_id:
 *          type: string
-*          example: fadadb65-080e-4be8-a3dc-163df80e0918
+*          example: "fadadb65-080e-4be8-a3dc-163df80e0918"
 *    ShelterGetResponse:
 *      type: object
 *      properties:
