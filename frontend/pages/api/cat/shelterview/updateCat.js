@@ -1,5 +1,36 @@
 import { supabase } from "../../supabase"
 
+/**
+ * @swagger
+ * /api/cat/shelterview/updateCat:
+ *   post:
+ *     tags:
+ *        - cat
+ *      description: update status cat by shelter
+ *      requestBody:
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/UpdateCat'
+ *      responses:
+ *        '200':
+ *          description: Update Success
+ *        '400':
+ *          description: Update Failed
+ * components:
+ *   schemas:
+ *    UpdateCat:
+ *      type: object
+ *      properties:
+ *        cat_id:
+ *          type: integer
+ *          example: 0
+ *        status:
+ *          type: boolean
+ *          example: true/false
+ *          
+ **/
+
 export default async function handler(req, res) {
 
     //add edit delete

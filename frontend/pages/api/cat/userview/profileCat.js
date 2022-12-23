@@ -1,6 +1,34 @@
 import { supabase } from "../../supabase"
 import { useEffect, useState } from 'react'
 
+/**
+ * @swagger
+ * /api/cat/userview/profileCat:
+ *   post:
+ *     tags:
+ *        - cat
+ *      description: show cat profile by id in userview
+ *      requestBody:
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/CatProfile'
+ *      responses:
+ *        '200':
+ *          description: Show Cat Profile
+ *        '400':
+ *          description: Failed to select
+ * components:
+ *  schemas:
+ *    CatProfile:
+ *      type: object
+ *      properties:
+ *        cat_id:
+ *          type: integer
+ *          example: 0
+ *          
+ **/
+
 export default async function handler(req, res) {
     //get profile cat in user view per cat id
     //select by cat_id

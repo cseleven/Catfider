@@ -1,16 +1,40 @@
 import { supabase } from "../../supabase"
 import { useEffect, useState } from 'react'
+
 /**
  * @swagger
  * /api/cat/shelterview/profileCat:
- *   get:
- *     description: Returns the hello world
- *     responses:
- *       200:
- *         description: hello world
- *     
- * 
- **/
+ *   post:
+ *     tags:
+ *        - cat
+ *      description: show cat profile by id
+ *      requestBody:
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/CatProfile'
+ *      responses:
+ *        '200':
+ *          description: Show Cat Profile
+ *        '400':
+ *          description: Failed to select
+ * components:
+ *  schemas:
+ *    CatProfile:
+ *      type: object
+ *      properties:
+ *        cat_id:
+ *          type: integer
+ *          example: 0
+ *          
+ **/  
+
+const handler = async (
+    req: NextApiRequest,
+    res: NextApiResponse<BreweryObject[]>
+) => {
+
+}
 
 export default async function handler(req, res) {
     //get profile cat in shelter view per cat id
