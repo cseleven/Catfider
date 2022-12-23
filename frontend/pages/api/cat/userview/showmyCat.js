@@ -2,13 +2,70 @@ import { supabase } from "../../supabase"
 import { useEffect, useState } from 'react'
 
 /**
- * @swagger
- * /api/cat/showmyCat:
- *   post:
- *     description: Returns the hello world
- *     responses:
- *       200:
- *         description: hello world
+* @swagger
+* /api/cat/userview/showmyCat:
+*    post:
+*      tags:
+*        - cat-user
+*      summary: get profile cat shelterview
+*      description: get profile cat shelterview
+*      operationId: showmyCat Userview
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/ShowMyCatUserviewRequest'
+*      responses:
+*        '200':
+*          description: Get Successful
+*          content:
+*            application/json:
+*              schema:
+*                $ref: '#/components/schemas/ShowMyCatUserviewResponse'
+*        '400':
+*          description: Get Failed Due to Incorrect Input
+*
+* components:
+*  schemas: 
+*   ShowMyCatUserviewRequest:
+*      type: object
+*      properties:
+*        login_id:
+*          type: string
+*          example: 113ccce3-1b58-4ce8-a5fd-cdd0426242a9
+*   ShowMyCatUserviewResponse:
+*      type: object
+*      properties:
+*        user_id:
+*          type: integer
+*          example: 0
+*        queue_id:
+*          type: integer
+*          example: 0
+*        cat_id:
+*          type: integer
+*          example: 0
+*        cat_name:
+*          type: string
+*          example: mali
+*        sex:
+*          type: string
+*          example: male
+*        breed:
+*          type: string
+*          example: mixed
+*        color:
+*          type: string
+*          example: mixed
+*        cat_picture:
+*          type: string
+*          example: web-url
+*        status:
+*          type: boolean
+*          example: true
+*        shelter_name:
+*          type: string
+*          example: love
  */
 
 export default async function handler(req, res) {

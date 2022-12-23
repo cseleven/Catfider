@@ -1,36 +1,37 @@
 import { supabase } from "../../supabase"
 
 /**
- * @swagger
- * /api/cat/shelterview/updateCat:
- *   post:
- *     tags:
- *        - cat
- *      description: update status cat by shelter
- *      requestBody:
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/UpdateCat'
- *      responses:
- *        '200':
- *          description: Update Success
- *        '400':
- *          description: Update Failed
- * components:
- *   schemas:
- *    UpdateCat:
- *      type: object
- *      properties:
- *        cat_id:
- *          type: integer
- *          example: 0
- *        status:
- *          type: boolean
- *          example: true/false
- *          
- */
-
+* @swagger
+* /api/cat/shelterview/updateCat:
+*    post:
+*      tags:
+*        - cat-shelter
+*      summary: update cat shelterview
+*      description: update cat shelterview
+*      operationId: updateCat
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/UpdateCatRequest'
+*      responses:
+*        '200':
+*          description: Update Successful
+*        '400':
+*          description: Update Failed Due to Incorrect
+* components:
+*  schemas:
+*    UpdateCatRequest:
+*      type: object
+*      properties:
+*        cat_id:
+*          type: integer
+*          example: 0
+*        status:
+*          type: boolean
+*          example: true
+*   
+*/
 export default async function handler(req, res) {
 
     //add edit delete

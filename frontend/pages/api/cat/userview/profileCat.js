@@ -2,32 +2,120 @@ import { supabase } from "../../supabase"
 import { useEffect, useState } from 'react'
 
 /**
- * @swagger
- * /api/cat/userview/profileCat:
- *   post:
- *     tags:
- *        - cat
- *      description: show cat profile by id in userview
- *      requestBody:
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/CatProfile'
- *      responses:
- *        '200':
- *          description: Show Cat Profile
- *        '400':
- *          description: Failed to select
- * components:
- *  schemas:
- *    CatProfile:
- *      type: object
- *      properties:
- *        cat_id:
- *          type: integer
- *          example: 0
- *          
- */
+* @swagger
+* /api/cat/userview/profileCat:
+*    post:
+*      tags:
+*        - cat-user
+*      summary: get profile cat shelterview
+*      description: get profile cat shelterview
+*      operationId: profileCat Userview
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/ProfileCatUserviewRequest'
+*      responses:
+*        '200':
+*          description: Get Successful
+*          content:
+*            application/json:
+*              schema:
+*                $ref: '#/components/schemas/ProfileCatUserviewResponse'
+*        '400':
+*          description: Get Failed Due to Incorrect Input
+* components:
+*  schemas:
+*    ProfileCatUserviewRequest:
+*      type: object
+*      properties:
+*        cat_id:
+*          type: integer
+*          example: 0
+*    ProfileCatUserviewResponse:
+*      type: object
+*      properties:
+*        cat_id:
+*          type: integer
+*          example: 0
+*        cat_name:
+*          type: string
+*          example: meow
+*        detail:
+*          type: string
+*          example: meow
+*        sex:
+*          type: string
+*          example: male
+*        breed:
+*          type: string
+*          example: mixed
+*        color:
+*          type: string
+*          example: mixed
+*        cat_picture:
+*          type: string
+*          example: mixed
+*        sterile:
+*          type: boolean
+*          example: true
+*        vacccine:
+*          type: boolean
+*          example: true
+*        congenital_desease:
+*          type: string
+*          example: nothing
+*        age:
+*          type: integer
+*          example: 0
+*        shelter_name:
+*          type: string
+*          example: love
+*        location_url:
+*          type: string
+*          example: www
+*        address:
+*          type: string
+*          example: www
+*        donate_name1:
+*          type: string
+*          example: www
+*        donate_number1:
+*          type: string
+*          example: 09x-xxx-xxx
+*        donate_name2:
+*          type: string
+*          example: www
+*        donate_number2:
+*          type: string
+*          example: 09x-xxx-xxx
+*        queue_date:
+*          type: string
+*          format: date-time
+*          example: '2022-12-23'
+*        queue_time:
+*          type: string
+*          example: 09.00-10.00
+*        user_id:
+*          type: integer
+*          example: 0
+*        email:
+*          type: string
+*          example: email
+*        queue_status:
+*          type: boolean
+*          example: true
+*    UpdateCatRequest:
+*      type: object
+*      properties:
+*        cat_id:
+*          type: integer
+*          example: 0
+*        status:
+*          type: boolean
+*          example: true
+*
+*/
 
 export default async function handler(req, res) {
     //get profile cat in user view per cat id
