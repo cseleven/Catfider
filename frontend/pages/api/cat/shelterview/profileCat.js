@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react'
  * @swagger
  * /api/cat/shelterview/profileCat:
  *   post:
- *     tags:
- *        - cat
  *      description: show cat profile by id
  *      requestBody:
  *        content:
@@ -18,23 +16,10 @@ import { useEffect, useState } from 'react'
  *          description: Show Cat Profile
  *        '400':
  *          description: Failed to select
- * components:
- *  schemas:
- *    CatProfile:
- *      type: object
- *      properties:
- *        cat_id:
- *          type: integer
- *          example: 0
  *          
- **/  
+ */  
 
-const handler = async (
-    req: NextApiRequest,
-    res: NextApiResponse<BreweryObject[]>
-) => {
 
-}
 
 export default async function handler(req, res) {
     //get profile cat in shelter view per cat id

@@ -27,7 +27,7 @@ import { useEffect, useState } from 'react'
  *          type: integer
  *          example: 0
  *          
- **/
+ */
 
 export default async function handler(req, res) {
     //get profile cat in user view per cat id

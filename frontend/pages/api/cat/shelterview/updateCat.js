@@ -29,7 +29,7 @@ import { supabase } from "../../supabase"
  *          type: boolean
  *          example: true/false
  *          
- **/
+ */
 
 export default async function handler(req, res) {
 

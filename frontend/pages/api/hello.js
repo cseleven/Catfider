@@ -1,5 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { NextApiRequest, NextApiResponse } from 'next';
 /**
  * @swagger
  * /api/hello:
@@ -9,8 +8,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
  *       200:
  *         description: hello world
  */
-export default function handler(_req: NextApiRequest, res: NextApiResponse) => {
-  res.status(200).json({
-    result: 'hello world',
-  });
-};
+export default function handler(req, res) {
+  res.status(200).json({ name: 'John Doe' })
+}
