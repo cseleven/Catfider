@@ -5,19 +5,24 @@ export default async function handler(req, res) {
   //call parameter from body
   const { queue_id, adopt_date } = req.body
 
+  let createStatus
+
   //check already adopt
   const checkAdopt = await checkAlreadyAdopt(queue_id)
   if (!checkAdopt) {
+
+    createStatus = false
     console.log("Already Create Adopt!")
-    res.status(400).json("Already Create Adopt!")
+    res.status(400).json(createStatus)
   } else {
     //check queue_id exist
     var queueID = await checkQueueId(queue_id)
 
     if (!queueID) {
       // if queue_id does not exist
+      createStatus = false
       console.log("Queue ID not found!")
-      res.status(400).json("Queue ID not found!")
+      res.status(400).json(createStatus)
     } else {
       var shelter_id = await getShelterID(queue_id)
       var user_id = await getUserID(queue_id)
@@ -32,7 +37,10 @@ export default async function handler(req, res) {
         user_id: user_id,
         cat_id: cat_id,
       }])
-      res.status(200).json("Create Adopt Succesful!")
+
+      createStatus = true
+      console.log("Queue ID not found!")
+      res.status(200).json(createStatus)
     }
   }
 }

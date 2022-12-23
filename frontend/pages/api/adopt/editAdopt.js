@@ -9,6 +9,8 @@ export default async function handler(req, res) {
   console.log(adopt_status)
   console.log(login_id)
 
+  let editStatus
+
   var shelter_id = await getShelterID(login_id)
   console.log("shelter id : ", shelter_id)
 
@@ -34,14 +36,21 @@ export default async function handler(req, res) {
         status: false,
         update_date: new Date(),
       }]).eq('cat_id', cat_id)
-      res.status(200).json("Edit Successful!")
+
+      editStatus = true
+      console.log("Edit Successful!")
+      res.status(200).json(editStatus)
     } else {
       //shelter id != shelter id in adopt
-      res.status(400).json("This ShelterID Does Not Have Permission!")
+      editStatus = false
+      console.log("This ShelterID Does Not Have Permission!")
+      res.status(400).json(editStatus)
     }
   } else {
     //queue_id does not exist
-    res.status(400).json("Adopt ID not found!")
+    editStatus = false
+    console.log("Adopt ID not found!")
+    res.status(400).json(editStatus)
   }
 }
 

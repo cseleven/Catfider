@@ -1,9 +1,51 @@
 import { supabase } from "../supabase"
 
+//http://localhost:3000/api-doc
+
+/**
+ * @swagger
+* /queue/createQueue:
+*    post: 
+*      tags:
+*        - queue
+*      summary: create queue for user
+*      description: create queue for user
+*      operationId: createQueue
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/QueueCreateRequest'
+*      responses:
+*        '200':
+*          description: Create Successful
+*        '400':
+*          description: Create Failed Due to Incorrect Input
+* components:
+*  schemas:
+*    QueueCreateRequest:
+*      type: object
+*      properties:
+*        cat_id:
+*          type: integer
+*          example: 0
+*        login_id:
+*          type: string
+*          example: "0fb8be3d-e566-4c87-8f1b-553d6dcf2ca3"
+*        queue_date:
+*          type: string
+*          format: date-time
+*          example: "2022-12-23"
+*        queue_time:
+*          type: string
+*          example: "09.00-10.00"
+ */
 export default async function handler(req, res) {
 
   //call parameter from body
   const {cat_id, login_id, queue_date, queue_time } = req.body
+
+  let createStatus
 
   console.log("cat_id: "+ JSON.stringify(cat_id))
   console.log("login_id: "+ JSON.stringify(login_id))
@@ -14,7 +56,9 @@ export default async function handler(req, res) {
   var checkQueue = await checkQueueUser(user_id, cat_id)
 
   if (!checkQueue) {
-    res.status(400).json("Already Queued!")
+    createStatus = false
+    console.log("Already Queued!")
+    res.status(400).json(false)
   } else {
   //query data
   const {data , error} = await supabase.from('cat_profile').select().eq('cat_id', cat_id)
@@ -31,8 +75,9 @@ export default async function handler(req, res) {
 
   if (!userID) {
     // if user_id does not exist
+    createStatus = false
     console.log("User ID not found!")
-    res.status(400).json("User ID not found!")
+    res.status(400).json(createStatus)
   } else {
       //check if queue date already exist
       console.log("User ID found!")
@@ -40,8 +85,9 @@ export default async function handler(req, res) {
 
       if (!queueDate) {
         // if queue_date exist
+        createStatus = false
         console.log("Queue Date Time already exist!")
-        res.status(400).json("Queue Date already exist!")
+        res.status(400).json(createStatus = false)
       } else {
         // if queue date does not exist then insert data
         console.log("Queue Date Time not exist!")
@@ -59,8 +105,9 @@ export default async function handler(req, res) {
         ])
 
         //print data
+        createStatus = true
         console.log("Insert Data Success!")
-        res.status(200).json("Insert Data Success!")
+        res.status(200).json(createStatus)
       }
     }
   }
