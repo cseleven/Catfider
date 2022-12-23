@@ -30,7 +30,7 @@ import { supabase } from "../supabase"
 *      properties:
 *        login_id:
 *          type: string
-*          example: 0fb8be3d-e566-4c87-8f1b-553d6dcf2ca3
+*          example: "6d6b6578-bda8-4659-9ba7-9ffca9684abf"
 *    ReportGetResponse:
 *      type: object
 *      properties:

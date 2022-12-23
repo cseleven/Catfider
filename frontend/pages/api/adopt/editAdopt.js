@@ -29,7 +29,7 @@ import { supabase } from "../supabase"
 *          example: 0
 *        login_id:
 *          type: string
-*          example: fadadb65-080e-4be8-a3dc-163df80e0918
+*          example: "fadadb65-080e-4be8-a3dc-163df80e0918"
 *        queue_status:
 *          type: boolean
 *          example: true
