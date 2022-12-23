@@ -1,5 +1,34 @@
 import { supabase } from "../supabase"
 
+/**
+ * @swagger
+* /api/shelter/createShelter:
+*    post:
+*      tags:
+*        - shelter
+*      summary: create shelter for user
+*      description: create shelter for user
+*      operationId: createShelter
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/ShelterCreateRequest'
+*      responses:
+*        '200':
+*          description: Create Successful
+*        '400':
+*          description: Create Failed Due to Incorrect Input
+* components:
+*  schemas:
+*    ShelterCreateRequest:
+*      type: object
+*      properties:
+*        login_id:
+*          type: string
+*          example: 0fb8be3d-e566-4c87-8f1b-553d6dcf2ca3
+*/
+
 export default async function handler(req, res) {
 
     //call parameter from body

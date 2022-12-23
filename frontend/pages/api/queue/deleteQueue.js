@@ -1,5 +1,37 @@
 import { supabase } from "../supabase"
 
+/**
+ * @swagger
+* /api/queue/deleteQueue:
+*    post:
+*      tags:
+*        - queue
+*      summary: delete queue for user
+*      description: delete queue for user
+*      operationId: deleteQueue
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/QueueDeleteRequest'
+*      responses:
+*        '200':
+*          description: Delete Successful
+*        '400':
+*          description: Delete Failed Due to Incorrect Input
+* components:
+*  schemas:
+*    QueueDeleteRequest:
+*      type: object
+*      properties:
+*        queue_id:
+*          type: integer
+*          example: 0
+*        login_id:
+*          type: string
+*          example: 0fb8be3d-e566-4c87-8f1b-553d6dcf2ca3
+ */
+
 //delete for user
 export default async function handler(req, res) {
 

@@ -4,7 +4,7 @@ import { supabase } from "../supabase"
 
 /**
  * @swagger
-* /queue/createQueue:
+* /api/queue/createQueue:
 *    post: 
 *      tags:
 *        - queue
@@ -39,7 +39,7 @@ import { supabase } from "../supabase"
 *        queue_time:
 *          type: string
 *          example: "09.00-10.00"
- */
+*/
 export default async function handler(req, res) {
 
   //call parameter from body
