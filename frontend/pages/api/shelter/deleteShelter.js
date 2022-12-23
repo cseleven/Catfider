@@ -1,5 +1,34 @@
 import { supabase } from "../supabase"
 
+/**
+ * @swagger
+* /api/shelter/deleteShelter:
+*    post:
+*      tags:
+*        - shelter
+*      summary: delete shelter for user
+*      description: delete shelter for user
+*      operationId: deleteShelter
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/ShelterDeleteRequest'
+*      responses:
+*        '200':
+*          description: Delete Successful
+*        '400':
+*          description: Delete Failed Due to Incorrect Input
+* components:
+*  schemas:
+*    ShelterDeleteRequest:
+*      type: object
+*      properties:
+*        login_id:
+*          type: string
+*          example: "fadadb65-080e-4be8-a3dc-163df80e0918"
+*/
+
 export default async function handler(req, res) {
 
     //call parameter from body
