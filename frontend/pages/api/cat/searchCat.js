@@ -2,6 +2,88 @@ import { supabase } from "../supabase"
 import { useEffect, useState } from 'react'
 import { stringify } from "querystring"
 
+/**
+* @swagger
+* /api/cat/searchCat:
+*    post:
+*      tags:
+*        - cat
+*      summary: get search cat
+*      description: get search cat
+*      operationId: searchCat
+*      requestBody:
+*       content:
+*         application/json:
+*           schema:
+*             $ref: '#/components/schemas/SearchCatRequest'
+*      responses:
+*       '200':
+*         description: Get Successful
+*         content:
+*           application/json:
+*             schema:
+*               $ref: '#/components/schemas/SearchCatResponse'
+*       '400':
+*         description: Get Failed Due to Incorrect Input
+* components:
+*  schemas:
+*   SearchCatRequest:
+*     type: object
+*     properties:
+*       page_number:
+*         type: integer
+*         example: 1
+*       cat_id:
+*         type: integer
+*         example: 0
+*       sex:
+*         type: string
+*         example: เมีย
+*       breed:
+*         type: string
+*         example: ผสม
+*       color:
+*         type: string
+*         example: ขาว
+*       status:
+*         type: boolean
+*         example: false
+*       shelter_name:
+*         type: string
+*         example: LoveWorldLoveCat
+*   SearchCatResponse:
+*     type: object
+*     properties:
+*       cat_id:
+*         type: integer
+*         example: 0
+*       cat_name:
+*         type: string
+*         example: meow
+*       detail:
+*         type: string
+*         example: meow
+*       sex:
+*         type: string
+*         example: male
+*       breed:
+*         type: string
+*         example: mixed
+*       color:
+*         type: string
+*         example: mixed
+*       cat_picture:
+*         type: string
+*         example: mixed
+*       status:
+*         type: boolean
+*         example: false
+*       shelter_name:
+*         type: string
+*         example: mixed
+*
+*/
+
 export default async function handler(req, res) {
     //filtering cat 
 

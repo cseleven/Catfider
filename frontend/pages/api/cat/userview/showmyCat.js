@@ -1,6 +1,73 @@
 import { supabase } from "../../supabase"
 import { useEffect, useState } from 'react'
 
+/**
+* @swagger
+* /api/cat/userview/showmyCat:
+*    post:
+*      tags:
+*        - cat-user
+*      summary: get profile cat userview
+*      description: get profile cat userview
+*      operationId: showmyCat Userview
+*      requestBody:
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/ShowMyCatUserviewRequest'
+*      responses:
+*        '200':
+*          description: Get Successful
+*          content:
+*            application/json:
+*              schema:
+*                $ref: '#/components/schemas/ShowMyCatUserviewResponse'
+*        '400':
+*          description: Get Failed Due to Incorrect Input
+*
+* components:
+*  schemas: 
+*   ShowMyCatUserviewRequest:
+*      type: object
+*      properties:
+*        login_id:
+*          type: string
+*          example: 113ccce3-1b58-4ce8-a5fd-cdd0426242a9
+*   ShowMyCatUserviewResponse:
+*      type: object
+*      properties:
+*        user_id:
+*          type: integer
+*          example: 0
+*        queue_id:
+*          type: integer
+*          example: 0
+*        cat_id:
+*          type: integer
+*          example: 0
+*        cat_name:
+*          type: string
+*          example: mali
+*        sex:
+*          type: string
+*          example: male
+*        breed:
+*          type: string
+*          example: mixed
+*        color:
+*          type: string
+*          example: mixed
+*        cat_picture:
+*          type: string
+*          example: web-url
+*        status:
+*          type: boolean
+*          example: true
+*        shelter_name:
+*          type: string
+*          example: love
+ */
+
 export default async function handler(req, res) {
     //get my cat in user view
     //select by shelter_id
@@ -16,7 +83,7 @@ export default async function handler(req, res) {
 
     let query = supabase
         .from('user_profile')
-        .select('user_id, queue(queue_id, cat_profile(cat_id, cat_name, sex, breed, color, cat_picture, status, shelter_profile(shelter_name)))')
+        .select('user_id, queue(queue_id, cat_profile(cat_id, cat_name, sex, breed, color, detail,cat_picture, status, shelter_profile(shelter_name)))')
         .eq('user_id', user_id) 
 
     const { data, error } = await query

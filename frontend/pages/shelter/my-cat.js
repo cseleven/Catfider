@@ -15,7 +15,6 @@ import Router from 'next/router';
 
 
 
-
 export default function MyCat() {
   const user = useUser()
   const session = useSession()
@@ -59,7 +58,7 @@ export default function MyCat() {
   };
 
   return (
-    <div>
+    <div class="container mx-auto">
       <nav class="flex mx-28 mt-9" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">
@@ -101,7 +100,6 @@ export default function MyCat() {
                 font-normal
             "
             >
-              <option>ประเภท</option>
               <option value="สถานะ">สถานะ</option>
               <option value="สายพันธุ์">สายพันธุ์</option>
               <option value="สี หรือ ลาย"> สี หรือ ลาย</option>
@@ -151,8 +149,8 @@ export default function MyCat() {
           {cat?.map((item) => (
             <div class="flex h-auto">
               <div class="flex w-[30rem] bg-white border-b border-gray-200 font-normal text-sm">
-                <Image class="mt-auto mb-auto ml-4" src={catProfileAdopt2} placeholder="blur" />
-                <div class="py-3 pl-2">
+                <div class="mt-auto mb-auto ml-4 w-10 h-10 bg-center bg-cover rounded-full" style={{"background-image": "url("+item.cat_picture+")"}}/>
+                <div class="py-3 pl-3">
                   <p class="text-gray-900 text-base">{item.cat_name} <>(#</>{item.cat_id}<>)</></p>
                   <p class="text-gray-500 text-xs">วันเข้าระบบ : {item.create_date}</p>
                 </div>
@@ -165,8 +163,8 @@ export default function MyCat() {
               </div>
               <div class="flex w-[3rem] bg-white border-gray-200 border-b">
                 {
-                  item.status ? (<p class="w-9 h-7 bg-green-200 rounded-[32px] my-auto text-sm text-green-600 font-medium text-center pt-1">ว่าง</p>) :
-                    (<p class="w-9 h-7 bg-red-200 rounded-[32px] my-auto text-sm text-red-600 font-medium text-center pt-1">มีบ้าน</p>)
+                  item.status ? (<p class="w-12 h-7 bg-green-200 rounded-[32px] my-auto text-sm text-green-600 font-medium text-center pt-1">ว่าง</p>) :
+                    (<p class="w-12 h-7 bg-red-200 rounded-[32px] my-auto text-sm text-red-600 font-medium text-center pt-1">มีบ้าน</p>)
                 }
               </div>
               <div class="flex w-[20rem] bg-white border-b border-gray-200">

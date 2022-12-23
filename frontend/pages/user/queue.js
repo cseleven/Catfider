@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { useUser } from '@supabase/auth-helpers-react'
 import { useRouter } from "next/router";
+import Router from 'next/router';
 
 
 export default function Queue() {
@@ -47,6 +48,7 @@ export default function Queue() {
 
         try {
             setLoading(true);
+            console.log("req : " + JSON.stringify(raw));
             let response = await fetch("/api/queue/createQueue", requestOptions);
             let data = await response.json();
             console.log("response : " + JSON.stringify(data));
@@ -56,6 +58,7 @@ export default function Queue() {
             })
             setLoading(false);
         }
+
 
     };
 

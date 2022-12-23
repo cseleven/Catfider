@@ -7,9 +7,8 @@ import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
 import Router from 'next/router';
 
-
 const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
-    return condition ? (
+    return condition == null? (
         <div class="grid mb-8 md:place-content-end md:mr-20">
           <button type="button" onClick={()=>Router.push({
               pathname: '/user/queue',
@@ -34,6 +33,7 @@ export default function CatProfile() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const user = useUser()
+  const session = useSession()
   const [cat, setCat] = useState(null)
   
   const mock = { 
@@ -45,17 +45,16 @@ export default function CatProfile() {
 
   
   useEffect(() => {
-    console.log("session: "+user?.id)
+    console.log("login_id: "+user?.id)
     console.log("rout: "+JSON.stringify(router.query.id))
     catExample()
   }, [])
 
 
   const catExample = async () => {
-
     var raw = JSON.stringify({
-      "cat_id": router.query.id,
-      "login_id": user?.id
+      "cat_id": "1",
+      "login_id": "user.id"
     });
 
     var myheader = {
@@ -109,10 +108,10 @@ export default function CatProfile() {
           map = {mock.map}
           vaccine={cat[0].vaccine}
           sterile={cat[0].sterile}
-          bank1={cat[0].shelter_profile.donate_name1}
-          donate_number1={cat[0].shelter_profile.donate_number1}
-          bank2={cat[0].shelter_profile.donate_name2}
-          donate_number2={cat[0].shelter_profile.donate_number2}
+          bank1={cat[0].shelter_profile?.donate_name1}
+          donate_number1={cat[0].shelter_profile?.donate_number1}
+          bank2={cat[0].shelter_profile?.donate_name2}
+          donate_number2={cat[0].shelter_profile?.donate_number2}
         />
 
         {/*section2*/}
@@ -128,8 +127,8 @@ export default function CatProfile() {
             disease={cat[0].congenital_disease}
           />
           <div class="md:basis-2/5 lg:border-l-2 lg:px-6">
-            {!mock.status?(<></>):(
-                <ConditionalWrapper condition={cat[0].queue} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue?.queue_date} time={cat[0].queue?.queue_time} place={cat[0].shelter_profile?.address}/>
+            {!cat[0].status?(<></>):(
+                <ConditionalWrapper condition={cat[0].queue[0]} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue[0]?.queue_date} time={cat[0].queue[0]?.queue_time} place={cat[0].shelter_profile?.address}/>
             )}
           </div>
         </div>

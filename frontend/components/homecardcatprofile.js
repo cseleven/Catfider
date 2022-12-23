@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 export default function HomecardCatprofile({ item }) {
     const user = useUser()
-    const imgcat=item.cat_picture
+    const imgcat= item.cat_picture
     const statuscat=item.status
     const namecat=item.cat_name
     const idcat=item.cat_id
@@ -18,14 +18,15 @@ export default function HomecardCatprofile({ item }) {
     const [path,setPath]=useState("/signin/cat/")
 
     useEffect(() => {
+        console.log(user?.user_metadata.role)
         checkPath()
     }, [])
     
     const checkPath = () => {
-        if(user?.user_metadata.role == 2){
+        if(user?.user_metadata?.role == 2){
             setPath("/shelter/cat/")
         }
-        if(user?.user_metadata.role == 1){
+        if(user?.user_metadata?.role == 1){
             setPath("/user/cat/")
         }
     }

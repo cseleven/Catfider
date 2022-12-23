@@ -31,6 +31,7 @@ export default function ShelterForm() {
             setLoading(true);
             let response = await fetch("/api/shelter/createShelter", requestOptions);
             let data = await response.json();
+            useUser(data)
             console.log("response : " + JSON.stringify(data));
             //useUser(data)
         } finally {
