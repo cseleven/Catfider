@@ -29,37 +29,37 @@ import { supabase } from "../supabase"
 *          example: "fadadb65-080e-4be8-a3dc-163df80e0918"
 *        shelter_name:
 *          type: string
-*          example: meow
+*          example: LoveWorldLoveCat
 *        website_url:
 *          type: string
-*          example: www
+*          example: www.loveworldlovecat.com
 *        email:
 *          type: string
-*          example: '@gmail'
+*          example: loveworldlovecat@gmail.com
 *        address:
 *          type: string
-*          example: location
+*          example: เลขที่ 1 ซอย ฉลองกรุง 1 แขวง ลาดกระบัง เขตลาดกระบัง กรุงเทพมหานคร 10520 
 *        contact_name:
 *          type: string
-*          example: meow
+*          example: มานี
 *        contact_lastname:
 *          type: string
-*          example: meow
+*          example: มีแมว
 *        contact_phone:
 *          type: string
 *          example: 09x-xxx-xxxx
 *        donate_name1:
 *          type: string
-*          example: meow
+*          example: กรุงศรี
 *        donate_number1:
 *          type: string
-*          example: meow
+*          example: 0-5459005661-5 
 *        donate_name2:
 *          type: string
-*          example: meow
+*          example: กรุงไทย
 *        donate_number2:
 *          type: string
-*          example: meow
+*          example: 0-5459005667-4 
 */
 
 //edit from client
