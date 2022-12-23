@@ -84,28 +84,33 @@ export default function MyCat() {
       </nav>
 
       <div class="flex mt-8">
-        <p class="text-4xl text-black font-normal mx-28">แมวของฉัน</p>
-        <div>
+        <p class="text-4xl text-black font-normal mx-28 mb-8">รายงานยอดการอุปการะ</p>
+        {/* <div>
           <a href="/shelter/add-cat" className="rounded-lg bg-salmon text-white text-lg ml-[890px] mb-7 px-6 py-2 gap-3">
             + เพิ่มแมว</a>
-        </div>
-      </div>
-      <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28" />
-
-      <div clss="grid grid-cols-1 gap-y-16 md:grid-cols-2 md:gap-x-12">
-        <p class="mx-auto mt-20 text-sm text-black font-normal mx-28">รายงานยอดการอุปการะแมวผ่านแพลตฟอร์ม Cat finder</p>
-        <p class="mx-auto text-sm text-black font-normal mx-28 ml">ชื่อมูลนิธิ.....</p>
+        </div> */}
       </div>
 
-      <div><p class="mx-auto text-sm text-black font-normal mx-28">วันที่ออกรายงาน.....</p></div>
+      <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28 mb-10" />
 
-      <div clss="w-full">
-        <p class="mx-auto mt-4 text-2xl text-iris font-normal mx-28 pb-10">ยอดทั้งหมด</p>
+
+
+      <div clss="flex">
+        <div><p class="flex justify-between text-base text-black font-normal">รายงานยอดการอุปการะแมวผ่านแพลตฟอร์ม Cat finder</p></div>
+        <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ :</p></div>
+        <div><p class="flex justify-end text-sm text-black font-normal">วันที่ออกรายงาน :</p></div>
+        <div><p class="flex justify-start mb-0 text-3xl text-iris font-normal">ยอดทั้งหมด</p></div>
+
       </div>
 
 
-      <div class="w-full shadow-md md:rounded-lg md:w-auto">
-        <table class="w-full text-sm text-left font-light text-black ">
+
+
+
+
+      <div class="overflow-x-hidden w-full mt-8 rounded md:rounded-lg shadow-md  md:w-auto">
+        
+        <table class=" w-full text-sm text-left font-light text-black ">
           <thead class="text-base text-gray-500 bg-gray-300">
             <tr>
               <th scope="col" class="py-3 px-6">
@@ -172,7 +177,7 @@ export default function MyCat() {
 
 
           <tfoot>
-            <tr class="font-medium text-gray-900 ">
+            <tr class="font-medium text-base text-gray-900 ">
               <th scope="row" class="py-3 px-6 text-base"> </th>
               <td class="py-4 px-6"> </td>
               <td class="py-4 px-6"> </td>
