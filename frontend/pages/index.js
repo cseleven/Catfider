@@ -214,11 +214,7 @@ export default function Home() {
           {/*section 6*/}
           <div class="w-screen h-[35rem] flex flex-col items-center">
             <p class="text-[40px] text-black/[0.8] font-medium text-center pt-[200px]">ยังมีน้องแมวที่ต้องการความรักจากคุณ</p>
-<<<<<<< HEAD
-            <button class="mx-auto rounded-lg bg-salmon text-white text-2xl mt-[40px] ml-[620px] px-20 py-[8px]">สมัครสมาชิก</button>
-=======
             <a href="/signin/user" class="rounded-lg bg-salmon text-white text-2xl mt-[48px]  mx-auto px-20 py-[8px]">สมัครสมาชิก</a>
->>>>>>> 4d29b91dd7756aaab6a707a97286ae3800adcea7
           </div>
 
           {/*img backgroud*/}

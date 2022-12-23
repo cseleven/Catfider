@@ -2488,18 +2488,6 @@ export default function FormAdopt() {
             </form >
             {/*section 5*/}
             <div class="w-screen h-[30rem]" >
-<<<<<<< HEAD
-                <button
-
-                    type="button"
-                    class="flex rounded-lg bg-salmon text-white rounded text-lg mx-auto my-12 px-7 py-2 gap-3"
-                    onClick={() => createPdf()}
-
-                >
-                    <Image src={vectorprinter} placeholder="blur" />
-                    พิมพ์เอกสาร
-                </button>
-=======
                 <a href="/user/formadopt-success">
                     <button type="button"
                         class="flex rounded-lg bg-salmon text-white text-lg mx-auto my-12 px-7 py-2 gap-3"
@@ -2508,7 +2496,6 @@ export default function FormAdopt() {
                         พิมพ์เอกสาร
                     </button>
                 </a>
->>>>>>> 4d29b91dd7756aaab6a707a97286ae3800adcea7
             </div >
         </div >
     )
