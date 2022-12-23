@@ -1,5 +1,7 @@
 import { useSession, useUser } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
+import { supabase } from '../api/supabase'
+import { getCookie } from 'cookies-next';
 
 export default function ShelterForm() {
     const user = useUser()
@@ -13,8 +15,15 @@ export default function ShelterForm() {
     }, [])
 
     const createProfile = async () => {
+        var cookie = getCookie("supabase-auth-token")
+        var token = cookie.split('"')[1]
+        var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+
         const user = useUser()
-        var raw = JSON.stringify({ "login_id": "6d6b6578-bda8-4659-9ba7-9ffca9684abf" });
+        var raw = JSON.stringify({ 
+            // "login_id": "6d6b6578-bda8-4659-9ba7-9ffca9684abf" 
+            "login_id": id
+        });
 
         var myheader = {
             'Content-Type': 'application/json'

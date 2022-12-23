@@ -5,11 +5,12 @@ import { useEffect, useState } from 'react'
 import { useUser } from '@supabase/auth-helpers-react'
 import { useRouter } from "next/router";
 import Router from 'next/router';
-
+import { supabase } from '../api/supabase'
+import { getCookie } from 'cookies-next';
 
 export default function Queue() {
     //setup
-    const user = useUser()
+    //const user = useUser()
     const session = useSession()
     const [loading, setLoading] = useState(true)
     const [cat, setCat] = useState(null)
@@ -27,9 +28,14 @@ export default function Queue() {
     //fetch data
     const postQueueCat = async (e) => {
 
+        var cookie = getCookie("supabase-auth-token")
+        var token = cookie.split('"')[1]
+        var{ data: { user },}= await supabase.auth.getUser(token)
+
         var raw = JSON.stringify({
             "cat_id": id,
             "login_id": user.id,
+            //"login_id": "0fb8be3d-e566-4c87-8f1b-553d6dcf2ca3",
             "queue_date": e.target.queue_date.value,
             "queue_time": e.target.queue_time.value
         });
@@ -53,10 +59,12 @@ export default function Queue() {
             let data = await response.json();
             console.log("response : " + JSON.stringify(data));
         } finally {
-            Router.push({
-                pathname: "/user/queue-success",
-            })
             setLoading(false);
+            if(data){
+                Router.push({
+                    pathname: "/user/queue-success",
+                })
+            }
         }
 
 
@@ -223,13 +231,10 @@ export default function Queue() {
                         </div>
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md mx-28">
                             <div class="h-[30rem] py-3">
-                                <button type="submit"
-                                    class="flex bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]">
+                                <button type="submit" class="flex bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]">
                                     ยืนยัน
                                 </button>
-
                             </div>
-
                         </div>
                     </form>
                 </div>

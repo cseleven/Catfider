@@ -16,6 +16,7 @@
     "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/auth-ui-react": "^0.2.6",
     "@supabase/supabase-js": "^2.2.0",
+    "cookies-next": "^2.1.1",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.4",
     "i": "^0.3.7",
@@ -26,7 +27,8 @@
     "puppeteer": "^19.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "swagger-ui-react": "^4.15.5"
+    "swagger-ui-react": "^4.15.5",
+    "swr": "^2.0.0"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",

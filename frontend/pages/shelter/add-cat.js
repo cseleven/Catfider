@@ -6,11 +6,12 @@ import { useSession, useUser } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
 import { supabase } from '../api/supabase'
 import Router from 'next/router';
+import { supabase } from '../api/supabase'
+import { getCookie } from 'cookies-next';
 
 
 export default function AddCat() {
     //setup 
-    const user = useUser()
     const session = useSession()
     const [loading, setLoading] = useState(true)
     const [cat, setCat] = useState(null)
@@ -51,10 +52,13 @@ export default function AddCat() {
     }
 
     const catExample = async (e) => {
+    
+        var cookie = getCookie("supabase-auth-token")
+        var token = cookie.split('"')[1]
+        var{ data: { user:{id} },}= await supabase.auth.getUser(token)
 
         var raw = JSON.stringify({
-            //"cat_id": 5,
-            "login_id": user.id,
+            "login_id": id,
             "cat_name": e.target.cat_name.value,
             "sex": e.target.sex.value,
             "breed": e.target.breed.value,

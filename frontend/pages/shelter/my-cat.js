@@ -12,11 +12,12 @@ import nextIcon from '../../public/my-cat/next-icon.png'
 import vectorprinter from '../../public/my-cat/printer.png'
 import line1 from '../../public/my-cat/line.png'
 import Router from 'next/router';
+import { supabase } from '../api/supabase'
+import { getCookie } from 'cookies-next';
 
 
 
 export default function MyCat() {
-  const user = useUser()
   const session = useSession()
   const [loading, setLoading] = useState(true)
   const [cat, setCat] = useState(null)
@@ -28,8 +29,14 @@ export default function MyCat() {
 
 
   const catExample = async () => {
+
+    var cookie = getCookie("supabase-auth-token")
+    var token = cookie.split('"')[1]
+    var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+
     var raw = JSON.stringify({
-      "login_id": "fadadb65-080e-4be8-a3dc-163df80e0918",
+      // "login_id": "fadadb65-080e-4be8-a3dc-163df80e0918",
+      "login_id": id,
       "page_number": 1
 
     });

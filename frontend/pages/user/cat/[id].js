@@ -6,6 +6,8 @@ import Loading from "../../../components/loading";
 import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
 import Router from 'next/router';
+import { supabase } from '../../api/supabase'
+import { getCookie } from 'cookies-next';
 
 const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
     return condition == null? (
@@ -52,9 +54,13 @@ export default function CatProfile() {
 
 
   const catExample = async () => {
+    var cookie = getCookie("supabase-auth-token")
+    var token = cookie.split('"')[1]
+    var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+
     var raw = JSON.stringify({
-      "cat_id": "1",
-      "login_id": "user.id"
+      "cat_id": router.query.id,
+      "login_id": id
     });
 
     var myheader = {
