@@ -12,6 +12,8 @@ import nextIcon from '../../public/my-cat/next-icon.png'
 import vectorprinter from '../../public/my-cat/printer.png'
 import line1 from '../../public/my-cat/line.png'
 import Router from 'next/router';
+import { supabase } from '../api/supabase'
+import { getCookie } from 'cookies-next';
 
 function getFormattedDate(options) {
   const today = new Date();
@@ -40,8 +42,12 @@ export default function MyCat() {
 
 
   const catExample = async () => {
+    var cookie = getCookie("supabase-auth-token")
+    var token = cookie.split('"')[1]
+    var { data: { user: { id } }, } = await supabase.auth.getUser(token)
+
     var raw = JSON.stringify({
-      "login_id": "fadadb65-080e-4be8-a3dc-163df80e0918",
+      "login_id": id,
       "page_number": 1
 
     });
@@ -131,7 +137,7 @@ export default function MyCat() {
 
       <div clss="flex">
         <div><p class="flex justify-between text-base text-black font-normal">รายงานยอดการอุปการะแมวผ่านแพลตฟอร์ม Cat finder</p></div>
-        <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ :</p></div>
+        <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ : { }</p></div>
         <div><p class="flex justify-end text-sm text-black font-normal">วันที่ออกรายงาน : {date}</p></div>
         <p class="flex text-3xl text-iris font-normal">ยอดทั้งหมด</p>
       </div>

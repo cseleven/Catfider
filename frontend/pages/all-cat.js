@@ -130,12 +130,12 @@ export default function AllCat() {
 
 
   return (
-    <div class="container mx-auto">
+    <div class="container min-h-[87vh] h-auto mx-auto max-w-6xl px-5 xl:px-0">
       {loading ? (
         <Loading />
       ) : (
         <div>
-          <nav class="flex mx-28 mt-9" aria-label="Breadcrumb">
+          <nav class="flex my-8" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
               <li class="inline-flex items-center">
                 <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">

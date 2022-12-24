@@ -29,9 +29,6 @@ export default function HomecardCatprofile({ item }) {
             var token = cookie.split('"')[1]
             var{ data: { user },}= await supabase.auth.getUser(token)
 
-            if(user?.user_metadata?.role == 2){
-                setPath("/shelter/cat/")
-            }
             if(user?.user_metadata?.role == 1){
                 setPath("/user/cat/")
             }

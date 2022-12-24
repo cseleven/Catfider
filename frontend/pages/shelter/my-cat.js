@@ -14,8 +14,14 @@ import line1 from '../../public/my-cat/line.png'
 import Router from 'next/router';
 import { supabase } from '../api/supabase'
 import { getCookie } from 'cookies-next';
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
 export default function MyCat() {
   const session = useSession()
@@ -27,12 +33,11 @@ export default function MyCat() {
     catExample()
   }, [])
 
-
   const catExample = async () => {
 
     var cookie = getCookie("supabase-auth-token")
     var token = cookie.split('"')[1]
-    var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+    var { data: { user: { id } }, } = await supabase.auth.getUser(token)
 
     var raw = JSON.stringify({
       // "login_id": "fadadb65-080e-4be8-a3dc-163df80e0918",
@@ -67,45 +72,45 @@ export default function MyCat() {
   const searchCat = async (e) => {
     var cookie = getCookie("supabase-auth-token")
     var token = cookie.split('"')[1]
-    var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+    var { data: { user: { id } }, } = await supabase.auth.getUser(token)
 
     var sby = e.target.searchBy.value;
     var sbar = e.target.searchBar.value;
-    var bef = { 
-      "login_id":id,
-      "page_number" : 1,
+    var bef = {
+      "login_id": id,
+      "page_number": 1,
     };
 
-    if(sby == "status"){
+    if (sby == "status") {
       bef = {
         ...bef,
-        "status" : sbar,
+        "status": sbar,
       }
     }
 
-    if(sby == "breed"){
+    if (sby == "breed") {
       bef = {
         ...bef,
-        "breed" : sbar,
+        "breed": sbar,
       }
     }
 
-    if(sby == "color"){
+    if (sby == "color") {
       bef = {
         ...bef,
-        "color" : sbar,
+        "color": sbar,
       }
     }
 
-    if(sby == "cat_id"){
+    if (sby == "cat_id") {
       bef = {
         ...bef,
-        "cat_id" : sbar,
+        "cat_id": sbar,
       }
     }
 
     var raw = JSON.stringify(bef);
-    
+
 
     var myheader = {
       'Content-Type': 'application/json'
@@ -143,7 +148,7 @@ export default function MyCat() {
           </li>
           <li aria-current="page">
             <div class="flex items-center">
-              <a href="/shelter/my-cat" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 ">
+              <a class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 ">
                 <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                 <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 ">แมวของฉัน</span>
               </a>
@@ -157,39 +162,126 @@ export default function MyCat() {
 
         <p class="text-4xl text-black font-normal mb-8">แมวของฉัน</p>
 
-        <button
-          type="button"
-          onClick={() => window.print()}
-          class="
-          button-hidden 
-          h-10
-          md:ml-30
-          lg:ml-auto
-          bg-iris hover:bg-indigo-400
-          text-white font-medium 
-          py-2 px-4 gap-3 
-          rounded inline-flex items-center"
-          style={{ '@media print': { display: 'none' } }}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7.25 7h9.5V5c0-2-.75-3-3-3h-3.5c-2.25 0-3 1-3 3v2ZM16 15v4c0 2-1 3-3 3h-2c-2 0-3-1-3-3v-4h8Z" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 10v5c0 2-1 3-3 3h-2v-3H8v3H6c-2 0-3-1-3-3v-5c0-2 1-3 3-3h12c2 0 3 1 3 3ZM17 15H7M7 11h3" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-          <span>เลือกดูรายงาน</span>
-        </button>
+        <Menu as="div" className="
+        relative 
+        inline-block 
+        text-left 
+        md:ml-auto
+        lg:ml-auto
+        px-8
+        ">
+          <div>
+            <Menu.Button className="inline-flex 
+            w-full 
+            justify-center
+             rounded-md 
+             border border-gray-300 
+             bg-iris-20
+             px-3 py-2
+             text-sm text-iris
+             shadow-sm hover:bg-iris-20
+             border border-iris
+             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
 
-        <button
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="3 0 30 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+              </svg>
+
+              เลือกดูรายงาน
+              <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+            </Menu.Button>
+          </div>
+
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="py-1">
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      href="/shelter/report-all"
+                      className={classNames(
+                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                        'block px-4 py-2 text-sm'
+                      )}
+                    >
+                      ยอดทั้งหมด
+                    </a>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      href="/shelter/report-month"
+                      className={classNames(
+                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                        'block px-4 py-2 text-sm'
+                      )}
+                    >
+                      ยอดรายเดือน
+                    </a>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      href="/shelter/report-daily"
+                      className={classNames(
+                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                        'block px-4 py-2 text-sm'
+                      )}
+                    >
+                      ยอดรายวัน
+                    </a>
+                  )}
+                </Menu.Item>
+              </div>
+            </Menu.Items>
+          </Transition>
+        </Menu>
+
+        {/* <button
           type="button"
-          onClick={() => window.print()}
           class="
           button-hidden 
           h-10
           md:ml-auto
           lg:ml-auto
+          
           bg-iris hover:bg-indigo-400
           text-white font-medium 
-          py-2 px-4 gap-3 
+          py-2 px-4
           rounded inline-flex items-center"
           style={{ '@media print': { display: 'none' } }}>
-          <span>+ เพิ่มแมว</span>
-        </button>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+          </svg>
+          <span>เลือกดูรายงาน</span>
+        </button> */}
+
+        <a href="/shelter/add-cat">
+          <button
+            type="button"
+            class="
+                button-hidden 
+                h-10
+                md:ml-auto
+                lg:ml-auto
+                bg-salmon hover:bg-red-300
+                text-white font-medium 
+                py-2 px-4 gap-3 
+                rounded inline-flex items-center"
+            style={{ '@media print': { display: 'none' } }}>
+            <span>+ เพิ่มแมว</span>
+          </button></a>
+
 
       </div>
 
@@ -270,7 +362,7 @@ export default function MyCat() {
           {cat?.map((item) => (
             <div class="flex h-auto">
               <div class="flex w-[30rem] bg-white border-b border-gray-200 font-normal text-sm">
-                <div class="mt-auto mb-auto ml-4 w-10 h-10 bg-center bg-cover rounded-full" style={{"background-image": "url("+item.cat_picture+")"}}/>
+                <div class="mt-auto mb-auto ml-4 w-10 h-10 bg-center bg-cover rounded-full" style={{ "background-image": "url(" + item.cat_picture + ")" }} />
                 <div class="py-3 pl-3">
                   <p class="text-gray-900 text-base">{item.cat_name} <>(#</>{item.cat_id}<>)</></p>
                   <p class="text-gray-500 text-xs">วันเข้าระบบ : {item.create_date}</p>
