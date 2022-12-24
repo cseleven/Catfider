@@ -13,7 +13,10 @@ import vectorprinter from '../../public/my-cat/printer.png'
 import line1 from '../../public/my-cat/line.png'
 import Router from 'next/router';
 
-
+function getFormattedDate(options) {
+  const today = new Date();
+  return new Intl.DateTimeFormat('en-US', options).format(today);
+}
 
 export default function MyCat() {
   const user = useUser()
@@ -28,6 +31,8 @@ export default function MyCat() {
     const time = time_tz.split("+")[0]
     return `${date} ${time}`
   }
+
+  const date = getFormattedDate({ year: 'numeric', month: 'long', day: 'numeric' });
 
   useEffect(() => {
     catExample()
@@ -65,8 +70,9 @@ export default function MyCat() {
   };
 
   return (
-    <div class="container rounded md:rounded-lg min-h-[87vh] h-auto mx-auto max-w-6xl px-5 xl:px-0">
-      <nav class="flex mx-28 mt-9 breadcrumb" aria-label="Breadcrumb">
+    <div class="container min-h-[87vh] h-auto mx-auto max-w-6xl px-5 xl:px-0">
+
+      <nav class="flex my-8 breadcrumb" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">
             <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
@@ -76,31 +82,58 @@ export default function MyCat() {
           </li>
           <li aria-current="page">
             <div class="flex items-center">
+              <a href="/shelter/my-cat" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 ">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                <span class="ml-1 text-sm font-medium text-gray-700 md:ml-2 ">แมวของฉัน</span>
+              </a>
+            </div>
+          </li>
+          <li aria-current="page">
+            <div class="flex items-center">
               <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-              <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">แมวของฉัน</span>
+              <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">รายงานยอดการอุปการะ</span>
             </div>
           </li>
         </ol>
       </nav>
 
-      <div class="flex mt-8">
-        <p class="text-4xl text-black font-normal mx-28 mb-8">รายงานยอดการอุปการะ</p>
-        {/* <div>
-          <a href="/shelter/add-cat" className="rounded-lg bg-salmon text-white text-lg ml-[890px] mb-7 px-6 py-2 gap-3">
-            + เพิ่มแมว</a>
-        </div> */}
+
+      <div class="button-hidden flex mt-8">
+
+        <p class="text-4xl text-black font-normal mb-8">รายงานยอดการอุปการะ</p>
+
+        <button
+          type="button"
+          onClick={() => window.print()}
+          class="
+          button-hidden 
+          h-10
+          md:ml-auto
+          lg:ml-auto
+          bg-iris hover:bg-indigo-400
+          text-white font-medium 
+          py-2 px-4 gap-3 
+          rounded inline-flex items-center"
+          style={{ '@media print': { display: 'none' } }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7.25 7h9.5V5c0-2-.75-3-3-3h-3.5c-2.25 0-3 1-3 3v2ZM16 15v4c0 2-1 3-3 3h-2c-2 0-3-1-3-3v-4h8Z" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 10v5c0 2-1 3-3 3h-2v-3H8v3H6c-2 0-3-1-3-3v-5c0-2 1-3 3-3h12c2 0 3 1 3 3ZM17 15H7M7 11h3" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span>พิมพ์รายงาน</span>
+        </button>
+
       </div>
 
-      <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28 mb-10" />
+      <hr class="button-hidden border-1 border-gray-200 mb-8" />
+
+      <script src="js/paged.polyfill.js"></script>
+      <div class="page-number"></div>
 
 
 
       <div clss="flex">
         <div><p class="flex justify-between text-base text-black font-normal">รายงานยอดการอุปการะแมวผ่านแพลตฟอร์ม Cat finder</p></div>
         <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ :</p></div>
-        <div><p class="flex justify-end text-sm text-black font-normal">วันที่ออกรายงาน :</p></div>
-        <div><p class="flex justify-start mb-0 text-3xl text-iris font-normal">ยอดทั้งหมด</p></div>
-
+        <div><p class="flex justify-end text-sm text-black font-normal">วันที่ออกรายงาน : {date}</p></div>
+        <p class="flex text-3xl text-iris font-normal">ยอดทั้งหมด</p>
       </div>
 
 
@@ -108,95 +141,95 @@ export default function MyCat() {
 
 
 
-      <div class="overflow-x-hidden w-full mt-8 rounded md:rounded-lg shadow-md  md:w-auto">
-        
-        <table class=" w-full text-sm text-left font-light text-black ">
-          <thead class="text-base text-gray-500 bg-gray-300">
-            <tr>
-              <th scope="col" class="py-3 px-6">
-                ลำดับ
-              </th>
-              <th scope="col" class="py-3 px-6">
-                รหัสแมว
-              </th>
-              <th scope="col" class="py-3 px-6">
-                ชื่อแมว
-              </th>
-              <th scope="col" class="py-3 px-6">
-                สายพันธุ์
-              </th>
-              <th scope="col" class="py-3 px-6">
-                เพศ
-              </th>
-              <th scope="col" class="py-3 px-6">
-                วันเข้าระบบ
-              </th>
-              <th scope="col" class="py-3 px-6">
-                วันที่ออก(ถูกรับเลี้ยง)
-              </th>
-              <th scope="col" class="py-3 px-6">
-                อีเมลผู้อุปการะ
-              </th>
-            </tr>
-          </thead>
 
-          {cat?.map((item, index) => (
 
-            <tbody>
-              <tr class="bg-gray-100 border-g border-gray-200">
-                <th scope="row" class="py-4 px-6 font-light text-black whitespace-nowrap">
-                  {index + 1}
+      <div class="overflow-x-hidden w-full mt-5 rounded md:rounded-lg shadow-md  md:w-auto">
+        {cat && Array.isArray(cat) && (
+          <table class=" w-full text-sm text-left font-light text-black ">
+            <thead class="text-base text-gray-500 bg-gray-300">
+              <tr>
+                <th scope="col" class="py-3 px-6">
+                  ลำดับ
                 </th>
-                <td class="py-4 px-6">
-                  <>#</>{item.cat_id}<></>
-                </td>
-                <td class="py-4 px-6">
-                  {item.cat_name}
-                </td>
-                <td class="py-4 px-6">
-                  {item.breed}
-                </td>
-                <td class="py-4 px-6">
-                  {item.sex}
-                </td>
-                <td class="py-4 px-6">
-                  {formatTimestamp(item.create_date)}
-                </td>
-                <td class="py-4 px-6">
-                  timestamp-out
-                </td>
-                <td class="py-4 px-6">
-                  user@email.com
-                </td>
+                <th scope="col" class="py-3 px-6">
+                  รหัสแมว
+                </th>
+                <th scope="col" class="py-3 px-6">
+                  ชื่อแมว
+                </th>
+                <th scope="col" class="py-3 px-6">
+                  สายพันธุ์
+                </th>
+                <th scope="col" class="py-3 px-6">
+                  เพศ
+                </th>
+                <th scope="col" class="py-3 px-6">
+                  วันเข้าระบบ
+                </th>
+                <th scope="col" class="py-3 px-6">
+                  วันที่ออก(ถูกรับเลี้ยง)
+                </th>
+                <th scope="col" class="py-3 px-6">
+                  อีเมลผู้อุปการะ
+                </th>
               </tr>
-            </tbody>
+            </thead>
+
+            {cat?.map((item, index) => (
+
+              <tbody>
+                <tr class="bg-gray-100 border-g border-gray-200">
+                  <th scope="row" class="py-4 px-6 font-light text-black whitespace-nowrap">
+                    {index + 1}
+                  </th>
+                  <td class="py-4 px-6">
+                    <>#</>{item.cat_id}<></>
+                  </td>
+                  <td class="py-4 px-6">
+                    {item.cat_name}
+                  </td>
+                  <td class="py-4 px-6">
+                    {item.breed}
+                  </td>
+                  <td class="py-4 px-6">
+                    {item.sex}
+                  </td>
+                  <td class="py-4 px-6">
+                    {formatTimestamp(item.create_date)}
+                  </td>
+                  <td class="py-4 px-6">
+                    timestamp-out
+                  </td>
+                  <td class="py-4 px-6">
+                    user@email.com
+                  </td>
+                </tr>
+              </tbody>
 
 
 
-          ))}
+            ))}
 
 
-          <tfoot>
-            <tr class="font-medium text-base text-gray-900 ">
-              <th scope="row" class="py-3 px-6 text-base"> </th>
-              <td class="py-4 px-6"> </td>
-              <td class="py-4 px-6"> </td>
-              <td class="py-4 px-6"> </td>
-              <td class="py-4 px-6"> </td>
-              <td class="py-4 px-6">จำนวนทั้งหมด</td>
-              <td class="py-4 px-6">3</td>
-              <td class="py-4 px-6">ตัว</td>
-            </tr>
-          </tfoot>
+            <tfoot>
+              <tr class="font-medium text-base text-gray-900 ">
+                <th scope="row" class="py-3 px-6 text-base"> </th>
+                <td class="py-4 px-6"> </td>
+                <td class="py-4 px-6"> </td>
+                <td class="py-4 px-6"> </td>
+                <td class="py-4 px-6"> </td>
+                <td class="py-4 px-6">จำนวนทั้งหมด</td>
+                <td class="py-4 px-6"> {cat.length} </td>
+                <td class="py-4 px-6">ตัว</td>
+              </tr>
+            </tfoot>
 
 
-        </table>
+
+          </table>
+        )}
+
       </div>
-
-
-
-
-      <div class="h-96"></div>
 
 
     </div >

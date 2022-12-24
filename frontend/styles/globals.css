@@ -45,9 +45,19 @@ a {
     overflow: hidden;
   }
 
-  .container {
-    zoom: 70%;
+  .breadcrumb {
+    display: none;
   }
+
+  .container {
+    zoom: 85%;
+  }
+
+  .button-hidden {
+    display: none;
+  }
+
+
 
   table {
     page-break-inside: avoid;
@@ -56,8 +66,16 @@ a {
   @page {
     size: A4;
     size: landscape;
-    margin: 0px;
+    
   }
+
+  @page {
+    @bottom-left {
+      content: "page " counter(page);
+      counter-increment: page;
+    }
+  }
+
 
   #important_thing {
     width: 100%;

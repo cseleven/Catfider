@@ -58,8 +58,9 @@ export default function MyCat() {
   };
 
   return (
-    <div class="container mx-auto">
-      <nav class="flex mx-28 mt-9" aria-label="Breadcrumb">
+    <div class="container min-h-[87vh] h-auto mx-auto max-w-6xl px-5 xl:px-0">
+
+      <nav class="flex my-8 breadcrumb" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">
             <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
@@ -69,20 +70,71 @@ export default function MyCat() {
           </li>
           <li aria-current="page">
             <div class="flex items-center">
-              <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-              <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">แมวของฉัน</span>
+              <a href="/shelter/my-cat" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 ">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 ">แมวของฉัน</span>
+              </a>
             </div>
           </li>
         </ol>
       </nav>
-      <div class="flex mt-8">
+
+
+      <div class="button-hidden flex mt-8">
+
+        <p class="text-4xl text-black font-normal mb-8">แมวของฉัน</p>
+
+        <button
+          type="button"
+          onClick={() => window.print()}
+          class="
+          button-hidden 
+          h-10
+          md:ml-30
+          lg:ml-auto
+          bg-iris hover:bg-indigo-400
+          text-white font-medium 
+          py-2 px-4 gap-3 
+          rounded inline-flex items-center"
+          style={{ '@media print': { display: 'none' } }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7.25 7h9.5V5c0-2-.75-3-3-3h-3.5c-2.25 0-3 1-3 3v2ZM16 15v4c0 2-1 3-3 3h-2c-2 0-3-1-3-3v-4h8Z" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 10v5c0 2-1 3-3 3h-2v-3H8v3H6c-2 0-3-1-3-3v-5c0-2 1-3 3-3h12c2 0 3 1 3 3ZM17 15H7M7 11h3" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span>พิมพ์รายงาน</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => window.print()}
+          class="
+          button-hidden 
+          h-10
+          md:ml-auto
+          lg:ml-auto
+          bg-iris hover:bg-indigo-400
+          text-white font-medium 
+          py-2 px-4 gap-3 
+          rounded inline-flex items-center"
+          style={{ '@media print': { display: 'none' } }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7.25 7h9.5V5c0-2-.75-3-3-3h-3.5c-2.25 0-3 1-3 3v2ZM16 15v4c0 2-1 3-3 3h-2c-2 0-3-1-3-3v-4h8Z" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 10v5c0 2-1 3-3 3h-2v-3H8v3H6c-2 0-3-1-3-3v-5c0-2 1-3 3-3h12c2 0 3 1 3 3ZM17 15H7M7 11h3" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span>พิมพ์รายงาน</span>
+        </button>
+
+      </div>
+
+      <hr class="button-hidden border-1 border-gray-200 mb-8" />
+      {/* <div class="flex mt-8">
         <p class="text-4xl text-black font-normal mx-28">แมวของฉัน</p>
         <div>
           <a href="/shelter/add-cat" className="rounded-lg bg-salmon text-white text-lg ml-[890px] mb-7 px-6 py-2 gap-3">
             + เพิ่มแมว</a>
         </div>
-      </div>
-      <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28" />
+      </div> */}
+
+
+
+
+
 
       <form>
         <div class="flex mt-9">
@@ -126,9 +178,7 @@ export default function MyCat() {
         </div>
       </form>
 
-      <a href="/user/form-adopt" className="flex rounded-lg bg-iris-20 border-iris-60 border-2 text-iris-100 text-sm font-normal mt-7 ml-[82rem] pt-2 pb-2 px-3 w-32 h-10">
-        <Image class="my-auto pr-1" src={vectorprinter} placeholder="blur" />
-        พิมพ์เอกสาร</a>
+
 
       <div class="h-[35rem]">
         <div class="h-auto rounded-lg drop-shadow-md bg-gray-50 ml-28 mr-28 mt-5 border-2 border-gray-200 ">
@@ -270,7 +320,7 @@ export default function MyCat() {
         </button>
       </div>
 
-      <div class="h-96"></div>
+
 
 
     </div >
