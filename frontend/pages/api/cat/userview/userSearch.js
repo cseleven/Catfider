@@ -1,7 +1,7 @@
 import { supabase } from "../../supabase"
 import { useEffect, useState } from 'react'
 
-
+//เอามาเทสเฉย ๆ 
 export default async function handler(req, res) {
     const { login_id, cat_id, sex, breed, color, 
             status } = req.body
