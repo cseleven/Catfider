@@ -90,7 +90,7 @@ export default async function handler(req, res) {
         if (status) {
             if (status == "ว่าง") {
                 query = query.eq('status', true)
-            } else if (status == "มีบ้านแล้ว") {
+            } else if (status == "มีบ้าน") {
                 query = query.eq('status', false)
             }
             else {
