@@ -247,24 +247,6 @@ export default function MyCat() {
           </Transition>
         </Menu>
 
-        {/* <button
-          type="button"
-          class="
-          button-hidden 
-          h-10
-          md:ml-auto
-          lg:ml-auto
-          
-          bg-iris hover:bg-indigo-400
-          text-white font-medium 
-          py-2 px-4
-          rounded inline-flex items-center"
-          style={{ '@media print': { display: 'none' } }}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-          </svg>
-          <span>เลือกดูรายงาน</span>
-        </button> */}
 
         <a href="/shelter/add-cat">
           <button
@@ -286,18 +268,7 @@ export default function MyCat() {
       </div>
 
       <hr class="button-hidden border-1 border-gray-200 mb-8" />
-      {/* <div class="flex mt-8">
-        <p class="text-4xl text-black font-normal mx-28">แมวของฉัน</p>
-        <div>
-          <a href="/shelter/add-cat" className="rounded-lg bg-salmon text-white text-lg ml-[890px] mb-7 px-6 py-2 gap-3">
-            + เพิ่มแมว</a>
-        </div>
-      </div> */}
-
-
-
-
-
+      
 
       <form onSubmit={searchCat} method="POST">
         <div class="flex mt-9">
