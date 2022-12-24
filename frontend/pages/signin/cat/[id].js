@@ -23,7 +23,6 @@ export default function CatProfile() {
   const catExample = async () => {
     var raw = JSON.stringify({
       "cat_id": router.query.id
-
     });
 
     var myheader = {

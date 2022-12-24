@@ -91,7 +91,7 @@ export default async function handler(req, res) {
         if (status) {
             if (status == "ว่าง") {
                 query = query.eq('queue.cat_profile.status', true)
-            } else if (status == "มีบ้านแล้ว") {
+            } else if (status == "มีบ้าน") {
                 query = query.eq('queue.cat_profile.status', false)
             }
             else {
