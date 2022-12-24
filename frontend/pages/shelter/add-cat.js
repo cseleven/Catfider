@@ -6,7 +6,6 @@ import { useSession, useUser } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
 import { supabase } from '../api/supabase'
 import Router from 'next/router';
-import { supabase } from '../api/supabase'
 import { getCookie } from 'cookies-next';
 
 
