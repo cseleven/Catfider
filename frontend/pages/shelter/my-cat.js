@@ -12,11 +12,12 @@ import nextIcon from '../../public/my-cat/next-icon.png'
 import vectorprinter from '../../public/my-cat/printer.png'
 import line1 from '../../public/my-cat/line.png'
 import Router from 'next/router';
+import { supabase } from '../api/supabase'
+import { getCookie } from 'cookies-next';
 
 
 
 export default function MyCat() {
-  const user = useUser()
   const session = useSession()
   const [loading, setLoading] = useState(true)
   const [cat, setCat] = useState(null)
@@ -28,8 +29,14 @@ export default function MyCat() {
 
 
   const catExample = async () => {
+
+    var cookie = getCookie("supabase-auth-token")
+    var token = cookie.split('"')[1]
+    var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+
     var raw = JSON.stringify({
-      "login_id": "fadadb65-080e-4be8-a3dc-163df80e0918",
+      // "login_id": "fadadb65-080e-4be8-a3dc-163df80e0918",
+      "login_id": id,
       "page_number": 1
 
     });
@@ -52,6 +59,72 @@ export default function MyCat() {
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
       setCat(data)
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const searchCat = async (e) => {
+    var cookie = getCookie("supabase-auth-token")
+    var token = cookie.split('"')[1]
+    var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+
+    var sby = e.target.searchBy.value;
+    var sbar = e.target.searchBar.value;
+    var bef = { 
+      "login_id":id,
+      "page_number" : 1,
+    };
+
+    if(sby == "status"){
+      bef = {
+        ...bef,
+        "status" : sbar,
+      }
+    }
+
+    if(sby == "breed"){
+      bef = {
+        ...bef,
+        "breed" : sbar,
+      }
+    }
+
+    if(sby == "color"){
+      bef = {
+        ...bef,
+        "color" : sbar,
+      }
+    }
+
+    if(sby == "cat_id"){
+      bef = {
+        ...bef,
+        "cat_id" : sbar,
+      }
+    }
+
+    var raw = JSON.stringify(bef);
+    
+
+    var myheader = {
+      'Content-Type': 'application/json'
+    };
+
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myheader,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/searchCat", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+      setCat(data);
     } finally {
       setLoading(false);
     }
@@ -134,12 +207,13 @@ export default function MyCat() {
 
 
 
-      <form>
+      <form onSubmit={searchCat} method="POST">
         <div class="flex mt-9">
           <label class="block ml-44">
             <select
               type="search"
               id="search-dropdown"
+              name="searchBy"
               class="
                 block
                 rounded-l-md
@@ -160,14 +234,13 @@ export default function MyCat() {
             <input
               type="search"
               id="search-dropdown"
+              name="searchBar"
               class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 
               focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               placeholder="พิมพ์ค้นหาที่นี่"
               required
             />
-            <button type="submit"
-              class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-salmon rounded-r-lg border 
-              focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-salmon rounded-r-lg border focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
               <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
               </path>
               </svg>
@@ -197,8 +270,8 @@ export default function MyCat() {
           {cat?.map((item) => (
             <div class="flex h-auto">
               <div class="flex w-[30rem] bg-white border-b border-gray-200 font-normal text-sm">
-                <Image class="mt-auto mb-auto ml-4" src={catProfileAdopt2} placeholder="blur" />
-                <div class="py-3 pl-2">
+                <div class="mt-auto mb-auto ml-4 w-10 h-10 bg-center bg-cover rounded-full" style={{"background-image": "url("+item.cat_picture+")"}}/>
+                <div class="py-3 pl-3">
                   <p class="text-gray-900 text-base">{item.cat_name} <>(#</>{item.cat_id}<>)</></p>
                   <p class="text-gray-500 text-xs">วันเข้าระบบ : {item.create_date}</p>
                 </div>
@@ -211,8 +284,8 @@ export default function MyCat() {
               </div>
               <div class="flex w-[3rem] bg-white border-gray-200 border-b">
                 {
-                  item.status ? (<p class="w-9 h-7 bg-green-200 rounded-[32px] my-auto text-sm text-green-600 font-medium text-center pt-1">ว่าง</p>) :
-                    (<p class="w-9 h-7 bg-red-200 rounded-[32px] my-auto text-sm text-red-600 font-medium text-center pt-1">มีบ้าน</p>)
+                  item.status ? (<p class="w-12 h-7 bg-green-200 rounded-[32px] my-auto text-sm text-green-600 font-medium text-center pt-1">ว่าง</p>) :
+                    (<p class="w-12 h-7 bg-red-200 rounded-[32px] my-auto text-sm text-red-600 font-medium text-center pt-1">มีบ้าน</p>)
                 }
               </div>
               <div class="flex w-[20rem] bg-white border-b border-gray-200">

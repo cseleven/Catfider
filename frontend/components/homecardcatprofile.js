@@ -3,9 +3,11 @@ import vectorLocation from '../public/index/vector-location.png'
 import Router from 'next/router';
 import { useUser } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react';
+import { supabase } from '../pages/api/supabase'
+import { getCookie } from 'cookies-next';
 
 export default function HomecardCatprofile({ item }) {
-    const user = useUser()
+    //const user = useUser()
     const imgcat= item.cat_picture
     const statuscat=item.status
     const namecat=item.cat_name
@@ -18,16 +20,21 @@ export default function HomecardCatprofile({ item }) {
     const [path,setPath]=useState("/signin/cat/")
 
     useEffect(() => {
-        console.log(user?.user_metadata.role)
         checkPath()
     }, [])
     
-    const checkPath = () => {
-        if(user?.user_metadata?.role == 2){
-            setPath("/shelter/cat/")
-        }
-        if(user?.user_metadata?.role == 1){
-            setPath("/user/cat/")
+    const checkPath = async () => {
+        var cookie = getCookie("supabase-auth-token")
+        if(cookie){
+            var token = cookie.split('"')[1]
+            var{ data: { user },}= await supabase.auth.getUser(token)
+
+            if(user?.user_metadata?.role == 2){
+                setPath("/shelter/cat/")
+            }
+            if(user?.user_metadata?.role == 1){
+                setPath("/user/cat/")
+            }
         }
     }
     
