@@ -8,9 +8,9 @@ import { useRouter, usePathname } from 'next/navigation';
 
 const navigation = [
   { name: "หน้าแรก", href: ["/", "/", "/"], current: true },
-  { name: "ค้นหาแมว", href: ["/all-cat","/all-cat","/all-cat"], current: false },
-  { name: "แมวของฉัน", href: ["/signin/login","/user/my-cat","/shelter/my-cat"], current: false },
-  { name: "ลิ้งค์ในเว็บ", href: ["/list","/list","/list"], current: false },
+  { name: "ค้นหาแมว", href: ["/all-cat", "/all-cat", "/all-cat"], current: false },
+  { name: "แมวของฉัน", href: ["/signin/login", "/user/my-cat", "/shelter/my-cat"], current: false },
+  { name: "ลิ้งค์ในเว็บ", href: ["/list", "/list", "/list"], current: false },
 ];
 
 function classNames(...classes) {
@@ -25,12 +25,12 @@ export default function Navbar() {
   const supabase = useSupabaseClient();
 
   useEffect(() => {
-    if(session){
+    if (session) {
       console.log("role : " + session.user.user_metadata.role);
       setId(session.user.user_metadata.role);
-      if(id==1){
+      if (id == 1) {
         console.log("role user");
-      }else if(id==2){
+      } else if (id == 2) {
         console.log("role shelter");
       }
     }
@@ -38,11 +38,11 @@ export default function Navbar() {
   }, [session])
 
   const checkPath = () => {
-    for(var i=0;i<navigation.length;i++){
-      if(pathname==navigation[i].href[id]){
-        navigation[i].current=true;
-      }else{
-        navigation[i].current=false;
+    for (var i = 0; i < navigation.length; i++) {
+      if (pathname == navigation[i].href[id]) {
+        navigation[i].current = true;
+      } else {
+        navigation[i].current = false;
       }
     }
   }
@@ -54,7 +54,7 @@ export default function Navbar() {
   }
 
   return (
-    <Disclosure as="nav" class="bg-white">
+    <Disclosure as="nav" class=" bg-white">
       {({ open }) => (
         <>
           <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -74,12 +74,12 @@ export default function Navbar() {
                 <div class="flex flex-shrink-0 items-center">
                   <img
                     class="block h-8 w-auto lg:hidden"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    src="https://cdn-icons-png.flaticon.com/512/763/763704.png"
                     alt="Your Company"
                   />
                   <img
                     class="hidden h-8 w-auto lg:block"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    src="https://cdn-icons-png.flaticon.com/512/763/763704.png"
                     alt="Your Company"
                   />
                 </div>
@@ -104,27 +104,27 @@ export default function Navbar() {
                 </div>
                 <div class="hidden sm:ml-6 sm:block">
                   <button class="flex space-x-4" type="button">
-                      <a
-                        key="สำหรับมูลนิธิ"
-                        href="/signin/shelter"
-                        class={classNames(
-                          false
-                            ? "bg-salmon text-white"
-                            : "text-iris hover:bg-light-salmon hover:text-zinc-800",
-                          "px-3 py-2 rounded-md text-sm font-extralight"
-                        )}
-                        aria-current={false ? "page" : undefined}
-                      >
-                        สำหรับมูลนิธิ
-                      </a>
+                    <a
+                      key="สำหรับมูลนิธิ"
+                      href="/signin/shelter"
+                      class={classNames(
+                        false
+                          ? "bg-salmon text-white"
+                          : "text-iris hover:bg-light-salmon hover:text-zinc-800",
+                        "px-3 py-2 rounded-md text-sm font-extralight"
+                      )}
+                      aria-current={false ? "page" : undefined}
+                    >
+                      สำหรับมูลนิธิ
+                    </a>
                   </button>
                 </div>
               </div>
-              
+
               <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <button
                   type="button"
-                  class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  class="rounded-full  p-1 text-gray-400 hover:text-salmon focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-light-salmon"
                 >
                   <span class="sr-only">View notifications</span>
                   <BellIcon class="h-6 w-6" aria-hidden="true" />
@@ -133,11 +133,11 @@ export default function Navbar() {
                 {/* Profile dropdown */}
                 <Menu as="div" class="relative ml-3">
                   <div>
-                    <Menu.Button class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <Menu.Button class="flex rounded-full bg-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-salmon">
                       <span class="sr-only">Open user menu</span>
                       <img
                         class="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src="https://cdn-icons-png.flaticon.com/512/64/64572.png"
                         alt=""
                       />
                     </Menu.Button>

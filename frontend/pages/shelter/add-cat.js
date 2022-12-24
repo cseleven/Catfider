@@ -4,25 +4,60 @@ import addProfile from '../../public/add-cat/add-profile.png'
 import changeProfile from '../../public/add-cat/change-profile.png'
 import { useSession, useUser } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
+import { supabase } from '../api/supabase'
+import Router from 'next/router';
+import { getCookie } from 'cookies-next';
 
 
 export default function AddCat() {
     //setup 
-    const user = useUser()
     const session = useSession()
     const [loading, setLoading] = useState(true)
     const [cat, setCat] = useState(null)
-    // const [id, setId] = useState(0)
+    const [catpicture, setCatpicture] = useState(null)
 
     useEffect(() => {
     }, [])
 
+    const handleUpload = async (e) => {
+        let file;
+        file = e.target.files[0];
+        setCatpicture("public" + file?.name)
 
+        console.log("set path Name");
+    }
+
+    const handleUpload2 = async (e) => {
+        let file;
+        file = e.target.cat_picture.files[0];
+
+        console.log("upload");
+
+        const { data, error } = await supabase.storage.from("add-cat-images").upload("public" + file?.name, file, { cacheControl: '3600', upsert: false });
+        if (data) {
+            console.log("upload" + JSON.stringify(data));
+            setCatpicture(data.path)
+        } else if (error) {
+            console.log(error);
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        handleUpload2(e)
+        catExample(e)
+        Router.push({
+            pathname: "/shelter/add-cat-success",
+        })
+    }
 
     const catExample = async (e) => {
+    
+        var cookie = getCookie("supabase-auth-token")
+        var token = cookie.split('"')[1]
+        var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+
         var raw = JSON.stringify({
-            //"cat_id": 5,
-            "login_id": "user.id",
+            "login_id": id,
             "cat_name": e.target.cat_name.value,
             "sex": e.target.sex.value,
             "breed": e.target.breed.value,
@@ -30,8 +65,8 @@ export default function AddCat() {
             "sterile": e.target.sterile.value,
             "vaccine": e.target.vaccine.value,
             "detail": e.target.detail.value,
-            "cat_picture": "www.google.com",
-            "status": e.target.status.value,
+            "cat_picture": "https://rcfbscerwcqpvvvpspba.supabase.co/storage/v1/object/public/add-cat-images/" + catpicture,
+            "status": true,
             "age": e.target.age.value,
             "age_unit": e.target.age_unit.value,
             "congenital_disease": e.target.congenital_disease.value
@@ -49,17 +84,11 @@ export default function AddCat() {
             redirect: 'follow'
         };
 
-        try {
-            setLoading(true);
-            let response = await fetch("/api/cat/shelterview/addCat", requestOptions);
-            let data = await response.json();
-            console.log("response : " + JSON.stringify(data));
-        } finally {
-            Router.push({
-                pathname: "/shelter/add-cat-success",
-            })
-            setLoading(false);
-        }
+
+        let response = await fetch("/api/cat/shelterview/addCat", requestOptions);
+        let dataCat = await response.json();
+        console.log("response : " + JSON.stringify(dataCat));
+
     };
 
 
@@ -116,7 +145,7 @@ export default function AddCat() {
                         <div class="text-sm font-light text-gray-600">สำหรับแสดงส่วนของโปรไฟล์</div>
                     </div>
 
-                    <form onSubmit={catExample}>
+                    <form method="POST" onSubmit={handleSubmit}>
                         <div class="h-auto bg-white rounded-t shadow-md px-7 py-6 space-y-3 ml-28">
                             <label class="block w-2/3">
                                 <span class=" flex text-gray-700">ชื่อน้องแมว
@@ -137,6 +166,7 @@ export default function AddCat() {
                                             placeholder-gray-300
                                         "
                                     placeholder="โปรดระบุชื่อ"
+                                    required
                                 />
                             </label>
                             <div class="flex">
@@ -158,6 +188,7 @@ export default function AddCat() {
                                             font-normal
                                             placeholder-gray-500
                                         "
+                                        required
                                     />
                                 </label>
                                 <label class="block pl-5 pt-5">
@@ -199,10 +230,11 @@ export default function AddCat() {
                                             text-gray-500 
                                             font-normal
                                         "
+                                    required
                                 >
                                     <option value="" selected disabled hidden>เลือกเพศ</option>
-                                    <option value="female">เพศผู้</option>
-                                    <option value="male">เพศเมีย</option>
+                                    <option value="ผู้">เพศผู้</option>
+                                    <option value="เมีย">เพศเมีย</option>
                                 </select>
                             </label>
                             <label class="block w-3/6">
@@ -223,6 +255,7 @@ export default function AddCat() {
                                             text-gray-500
                                             font-normal
                                         "
+                                    required
                                 >
                                     <option value="" selected disabled hidden>เลือกสายพันธุ์</option>
                                     <option value="ไทย">ไทย</option>
@@ -257,6 +290,7 @@ export default function AddCat() {
                                             text-gray-500
                                             font-normal
                                         "
+                                    required
                                 >
                                     <option value="" selected disabled hidden>เลือกสี หรือ ลาย</option>
                                     <option value="ดำ">ดำ</option>
@@ -296,6 +330,7 @@ export default function AddCat() {
                                             text-gray-500
                                             font-normal
                                         "
+                                    required
                                 >
                                     <option value="" selected disabled hidden>เลือกประวัติ</option>
                                     <option value={true}>ซีดวัคซีนแล้ว</option>
@@ -320,6 +355,7 @@ export default function AddCat() {
                                             text-gray-500
                                             font-normal
                                         "
+                                    required
                                 >
                                     <option value="" selected disabled hidden>เลือกประวัติ</option>
                                     <option value={true}>ทำหมันแล้ว</option>
@@ -344,6 +380,7 @@ export default function AddCat() {
                                             text-gray-500
                                             font-normal
                                         "
+                                    required
                                 >
                                     <option value="" selected disabled hidden>เลือกโรคประจำตัว</option>
                                     <option value="ไม่มี">ไม่มี</option>
@@ -387,8 +424,10 @@ export default function AddCat() {
                                     <div class="flex flex-col items-center justify-center pb-6">
                                         Change
                                     </div>
-                                    <input id="cat_picture" name="cat_picture" type="file" class="hidden" />
+                                    <input id="cat_picture" name="cat_picture" type="file" accept="image/*" class="hidden"
+                                        onChange={(e) => { handleUpload(e) }} />
                                 </label>
+                                {catpicture ? (<span class="font-normal text-sm text-gray-900 my-auto">{catpicture}</span>) : (<></>)}
                             </div>
                             <div class="flex items-center justify-center w-full">
                                 <label for="cat_picture" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -396,16 +435,17 @@ export default function AddCat() {
                                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="text-indigo-600">Upload a file</span> or drag and drop</p>
                                         <span class="text-gray-500 text-xs font-light">PNG, JPG, GIF up to 10MB</span>
+
                                     </div>
-                                    <input id="cat_picture" name="cat_picture" type="file" class="hidden" />
+                                    {/*<input id="cat_picture" name="cat_picture" type="file" accept="image/*" class="hidden"
+                                        onChange={(e) => { handleUpload(e) }} />*/}
                                 </label>
                             </div>
                         </div>
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
                             <div class="h-[30rem] py-3">
-                                <button type="submit">
-                                    <a href="/shelter/add-cat-success" className="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]">
-                                        ยืนยัน</a>
+                                <button type="submit" class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]">
+                                    ยืนยัน
                                 </button>
                             </div>
                         </div>
@@ -418,4 +458,6 @@ export default function AddCat() {
         </div >
     )
 }
+
+
 
