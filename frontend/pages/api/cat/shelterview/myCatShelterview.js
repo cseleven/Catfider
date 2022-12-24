@@ -68,7 +68,7 @@ export default async function handler(req, res) {
     //get profile cat in shelter view per cat id
     //select by shelter_id
 
-    const { login_id , page_number} = req.body
+    const { login_id, cat_id, sex, breed, color, status, page_number} = req.body
 
     var shelter_id = await getShelterID(login_id)
 
@@ -82,6 +82,21 @@ export default async function handler(req, res) {
         .select('cat_id, cat_name, sex, breed, color, cat_picture, status, create_date')
         .eq('shelter_id', shelter_id)
         .range(6*(page_number-1), (6*page_number)-1)
+    
+        if (cat_id) { query = query.eq('cat_id', cat_id) }
+        if (sex) { query = query.eq('sex', sex) }
+        if (breed) { query = query.eq('breed', breed) }
+        if (color) { query = query.eq('color', color) }
+        if (status) {
+            if (status == "ว่าง") {
+                query = query.eq('status', true)
+            } else if (status == "มีบ้านแล้ว") {
+                query = query.eq('status', false)
+            }
+            else {
+                query = query.eq('status', status)
+            }
+        }
         
     const { data, error } = await query
 
