@@ -25,6 +25,7 @@ export default function MyCat() {
   const session = useSession()
   const [loading, setLoading] = useState(true)
   const [cat, setCat] = useState(null)
+  const [year, setYear] = useState(null)
   // const [id, setId] = useState(0)
 
   const formatTimestamp = (timestamp) => {
@@ -66,10 +67,12 @@ export default function MyCat() {
 
     try {
       setLoading(true);
-      let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
+      let response = await fetch("/api/adopt/getReport", requestOptions);
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
       setCat(data)
+      setYear(data.perYear?.data)
+      console.log("response : " + JSON.stringify(data.perYear));
     } finally {
       setLoading(false);
     }
@@ -137,7 +140,7 @@ export default function MyCat() {
 
       <div clss="flex">
         <div><p class="flex justify-between text-base text-black font-normal">รายงานยอดการอุปการะแมวผ่านแพลตฟอร์ม Cat finder</p></div>
-        <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ : { }</p></div>
+        <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ :</p></div>
         <div><p class="flex justify-end text-sm text-black font-normal">วันที่ออกรายงาน : {date}</p></div>
         <p class="flex text-3xl text-iris font-normal">ยอดทั้งหมด</p>
       </div>
@@ -181,12 +184,12 @@ export default function MyCat() {
               </tr>
             </thead>
 
-            {cat?.map((item, index) => (
+            {year?.map((item, index) => (
 
               <tbody>
                 <tr class="bg-gray-100 border-g border-gray-200">
                   <th scope="row" class="py-4 px-6 font-light text-black whitespace-nowrap">
-                    {index + 1}
+
                   </th>
                   <td class="py-4 px-6">
                     <>#</>{item.cat_id}<></>
@@ -204,7 +207,7 @@ export default function MyCat() {
                     {formatTimestamp(item.create_date)}
                   </td>
                   <td class="py-4 px-6">
-                    timestamp-out
+                    {item.adopt_date}
                   </td>
                   <td class="py-4 px-6">
                     user@email.com
@@ -225,7 +228,7 @@ export default function MyCat() {
                 <td class="py-4 px-6"> </td>
                 <td class="py-4 px-6"> </td>
                 <td class="py-4 px-6">จำนวนทั้งหมด</td>
-                <td class="py-4 px-6"> {cat.length} </td>
+                <td class="py-4 px-6"> {cat.perYear?.count} </td>
                 <td class="py-4 px-6">ตัว</td>
               </tr>
             </tfoot>

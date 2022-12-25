@@ -25,6 +25,7 @@ export default function MyCat() {
   const session = useSession()
   const [loading, setLoading] = useState(true)
   const [cat, setCat] = useState(null)
+  const [month, setMonth] = useState(null)
   // const [id, setId] = useState(0)
 
   const formatTimestamp = (timestamp) => {
@@ -70,6 +71,7 @@ export default function MyCat() {
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
       setCat(data)
+      setMonth(data.perMonth?.data)
     } finally {
       setLoading(false);
     }
@@ -181,7 +183,7 @@ export default function MyCat() {
               </tr>
             </thead>
 
-            {cat?.map((item, index) => (
+            {month?.map((item, index) => (
 
               <tbody>
                 <tr class="bg-gray-100 border-g border-gray-200">
@@ -225,7 +227,7 @@ export default function MyCat() {
                 <td class="py-4 px-6"> </td>
                 <td class="py-4 px-6"> </td>
                 <td class="py-4 px-6">จำนวนทั้งหมด</td>
-                <td class="py-4 px-6"> {cat.length} </td>
+                <td class="py-4 px-6"> {cat.perMonth?.count} </td>
                 <td class="py-4 px-6">ตัว</td>
               </tr>
             </tfoot>

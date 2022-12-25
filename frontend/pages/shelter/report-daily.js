@@ -25,6 +25,7 @@ export default function MyCat() {
   const session = useSession()
   const [loading, setLoading] = useState(true)
   const [cat, setCat] = useState(null)
+  const [day, setDay] = useState(null)
   // const [id, setId] = useState(0)
 
   const formatTimestamp = (timestamp) => {
@@ -70,6 +71,7 @@ export default function MyCat() {
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
       setCat(data)
+      setDay(data.perDay?.data)
     } finally {
       setLoading(false);
     }
@@ -139,7 +141,7 @@ export default function MyCat() {
         <div><p class="flex justify-between text-base text-black font-normal">รายงานยอดการอุปการะแมวผ่านแพลตฟอร์ม Cat finder</p></div>
         <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ :</p></div>
         <div><p class="flex justify-end text-sm text-black font-normal">วันที่ออกรายงาน : {date}</p></div>
-        <p class="flex text-3xl text-iris font-normal">ยอดรายวัน</p>
+        <p class="flex text-3xl text-iris font-normal">ยอดรายเดือน</p>
       </div>
 
 
@@ -181,7 +183,7 @@ export default function MyCat() {
               </tr>
             </thead>
 
-            {cat?.map((item, index) => (
+            {day?.map((item, index) => (
 
               <tbody>
                 <tr class="bg-gray-100 border-g border-gray-200">
@@ -225,7 +227,7 @@ export default function MyCat() {
                 <td class="py-4 px-6"> </td>
                 <td class="py-4 px-6"> </td>
                 <td class="py-4 px-6">จำนวนทั้งหมด</td>
-                <td class="py-4 px-6"> {cat.length} </td>
+                <td class="py-4 px-6"> {cat.perDay?.count} </td>
                 <td class="py-4 px-6">ตัว</td>
               </tr>
             </tfoot>
