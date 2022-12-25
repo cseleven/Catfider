@@ -118,14 +118,9 @@ export default function MyCat() {
   };
 
   return (
-<<<<<<< HEAD
-    <div>
-      <nav class="flex mx-28 mt-9" aria-label="Breadcrumb">
-=======
     <div class="container min-h-[87vh] h-auto mx-auto max-w-6xl px-5 xl:px-0">
 
       <nav class="flex my-8 breadcrumb" aria-label="Breadcrumb">
->>>>>>> e6179a65842f80c33140f7d95a112e4bbe2eca33
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">
             <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
@@ -248,41 +243,41 @@ export default function MyCat() {
         <div class="h-auto rounded-lg drop-shadow-md bg-gray-50 ml-28 mr-28 mt-5 border-2 border-gray-200 ">
           {/*<div class="flex text-gray-500 font-normal pt-3 pl-7 space-x-[28rem]">*/}
           <div class="flex text-gray-500 text-sm font-normal pt-2 pb-1">
-            <div class="w-[30rem] pl-7">
+            <div class="w-[25rem] pl-7">
               <p class=" ">ชื่อ</p>
             </div>
-            <div class="w-[28rem]">
+            <div class="w-[15em]">
               <p>สายพันธุ์</p>
             </div>
-            <div class="w-[3rem]">
+            <div class="w-[5rem] ml-7">
               <p>สถานะ</p>
             </div>
-            <div class="w-[10rem]"></div>
+            <div class="w-[13rem]"></div>
           </div>
 
           {cat?.map((item) => (
             <div class="flex h-auto">
-              <div class="flex w-[30rem] bg-white border-b border-gray-200 font-normal text-sm">
+              <div class="flex w-[25rem] bg-white border-b border-gray-200 font-normal text-sm">
                 <Image class="mt-auto mb-auto ml-4" src={catProfileAdopt2} placeholder="blur" />
                 <div class="py-3 pl-2">
                   <p class="text-gray-900 text-base">{item.cat_name} <>(#</>{item.cat_id}<>)</></p>
                   <p class="text-gray-500 text-xs">วันเข้าระบบ : {item.create_date}</p>
                 </div>
               </div>
-              <div class="flex w-[28rem] bg-white border-gray-200 border-b font-normal text-sm">
-                <div class="my-auto">
+              <div class="flex w-[15rem] bg-white border-gray-200 border-b font-normal text-sm">
+                <div class="">
                   <p class="text-gray-900 text-base">{item.breed}</p>
                   <p class="text-gray-500 text-xs">{item.sex}</p>
                 </div>
               </div>
-              <div class="flex w-[3rem] bg-white border-gray-200 border-b">
+              <div class="flex w-[5rem] bg-white border-gray-200 border-b">
                 {
                   item.status ? (<p class="w-9 h-7 bg-green-200 rounded-[32px] my-auto text-sm text-green-600 font-medium text-center pt-1">ว่าง</p>) :
                     (<p class="w-9 h-7 bg-red-200 rounded-[32px] my-auto text-sm text-red-600 font-medium text-center pt-1">มีบ้าน</p>)
                 }
               </div>
-              <div class="flex w-[20rem] bg-white border-b border-gray-200">
-                <button type="button" onClick={() => Router.push({ pathname: "/shelter/cat/" + item.cat_id, })} class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
+              <div class="flex w-[13rem] bg-white border-b border-gray-200 ">
+                <button type="button" onClick={() => Router.push({ pathname: "/shelter/cat/" + item.cat_id, })} class="text-sm text-indigo-600 font-normal ml-28">Edit</button>
               </div>
             </div>
           ))}

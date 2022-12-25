@@ -2,12 +2,6 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Loading from '../components/loading'
 import HomecardCatprofile from '../components/homecardcatprofile.js'
-<<<<<<< HEAD
-import catProfile1 from '../public/index/cat-profile1.png'
-import Homecat from '../components/homecat'
-import Router from 'next/router';
-=======
->>>>>>> e6179a65842f80c33140f7d95a112e4bbe2eca33
 import previousIcon from '../public/my-cat/previous-icon.png'
 import nextIcon from '../public/my-cat/next-icon.png'
 
@@ -22,28 +16,6 @@ export default function AllCat() {
     fetchCat()
   }, [])
 
-<<<<<<< HEAD
-
-  // useEffect(() => {
-  //   console.log("user : " + JSON.stringify(user));
-  //   fetchCat("x", function() {
-  //         console.log("cat : " + cat);
-  //       });
-  //   if(user){
-  //     console.log("role : " + user.user_metadata.role);
-  //     setId(user.user_metadata.role);
-  //     if(id==1){
-  //       console.log("role user");
-  //     }else if(id==2){
-  //       console.log("role shelter");
-  //     }
-  //   }
-  // }, [session])
-
-  const fetchCat = async () => {
-    var raw = JSON.stringify({
-      "page_number" : 1,
-=======
   const fetchCat = async () => {
     var raw = JSON.stringify({
       "page_number" : 1,
@@ -78,7 +50,6 @@ export default function AllCat() {
     var raw = JSON.stringify({ 
       "page_number" : 1,
       [e.target.searchBy.value] : e.target.searchBar.value,
->>>>>>> e6179a65842f80c33140f7d95a112e4bbe2eca33
     });
 
     var myheader = {
@@ -104,44 +75,6 @@ export default function AllCat() {
     }
   };
 
-<<<<<<< HEAD
-  const searchCat = async (e) => {
-    var sby = e.target.searchBy.value;
-    var sbar = e.target.searchBar.value;
-    var bef = { "page_number" : 1,};
-
-    if(sby == "status"){
-      bef = {
-        ...bef,
-        "status" : sbar,
-      }
-    }
-
-    if(sby == "breed"){
-      bef = {
-        ...bef,
-        "breed" : sbar,
-      }
-    }
-
-    if(sby == "color"){
-      bef = {
-        ...bef,
-        "color" : sbar,
-      }
-    }
-
-    if(sby == "cat_id"){
-      bef = {
-        ...bef,
-        "cat_id" : sbar,
-      }
-    }
-
-    var raw = JSON.stringify(bef);
-    
-
-=======
   const searchPage = async (nextPage) => {
     if(nextPage==0){
       nextPage=1;
@@ -154,7 +87,6 @@ export default function AllCat() {
       [searchBy] : searchBar,
     });
     
->>>>>>> e6179a65842f80c33140f7d95a112e4bbe2eca33
     var myheader = {
       'Content-Type': 'application/json'
     };
@@ -177,10 +109,6 @@ export default function AllCat() {
       setLoading(false);
     }
   };
-<<<<<<< HEAD
-
-=======
->>>>>>> e6179a65842f80c33140f7d95a112e4bbe2eca33
 
   return (
     <div class="container mx-auto">
@@ -205,13 +133,8 @@ export default function AllCat() {
             </ol>
           </nav>
           <p class="py-7 text-[36px] text-center text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon">น้องแมวหาบ้าน</p>
-<<<<<<< HEAD
-          <hr/>
-            <form onSubmit={searchCat} method="POST">
-=======
           <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28" />
             <form onSubmit={searchCat} method="POST" class="lg:mx-28 lg:max-w-10/12">
->>>>>>> e6179a65842f80c33140f7d95a112e4bbe2eca33
               <div class="flex mt-9">
                 <label class="block ml-44">
                   <select
@@ -259,19 +182,6 @@ export default function AllCat() {
             ))}
           </div>
 
-<<<<<<< HEAD
-          <div class="flex w-[20rem] h-12 rounded-lg border-2 border-paw font-normal text-base text-paw mx-auto px-4 space-x-5">
-            <button type="button "
-              class="flex">
-              <Image class="pt-3" src={previousIcon} placeholder="blur"></Image>
-              <p class="pl-3 pt-3"> Previous   </p>
-            </button>
-            <p class="pt-3"> 1 </p>
-            <p class="pt-3"> 2 </p>
-            <p class="pt-3"> 3 </p>
-            <button type="button "
-              class="flex">
-=======
           <div class="flex w-[20rem] h-12 my-24 rounded-lg border-2 border-paw font-normal text-base text-paw mx-auto px-4 space-x-5">
             <button type="button" class="flex" onClick={()=>searchPage(currentpage[0])}>
               <Image class="pt-3" src={previousIcon} placeholder="blur"></Image>
@@ -281,7 +191,6 @@ export default function AllCat() {
             <p class="pt-3 text-salmon"> {currentpage[1]} </p>
             <p class="pt-3"> {currentpage[2]} </p>
             <button type="button" class="flex" onClick={()=>searchPage(currentpage[2])}>
->>>>>>> e6179a65842f80c33140f7d95a112e4bbe2eca33
               <p class="pr-3 pt-3">   Next </p>
               <Image class="pt-4" src={nextIcon} placeholder="blur"></Image>
             </button>

@@ -22,7 +22,7 @@ export default function AddCat() {
     const handleUpload = async (e) => {
         let file;
         file = e.target.files[0];
-        setCatpicture("public" + file?.name)
+        setCatpicture("" + file?.name)
 
         console.log("set path Name");
     }
@@ -33,7 +33,7 @@ export default function AddCat() {
 
         console.log("upload");
 
-        const { data, error } = await supabase.storage.from("add-cat-images").upload("public" + file?.name, file, { cacheControl: '3600', upsert: false });
+        const { data, error } = await supabase.storage.from("add-cat-images").upload("" + file?.name, file, { cacheControl: '3600', upsert: false });
         if (data) {
             console.log("upload" + JSON.stringify(data));
             setCatpicture(data.path)
@@ -42,19 +42,26 @@ export default function AddCat() {
         }
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e, a) => {
+        a == false
         handleUpload2(e)
         catExample(e)
-        Router.push({
-            pathname: "/shelter/add-cat-success",
-        })
+        if (e != required) {
+            a == true
+            if (console.log(a === true)) {
+                console.log("EEEEEEE " + e)
+                Router.push({
+                    pathname: "/shelter/add-cat-success",
+                })
+            }
+        }
     }
 
     const catExample = async (e) => {
-    
+
         var cookie = getCookie("supabase-auth-token")
         var token = cookie.split('"')[1]
-        var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+        var { data: { user: { id } }, } = await supabase.auth.getUser(token)
 
         var raw = JSON.stringify({
             "login_id": id,
@@ -333,7 +340,7 @@ export default function AddCat() {
                                     required
                                 >
                                     <option value="" selected disabled hidden>เลือกประวัติ</option>
-                                    <option value={true}>ซีดวัคซีนแล้ว</option>
+                                    <option value={true}>ฉีดวัคซีนแล้ว</option>
                                     <option value={false}>ยังไม่ซีดวัคซีน</option>
                                 </select>
                             </label>
@@ -435,14 +442,18 @@ export default function AddCat() {
                                         <span class="text-gray-500 text-xs font-light">PNG, JPG, GIF up to 10MB</span>
                                     </div>
                                     <input id="cat_picture" name="cat_picture" type="file" accept="image/*" class="hidden"
-                                        onChange={(e) => { handleUpload(e) }} />
+                                        onChange={(e) => { handleUpload(e) }}
+                                        required
+                                    />
                                     {catpicture ? (<span class="font-normal text-sm text-gray-900 my-auto">{catpicture}</span>) : (<></>)}
                                 </label>
                             </div>
                         </div>
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
                             <div class="h-[30rem] py-3">
-                                <button type="submit" class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]">
+                                <button type="submit" class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]"
+                                    onClick={(a) => { handleSubmit(a) }}
+                                >
                                     ยืนยัน
                                 </button>
                             </div>
