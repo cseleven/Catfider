@@ -100,13 +100,14 @@ export default function AddCat() {
 
 
     return (
-        <div class="container min-h-[87vh] h-auto mx-auto max-w-6xl px-5 xl:px-0 ">
+        <div class="container min-h-[87vh] h-auto max-w-6xl px-5 xl:px-0 ">
             <Head>
                 <title>Cat Finder</title>
                 <meta name="description" content="create by eleven" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
+            <div class="ml-48">
             <nav class="flex my-8 breadcrumb" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
@@ -139,10 +140,11 @@ export default function AddCat() {
             </div>
 
             <hr class="button-hidden border-1 border-gray-200 mb-8" />
+            </div>
 
             {/*section 2*/}
 
-            <div class="bg-light-salmon py-6">
+            <div class="w-screen bg-light-salmon py-6">
                 <div class="flex">
                     <div class="ml-28">
                         <div class="text-2xl font-normal text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon">ข้อมูลแมว</div>
