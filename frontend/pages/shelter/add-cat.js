@@ -15,17 +15,17 @@ export default function AddCat() {
     const [loading, setLoading] = useState(true)
     const [cat, setCat] = useState(null)
     const [catpicture, setCatpicture] = useState(null)
+    const [uid, setUid] = useState(null);
 
     useEffect(() => {
+        getUid()
     }, [])
 
-    const updateInput = e => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        })
-        console.log(JSON.stringify(input));
-
+    const getUid = async() => {
+        var cookie = getCookie("supabase-auth-token")
+        var token = cookie.split('"')[1]
+        var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+        setUid(id)
     }
 
     const handleUpload = async (e) => {
@@ -46,43 +46,38 @@ export default function AddCat() {
         if (data) {
             console.log("upload" + JSON.stringify(data));
             setCatpicture(data.path)
+            return true
         } else if (error) {
             console.log(error);
+            return false
         }
+
+        return false
     }
 
-    const handleSubmit = async (e, a) => {
-        a = false
-        handleUpload2(e)
-        catExample(e)
-        console.log("eeeeeeeeee " + e)
-        console.log("aaaaaaaaaa " + a)
-        console.log("type " + typeof Object(e))
-        console.log("type e" + Object(e) != null)
-        console.log("type e2" + Object(e) == null)
-        console.log("type e3" + Object(e) != undefined)
-        console.log("type e4" + Object(e) == undefined)
+    const handleSubmit = async (e) => {
+        var submit = handleUpload2(e)
+        var submit2 = catExample(e)
 
-        if (catExample(e) != 'undefined') {
-            a = true
-            if (a == true) {
-                console.log("AAAAAAA " + a)
-                console.log("EEEEEEE " + e)
-                Router.push({
-                    pathname: "/shelter/add-cat-success",
-                })
-            }
+        console.log("eeeeeeeeee " + e)
+        console.log("type " + typeof e)
+        console.log("type e" + e != null)
+        console.log("type e3" + e != undefined)
+
+        if (submit && submit2) {
+
+            console.log("EEEEEEE " + e)
+            Router.push({
+                pathname: "/shelter/add-cat-success",
+            })
+
         }
     }
 
     const catExample = async (e) => {
 
-        var cookie = getCookie("supabase-auth-token")
-        var token = cookie.split('"')[1]
-        var { data: { user: { id } }, } = await supabase.auth.getUser(token)
-
         var raw = JSON.stringify({
-            "login_id": id,
+            "login_id": uid,
             "cat_name": e.target.cat_name.value,
             "sex": e.target.sex.value,
             "breed": e.target.breed.value,
@@ -113,6 +108,10 @@ export default function AddCat() {
         let response = await fetch("/api/cat/shelterview/addCat", requestOptions);
         let dataCat = await response.json();
         console.log("response : " + JSON.stringify(dataCat));
+        if (dataCat) { return true }
+
+        return false
+
     };
 
 
@@ -176,7 +175,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <input
-                                    onChange={updateInput}
                                     id="cat_name"
                                     name="cat_name"
                                     type="text"
@@ -242,7 +240,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                    onChange={updateInput}
                                     id="sex"
                                     name="sex"
                                     class="
@@ -268,7 +265,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                    onChange={updateInput}
                                     id="breed"
                                     name="breed"
                                     class="
@@ -304,7 +300,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                onChange={updateInput}
                                     id="color"
                                     name="color"
                                     class="
@@ -345,7 +340,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                onChange={updateInput}
                                     id="vaccine"
                                     name="vaccine"
                                     class="
@@ -371,7 +365,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                onChange={updateInput}
                                     id="sterile"
                                     name="sterile"
                                     class="
@@ -397,7 +390,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                onChange={updateInput}
                                     id="congenital_disease"
                                     name="congenital_disease"
                                     class="

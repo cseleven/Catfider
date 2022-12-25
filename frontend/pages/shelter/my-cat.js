@@ -20,9 +20,9 @@ import { getCookie } from 'cookies-next';
 
 export default function MyCat() {
   const [cat, setCat] = useState(null)
-  const [currentpage, setCurrentpage] = useState([0,1,2]);
-  const [searchBy,setSearchBy] = useState(null);
-  const [searchBar,setSearchBar] = useState(null);
+  const [currentpage, setCurrentpage] = useState([0, 1, 2]);
+  const [searchBy, setSearchBy] = useState(null);
+  const [searchBar, setSearchBar] = useState(null);
 
   useEffect(() => {
     catExample()
@@ -33,7 +33,7 @@ export default function MyCat() {
 
     var cookie = getCookie("supabase-auth-token")
     var token = cookie.split('"')[1]
-    var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+    var { data: { user: { id } }, } = await supabase.auth.getUser(token)
 
     var raw = JSON.stringify({
       // "login_id": "fadadb65-080e-4be8-a3dc-163df80e0918",
@@ -63,10 +63,10 @@ export default function MyCat() {
   const searchCat = async (e) => {
     setSearchBy(e.target.searchBy.value)
     setSearchBar(e.target.searchBar.value)
-    setCurrentpage([0,1,2])
-    var raw = JSON.stringify({ 
-      "page_number" : 1,
-      [e.target.searchBy.value] : e.target.searchBar.value,
+    setCurrentpage([0, 1, 2])
+    var raw = JSON.stringify({
+      "page_number": 1,
+      [e.target.searchBy.value]: e.target.searchBar.value,
     });
 
     var myheader = {
@@ -87,17 +87,17 @@ export default function MyCat() {
   };
 
   const searchPage = async (nextPage) => {
-    if(nextPage==0){
-      nextPage=1;
+    if (nextPage == 0) {
+      nextPage = 1;
     }
 
-    setCurrentpage([nextPage-1,nextPage,nextPage+1])
+    setCurrentpage([nextPage - 1, nextPage, nextPage + 1])
 
-    var raw = JSON.stringify({ 
-      "page_number" : nextPage,
-      [searchBy] : searchBar,
+    var raw = JSON.stringify({
+      "page_number": nextPage,
+      [searchBy]: searchBar,
     });
-    
+
     var myheader = {
       'Content-Type': 'application/json'
     };
@@ -110,7 +110,7 @@ export default function MyCat() {
       redirect: 'follow'
     };
 
-    
+
     let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
     let data = await response.json();
     console.log("response : " + JSON.stringify(data));
@@ -202,6 +202,7 @@ export default function MyCat() {
               id="search-dropdown"
               name="searchBy"
               class="
+                w-[8rem] 
                 block
                 rounded-l-md
                 border-gray-300
@@ -364,14 +365,14 @@ export default function MyCat() {
       </div>
 
       <div class="flex w-[20rem] h-12 my-24 rounded-lg border-2 border-paw font-normal text-base text-paw mx-auto px-4 space-x-5">
-        <button type="button" class="flex" onClick={()=>searchPage(currentpage[0])}>
+        <button type="button" class="flex" onClick={() => searchPage(currentpage[0])}>
           <Image class="pt-3" src={previousIcon} placeholder="blur"></Image>
           <p class="pl-3 pt-3"> Previous   </p>
         </button>
-        <p class="pt-3"> {(currentpage[0]!=0)?(<>{currentpage[0]}</>):(<></>)} </p>
+        <p class="pt-3"> {(currentpage[0] != 0) ? (<>{currentpage[0]}</>) : (<></>)} </p>
         <p class="pt-3 text-salmon"> {currentpage[1]} </p>
         <p class="pt-3"> {currentpage[2]} </p>
-        <button type="button" class="flex" onClick={()=>searchPage(currentpage[2])}>
+        <button type="button" class="flex" onClick={() => searchPage(currentpage[2])}>
           <p class="pr-3 pt-3">   Next </p>
           <Image class="pt-4" src={nextIcon} placeholder="blur"></Image>
         </button>
