@@ -89,7 +89,7 @@ async function getdataPerDate( shelter_id, result ) {
   const date = new Date()
   const currentDate = getDate(date)
 
-  const { data, count } = await supabase.from('adopt').select('*', { count: 'exact' }).eq('shelter_id', shelter_id).gte('adopt_date', currentDate)
+  const { data, count } = await supabase.from('adopt').select('adopt_id, create_date, adopt_status, update_date, queue_id, cat_id, user_id, user_profile(email), adopt_date,  shelter_id, shelter_profile(shelter_name)', { count: 'exact' }).eq('shelter_id', shelter_id).gte('adopt_date', currentDate)
   result = {
     data,
     count
@@ -106,7 +106,7 @@ async function getdataPerMonth( shelter_id, result ) {
   const currentMonth = getMonth(currentDate)
   
   //query data
-  const { data, count} = await supabase.from('adopt').select('*', { count: 'exact'}).eq('shelter_id', shelter_id).gte( 'adopt_date', currentMonth)
+  const { data, count } = await supabase.from('adopt').select('adopt_id, create_date, adopt_status, update_date, queue_id, cat_id, user_id, user_profile(email), adopt_date,  shelter_id, shelter_profile(shelter_name)', { count: 'exact'}).eq('shelter_id', shelter_id).gte( 'adopt_date', currentMonth)
   result = {
     data,
     count
@@ -126,7 +126,7 @@ async function getdataPerYear(shelter_id, result) {
   const currentYear = getYear(date)
 
   //query data
-  const { data, count } = await supabase.from('adopt').select('*', { count: 'exact' }).eq('shelter_id', shelter_id).gte('adopt_date', currentYear)
+  const { data, count } = await supabase.from('adopt').select('adopt_id, create_date, adopt_status, update_date, queue_id, cat_id, user_id, user_profile(email), adopt_date,  shelter_id, shelter_profile(shelter_name)', { count: 'exact' }).eq('shelter_id', shelter_id).gte('adopt_date', currentYear)
   result = {
     data,
     count

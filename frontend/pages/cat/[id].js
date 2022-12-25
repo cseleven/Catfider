@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import Loading from "../../../components/loading";
-import Catprofile from "../../../components/catprofile";
-import Catdetail from "../../../components/catdetail";
+import Loading from "../../components/loading";
+import Catprofile from "../../components/catprofile";
+import Catdetail from "../../components/catdetail";
 import { useRouter } from "next/router";
 
 export default function CatProfile() {
@@ -23,7 +23,6 @@ export default function CatProfile() {
   const catExample = async () => {
     var raw = JSON.stringify({
       "cat_id": router.query.id
-
     });
 
     var myheader = {

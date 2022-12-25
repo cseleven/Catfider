@@ -6,8 +6,33 @@ import Loading from "../../../components/loading";
 import Catprofile from "../../../components/catprofile";
 import Catdetail from "../../../components/catdetail";
 import Router from 'next/router';
+import { supabase } from '../../api/supabase'
+import { getCookie } from 'cookies-next';
 
-const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) => {
+const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place, query_id }) => {
+
+    const delQueue = async() => {
+      var raw = JSON.stringify({
+        "queue_id":query_id,
+        "login_id": id
+      });
+
+      var myheader = {
+        'Content-Type': 'application/json'
+      };
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myheader,
+        body: raw,
+        redirect: 'follow'
+      };
+ 
+      let response = await fetch("/api/queue/deleteQueue", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+    }
+
     return condition == null? (
         <div class="grid mb-8 md:place-content-end md:mr-20">
           <button type="button" onClick={()=>Router.push({
@@ -25,6 +50,7 @@ const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place }) 
           <h5>เวลา : {time}</h5>
           <h5>สถานที่ : {place}</h5>
           <button type="button" class="rounded-[4px] bg-gray-400 text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">จองคิวดูแมว</button>
+          <button type="button" onClick={delQueue} class="text-[18px] text-error underline font-normal text-center py-0 px-5 mt-2 mr-7">ยกเลิกคิว</button>
         </div>
     )
 };
@@ -40,7 +66,7 @@ export default function CatProfile() {
     name:"มะลิ", pic:"https://images.unsplash.com/photo-1615789591457-74a63395c990", vaccine:true, sterile:true,bank:["กสิกร 999-999-9999","กรุงไทย 888-888-888"],
     id: 1210, map:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.810927024412!2d100.77565737605752!3d13.729894097798276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d664988a1bedf%3A0xcc678f180e221cd0!2sKing%20Mongkut&#39;s%20Institute%20of%20Technology%20Ladkrabang!5e0!3m2!1sen!2sth!4v1671191115547!5m2!1sen!2sth",
     detail:"แมวจรลายสลิดที่ชอบกินขนมแมวเลียเป็นชีวิตจิตใจ มีอาการบาดเจ็บที่ขาข้างซ้าย ชอบทำหน้าแปลกๆ และนอนกลิ้งไปมา", status:true,
-    age:4.5, sex:"เพศเมีย", breed:"ไทย", color:"ขาวดำ", disease:"ไม่มี", hold:true, shelter:"มูลนิธิบ้านรักแมว",day: "22/12/2022", time : "10.00-11.00 น.", สถานที่ : "มูลนิธิบ้านรักแมว"
+    age:4.5, sex:"เพศเมีย", breed:"ไทย", color:"ขาวดำ", disease:"ไม่มี", hold:true, shelter:"มูลนิธิบ้านรักแมว",day: "22/12/2022", time : "10.00-11.00 น.", สถานที่ : "มูลนิธิบ้านรักแมว",queue_id :1,
   }
 
   
@@ -52,9 +78,13 @@ export default function CatProfile() {
 
 
   const catExample = async () => {
+    var cookie = getCookie("supabase-auth-token")
+    var token = cookie.split('"')[1]
+    var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+
     var raw = JSON.stringify({
-      "cat_id": "1",
-      "login_id": "user.id"
+      "cat_id": router.query.id,
+      "login_id": id
     });
 
     var myheader = {
@@ -128,7 +158,7 @@ export default function CatProfile() {
           />
           <div class="md:basis-2/5 lg:border-l-2 lg:px-6">
             {!cat[0].status?(<></>):(
-                <ConditionalWrapper condition={cat[0].queue[0]} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue[0]?.queue_date} time={cat[0].queue[0]?.queue_time} place={cat[0].shelter_profile?.address}/>
+                <ConditionalWrapper condition={cat[0].queue[0]} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue[0]?.queue_date} time={cat[0].queue[0]?.queue_time} place={cat[0].shelter_profile?.address} queue_id={mock.queue_id}/>
             )}
           </div>
         </div>

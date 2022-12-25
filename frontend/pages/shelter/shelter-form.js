@@ -1,47 +1,18 @@
 import { useSession, useUser } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
+import Router from 'next/router';
+import { supabase } from '../api/supabase'
+import { getCookie } from 'cookies-next';
 
 export default function ShelterForm() {
-    const user = useUser()
-    const session = useSession()
-    const [loading, setLoading] = useState(true)
-    const [cat, setCat] = useState(null)
-    // const [id, setId] = useState(0)
-
-    useEffect(() => {
-        createProfile()
-    }, [])
-
-    const createProfile = async () => {
-        const user = useUser()
-        var raw = JSON.stringify({ "login_id": "6d6b6578-bda8-4659-9ba7-9ffca9684abf" });
-
-        var myheader = {
-            'Content-Type': 'application/json'
-        };
-
-        var requestOptions = {
-            method: 'POST',
-            headers: myheader,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        try {
-            setLoading(true);
-            let response = await fetch("/api/shelter/createShelter", requestOptions);
-            let data = await response.json();
-            useUser(data)
-            console.log("response : " + JSON.stringify(data));
-            //useUser(data)
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const ShelterForm = async (e) => {
+        var cookie = getCookie("supabase-auth-token")
+        var token = cookie.split('"')[1]
+        var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+
         var raw = JSON.stringify({
-            "login_id": user.id,
+            "login_id": id,
             "shelter_name": e.target.shelter_name.value,
             "website_url": e.target.website_url.value,
             "email": e.target.email.value,
@@ -54,7 +25,6 @@ export default function ShelterForm() {
             "donate_number1": e.target.donate_number1.value,
             "donate_name2": e.target.donate_name2.value,
             "donate_number2": e.target.donate_number2.value
-
         });
 
         var myheader = {
@@ -70,14 +40,16 @@ export default function ShelterForm() {
         };
 
         try {
-            setLoading(true);
             let response = await fetch("/api/shelter/editShelter", requestOptions);
             let data = await response.json();
             console.log("response : " + JSON.stringify(data));
         } finally {
-            setLoading(false);
+            Router.push({
+                pathname: '/'
+            })
         }
     };
+
     return (
         <div class="h-auto">
             <div class="w-screen h-[20rem]">
