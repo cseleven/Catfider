@@ -19,6 +19,15 @@ export default function AddCat() {
     useEffect(() => {
     }, [])
 
+    const updateInput = e => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        })
+        console.log(JSON.stringify(input));
+
+    }
+
     const handleUpload = async (e) => {
         let file;
         file = e.target.files[0];
@@ -43,12 +52,21 @@ export default function AddCat() {
     }
 
     const handleSubmit = async (e, a) => {
-        a == false
+        a = false
         handleUpload2(e)
         catExample(e)
-        if (e != required) {
-            a == true
-            if (console.log(a === true)) {
+        console.log("eeeeeeeeee " + e)
+        console.log("aaaaaaaaaa " + a)
+        console.log("type " + typeof Object(e))
+        console.log("type e" + Object(e) != null)
+        console.log("type e2" + Object(e) == null)
+        console.log("type e3" + Object(e) != undefined)
+        console.log("type e4" + Object(e) == undefined)
+
+        if (catExample(e) != 'undefined') {
+            a = true
+            if (a == true) {
+                console.log("AAAAAAA " + a)
                 console.log("EEEEEEE " + e)
                 Router.push({
                     pathname: "/shelter/add-cat-success",
@@ -95,7 +113,6 @@ export default function AddCat() {
         let response = await fetch("/api/cat/shelterview/addCat", requestOptions);
         let dataCat = await response.json();
         console.log("response : " + JSON.stringify(dataCat));
-
     };
 
 
@@ -159,6 +176,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <input
+                                    onChange={updateInput}
                                     id="cat_name"
                                     name="cat_name"
                                     type="text"
@@ -224,6 +242,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                    onChange={updateInput}
                                     id="sex"
                                     name="sex"
                                     class="
@@ -249,6 +268,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                    onChange={updateInput}
                                     id="breed"
                                     name="breed"
                                     class="
@@ -284,6 +304,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                onChange={updateInput}
                                     id="color"
                                     name="color"
                                     class="
@@ -324,6 +345,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                onChange={updateInput}
                                     id="vaccine"
                                     name="vaccine"
                                     class="
@@ -349,6 +371,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                onChange={updateInput}
                                     id="sterile"
                                     name="sterile"
                                     class="
@@ -374,6 +397,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                onChange={updateInput}
                                     id="congenital_disease"
                                     name="congenital_disease"
                                     class="
@@ -443,7 +467,6 @@ export default function AddCat() {
                                     </div>
                                     <input id="cat_picture" name="cat_picture" type="file" accept="image/*" class="hidden"
                                         onChange={(e) => { handleUpload(e) }}
-                                        required
                                     />
                                     {catpicture ? (<span class="font-normal text-sm text-gray-900 my-auto">{catpicture}</span>) : (<></>)}
                                 </label>
