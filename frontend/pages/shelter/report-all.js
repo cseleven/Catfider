@@ -137,23 +137,23 @@ export default function MyCat() {
       <div class="page-number"></div>
 
 
-
-      <div clss="flex">
-        <div><p class="flex justify-between text-base text-black font-normal">รายงานยอดการอุปการะแมวผ่านแพลตฟอร์ม Cat finder</p></div>
-        <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ :</p></div>
-        <div><p class="flex justify-end text-sm text-black font-normal">วันที่ออกรายงาน : {date}</p></div>
-        <p class="flex text-3xl text-iris font-normal">ยอดทั้งหมด</p>
-      </div>
-
-
-
+      
+        <div clss="flex">
+          <div><p class="flex justify-between text-base text-black font-normal">รายงานยอดการอุปการะแมวผ่านแพลตฟอร์ม Cat finder</p></div>
+          <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ : {cat?.perYear?.data[0].shelter_profile?.shelter_name}</p></div>
+          <div><p class="flex justify-end text-sm text-black font-normal">วันที่ออกรายงาน : {date}</p></div>
+          <p class="flex text-3xl text-iris font-normal">ยอดทั้งหมด</p>
+        </div>
+     
 
 
 
 
 
       <div class="overflow-x-hidden w-full mt-5 rounded md:rounded-lg shadow-md  md:w-auto">
-        {cat && Array.isArray(cat) && (
+        {year && Array.isArray(year) && (
+
+          
           <table class=" w-full text-sm text-left font-light text-black ">
             <thead class="text-base text-gray-500 bg-gray-300">
               <tr>
@@ -189,28 +189,28 @@ export default function MyCat() {
               <tbody>
                 <tr class="bg-gray-100 border-g border-gray-200">
                   <th scope="row" class="py-4 px-6 font-light text-black whitespace-nowrap">
-
+                    {index + 1}
                   </th>
                   <td class="py-4 px-6">
                     <>#</>{item.cat_id}<></>
                   </td>
                   <td class="py-4 px-6">
-                    {item.cat_name}
+                    {item.cat_profile.cat_name}
                   </td>
                   <td class="py-4 px-6">
-                    {item.breed}
+                    {item.cat_profile.breed}
                   </td>
                   <td class="py-4 px-6">
-                    {item.sex}
+                    {item.cat_profile.sex}
                   </td>
                   <td class="py-4 px-6">
-                    {formatTimestamp(item.create_date)}
+                    {formatTimestamp(item.cat_profile.create_date)}
                   </td>
                   <td class="py-4 px-6">
                     {item.adopt_date}
                   </td>
                   <td class="py-4 px-6">
-                    user@email.com
+                    {item.user_profile.email}
                   </td>
                 </tr>
               </tbody>

@@ -6,13 +6,13 @@ export async function middleware(req) {
 
   const supabase = createMiddlewareSupabaseClient({ req, res })
 
-  // const {
-  //   data: { session },
-  // } = await supabase.auth.getSession()
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
 
-  if ( session && req.nextUrl.pathname.startsWith('/signin')) {
-      console.log("please logout before new signin")
-      res = NextResponse.redirect(new URL('/', req.url))
+  if (session && req.nextUrl.pathname.startsWith('/signin')) {
+    console.log("please logout before new signin")
+    res = NextResponse.redirect(new URL('/', req.url))
   }
 
   if (!session && req.nextUrl.pathname.startsWith('/user')) {

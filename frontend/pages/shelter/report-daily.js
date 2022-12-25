@@ -67,11 +67,12 @@ export default function MyCat() {
 
     try {
       setLoading(true);
-      let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
+      let response = await fetch("/api/adopt/getReport", requestOptions);
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
       setCat(data)
       setDay(data.perDay?.data)
+      console.log("response : " + JSON.stringify(data.perDay));
     } finally {
       setLoading(false);
     }
@@ -139,9 +140,9 @@ export default function MyCat() {
 
       <div clss="flex">
         <div><p class="flex justify-between text-base text-black font-normal">รายงานยอดการอุปการะแมวผ่านแพลตฟอร์ม Cat finder</p></div>
-        <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ :</p></div>
+        <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ :{cat?.perDay?.data[0].shelter_profile?.shelter_name}</p></div>
         <div><p class="flex justify-end text-sm text-black font-normal">วันที่ออกรายงาน : {date}</p></div>
-        <p class="flex text-3xl text-iris font-normal">ยอดรายเดือน</p>
+        <p class="flex text-3xl text-iris font-normal">ยอดรายวัน</p>
       </div>
 
 
@@ -149,10 +150,10 @@ export default function MyCat() {
 
 
 
-
-
       <div class="overflow-x-hidden w-full mt-5 rounded md:rounded-lg shadow-md  md:w-auto">
-        {cat && Array.isArray(cat) && (
+        {day && Array.isArray(day) && (
+
+
           <table class=" w-full text-sm text-left font-light text-black ">
             <thead class="text-base text-gray-500 bg-gray-300">
               <tr>
@@ -194,22 +195,22 @@ export default function MyCat() {
                     <>#</>{item.cat_id}<></>
                   </td>
                   <td class="py-4 px-6">
-                    {item.cat_name}
+                    {item.cat_profile.cat_name}
                   </td>
                   <td class="py-4 px-6">
-                    {item.breed}
+                    {item.cat_profile.breed}
                   </td>
                   <td class="py-4 px-6">
-                    {item.sex}
+                    {item.cat_profile.sex}
                   </td>
                   <td class="py-4 px-6">
-                    {formatTimestamp(item.create_date)}
+                    {formatTimestamp(item.cat_profile.create_date)}
                   </td>
                   <td class="py-4 px-6">
-                    timestamp-out
+                    {item.adopt_date}
                   </td>
                   <td class="py-4 px-6">
-                    user@email.com
+                    {item.user_profile.email}
                   </td>
                 </tr>
               </tbody>
