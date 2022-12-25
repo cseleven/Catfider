@@ -17,6 +17,7 @@ import { getCookie } from 'cookies-next';
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import Loading from '../../components/loading'
 
 
 function classNames(...classes) {
@@ -26,10 +27,11 @@ function classNames(...classes) {
 
 export default function MyCat() {
   const [cat, setCat] = useState(null)
-  const [currentpage, setCurrentpage] = useState([0,1,2]);
-  const [searchBy,setSearchBy] = useState(null);
-  const [searchBar,setSearchBar] = useState(null);
+  const [currentpage, setCurrentpage] = useState([0, 1, 2]);
+  const [searchBy, setSearchBy] = useState(null);
+  const [searchBar, setSearchBar] = useState(null);
   const [uid,setUid] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     catExample()
@@ -60,10 +62,15 @@ export default function MyCat() {
       redirect: 'follow'
     };
 
-    let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
-    let data = await response.json();
-    console.log("response : " + JSON.stringify(data));
-    setCat(data)
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+      setCat(data)
+    } finally {
+      setLoading(false);
+    }
   };
 
   const searchCat = async (e) => {
@@ -87,10 +94,15 @@ export default function MyCat() {
       redirect: 'follow'
     };
 
-    let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
-    let data = await response.json();
-    console.log("response : " + JSON.stringify(data));
-    setCat(data);
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+      setCat(data)
+    } finally {
+      setLoading(false);
+    }
   };
 
   const searchPage = async (nextPage) => {
@@ -116,16 +128,24 @@ export default function MyCat() {
       body: raw,
       redirect: 'follow'
     };
- 
-    let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
-    let data = await response.json();
-    console.log("response : " + JSON.stringify(data));
-    setCat(data);
+
+    try {
+      setLoading(true);
+      let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
+      let data = await response.json();
+      console.log("response : " + JSON.stringify(data));
+      setCat(data)
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
+    <div>
+      {loading ? (
+        <Loading />
+      ) : (
     <div class="container min-h-[87vh] h-auto mx-auto max-w-6xl px-5 xl:px-0">
-
       <nav class="flex my-8 breadcrumb" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">
@@ -364,6 +384,8 @@ export default function MyCat() {
         </button>
       </div>
     </div >
+      )}
+    </div>
   )
 }
 
