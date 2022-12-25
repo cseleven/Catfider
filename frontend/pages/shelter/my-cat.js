@@ -26,16 +26,10 @@ function classNames(...classes) {
 
 export default function MyCat() {
   const [cat, setCat] = useState(null)
-<<<<<<< HEAD
-  const [currentpage, setCurrentpage] = useState([0, 1, 2]);
-  const [searchBy, setSearchBy] = useState(null);
-  const [searchBar, setSearchBar] = useState(null);
-=======
   const [currentpage, setCurrentpage] = useState([0,1,2]);
   const [searchBy,setSearchBy] = useState(null);
   const [searchBar,setSearchBar] = useState(null);
   const [uid,setUid] = useState(null)
->>>>>>> origin/main
 
   useEffect(() => {
     catExample()
@@ -45,12 +39,8 @@ export default function MyCat() {
 
     var cookie = getCookie("supabase-auth-token")
     var token = cookie.split('"')[1]
-<<<<<<< HEAD
-    var { data: { user: { id } }, } = await supabase.auth.getUser(token)
-=======
     var{ data: { user:{id} },}= await supabase.auth.getUser(token)
     setUid(id)
->>>>>>> origin/main
 
     var raw = JSON.stringify({
       // "login_id": "fadadb65-080e-4be8-a3dc-163df80e0918",
@@ -79,18 +69,11 @@ export default function MyCat() {
   const searchCat = async (e) => {
     setSearchBy(e.target.searchBy.value)
     setSearchBar(e.target.searchBar.value)
-<<<<<<< HEAD
-    setCurrentpage([0, 1, 2])
-    var raw = JSON.stringify({
-      "page_number": 1,
-      [e.target.searchBy.value]: e.target.searchBar.value,
-=======
     setCurrentpage([0,1,2])
     var raw = JSON.stringify({ 
       "login_id": uid,
       "page_number" : 1,
       [e.target.searchBy.value] : e.target.searchBar.value,
->>>>>>> origin/main
     });
 
     var myheader = {
@@ -117,16 +100,10 @@ export default function MyCat() {
 
     setCurrentpage([nextPage - 1, nextPage, nextPage + 1])
 
-<<<<<<< HEAD
-    var raw = JSON.stringify({
-      "page_number": nextPage,
-      [searchBy]: searchBar,
-=======
     var raw = JSON.stringify({ 
       "login_id": uid,
       "page_number" : nextPage,
       [searchBy] : searchBar,
->>>>>>> origin/main
     });
 
     var myheader = {
@@ -139,12 +116,7 @@ export default function MyCat() {
       body: raw,
       redirect: 'follow'
     };
-<<<<<<< HEAD
-
-
-=======
  
->>>>>>> origin/main
     let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
     let data = await response.json();
     console.log("response : " + JSON.stringify(data));
@@ -294,7 +266,6 @@ export default function MyCat() {
               id="search-dropdown"
               name="searchBy"
               class="
-<<<<<<< HEAD
                 w-[8rem] 
                 block
                 rounded-l-md
@@ -304,16 +275,6 @@ export default function MyCat() {
                 text-gray-500 
                 font-normal
             "
-=======
-                  block
-                  rounded-l-md
-                  border-gray-300
-                  shadow-sm
-                  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                  text-gray-500 
-                  font-normal
-              "
->>>>>>> origin/main
             >
               <option value="" selected disabled hidden>โปรดเลือก</option>
               <option value="status">สถานะ</option>

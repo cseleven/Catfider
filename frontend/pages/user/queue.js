@@ -30,15 +30,22 @@ export default function Queue() {
     }, [])
 
 
-    const getUid = async() => {
+    const getUid = async () => {
         var cookie = getCookie("supabase-auth-token")
         var token = cookie.split('"')[1]
-        var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+        var { data: { user: { id } }, } = await supabase.auth.getUser(token)
         setUid(id)
     }
 
+    const handleSubmit = async (e) => {
+        postQueueCat(e)
+        Router.push({
+            pathname: "/user/queue-success",
+        })
+    }
+
     //fetch data
-    const postQueueCat = async(e) => {
+    const postQueueCat = async (e) => {
         var raw = JSON.stringify({
             "cat_id": id,
             "login_id": uid,
@@ -219,7 +226,7 @@ export default function Queue() {
                                             text-gray-500 
                                             font-normal
                                         "
-                                        required
+                                    required
                                 >
                                     <option>เลือกช่วงเวลา</option>
                                     <option value="9.00-10.00">9.00-10.00 น.</option>
@@ -231,7 +238,9 @@ export default function Queue() {
                         </div>
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md mx-28">
                             <div class="h-[30rem] py-3">
-                                <button type="submit" class="flex bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]">
+                                <button type="submit" class="flex bg-salmon text-white rounded text-xs font-normal px-6 py-2.5 ml-[700px]"
+                                    onClick={(e) => { handleSubmit(e) }}
+                                >
                                     ยืนยัน
                                 </button>
                             </div>
