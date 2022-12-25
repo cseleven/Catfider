@@ -33,6 +33,18 @@ import { useEffect, useState } from 'react'
 *        login_id:
 *          type: string
 *          example: 113ccce3-1b58-4ce8-a5fd-cdd0426242a9
+*        cat_id:
+*          type: integer
+*          example: 0
+*        sex:
+*          type: string
+*          example: เมีย
+*        breed:
+*          type: string
+*          example: ผสม
+*        color:
+*          type: string
+*          example: ขาว
 *   ShowMyCatUserviewResponse:
 *      type: object
 *      properties:
