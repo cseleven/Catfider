@@ -42,10 +42,7 @@ export default function MyCat() {
     setUid(id)
 
     var raw = JSON.stringify({
-
-
       "login_id": id,
-
     });
 
     var myheader = {

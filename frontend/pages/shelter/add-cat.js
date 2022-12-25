@@ -15,17 +15,17 @@ export default function AddCat() {
     const [loading, setLoading] = useState(true)
     const [cat, setCat] = useState(null)
     const [catpicture, setCatpicture] = useState(null)
+    const [uid, setUid] = useState(null);
 
     useEffect(() => {
+        getUid()
     }, [])
 
-    const updateInput = e => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        })
-        console.log(JSON.stringify(input));
-
+    const getUid = async () => {
+        var cookie = getCookie("supabase-auth-token")
+        var token = cookie.split('"')[1]
+        var { data: { user: { id } }, } = await supabase.auth.getUser(token)
+        setUid(id)
     }
 
     const handleUpload = async (e) => {
@@ -51,38 +51,18 @@ export default function AddCat() {
         }
     }
 
-    const handleSubmit = async (e, a) => {
-        a = false
+    const handleSubmit = async (e) => {
         handleUpload2(e)
         catExample(e)
-        console.log("eeeeeeeeee " + e)
-        console.log("aaaaaaaaaa " + a)
-        console.log("type " + typeof Object(e))
-        console.log("type e" + Object(e) != null)
-        console.log("type e2" + Object(e) == null)
-        console.log("type e3" + Object(e) != undefined)
-        console.log("type e4" + Object(e) == undefined)
-
-        if (catExample(e) != 'undefined') {
-            a = true
-            if (a == true) {
-                console.log("AAAAAAA " + a)
-                console.log("EEEEEEE " + e)
-                Router.push({
-                    pathname: "/shelter/add-cat-success",
-                })
-            }
-        }
+        Router.push({
+            pathname: "/shelter/add-cat-success",
+        })
     }
 
     const catExample = async (e) => {
 
-        var cookie = getCookie("supabase-auth-token")
-        var token = cookie.split('"')[1]
-        var { data: { user: { id } }, } = await supabase.auth.getUser(token)
-
         var raw = JSON.stringify({
-            "login_id": id,
+            "login_id": uid,
             "cat_name": e.target.cat_name.value,
             "sex": e.target.sex.value,
             "breed": e.target.breed.value,
@@ -113,6 +93,7 @@ export default function AddCat() {
         let response = await fetch("/api/cat/shelterview/addCat", requestOptions);
         let dataCat = await response.json();
         console.log("response : " + JSON.stringify(dataCat));
+
     };
 
 
@@ -176,7 +157,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <input
-                                    onChange={updateInput}
                                     id="cat_name"
                                     name="cat_name"
                                     type="text"
@@ -242,7 +222,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                    onChange={updateInput}
                                     id="sex"
                                     name="sex"
                                     class="
@@ -268,7 +247,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                    onChange={updateInput}
                                     id="breed"
                                     name="breed"
                                     class="
@@ -304,7 +282,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                onChange={updateInput}
                                     id="color"
                                     name="color"
                                     class="
@@ -345,7 +322,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                onChange={updateInput}
                                     id="vaccine"
                                     name="vaccine"
                                     class="
@@ -371,7 +347,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                onChange={updateInput}
                                     id="sterile"
                                     name="sterile"
                                     class="
@@ -397,7 +372,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                onChange={updateInput}
                                     id="congenital_disease"
                                     name="congenital_disease"
                                     class="
@@ -475,7 +449,7 @@ export default function AddCat() {
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
                             <div class="h-[30rem] py-3">
                                 <button type="submit" class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]"
-                                    onClick={(a) => { handleSubmit(a) }}
+                                    onClick={(e) => { handleSubmit(e) }}
                                 >
                                     ยืนยัน
                                 </button>

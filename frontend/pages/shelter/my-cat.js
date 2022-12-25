@@ -27,9 +27,9 @@ function classNames(...classes) {
 
 export default function MyCat() {
   const [cat, setCat] = useState(null)
-  const [currentpage, setCurrentpage] = useState([0,1,2]);
-  const [searchBy,setSearchBy] = useState(null);
-  const [searchBar,setSearchBar] = useState(null);
+  const [currentpage, setCurrentpage] = useState([0, 1, 2]);
+  const [searchBy, setSearchBy] = useState(null);
+  const [searchBar, setSearchBar] = useState(null);
   const [uid,setUid] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -128,7 +128,7 @@ export default function MyCat() {
       body: raw,
       redirect: 'follow'
     };
- 
+
     try {
       setLoading(true);
       let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
@@ -286,14 +286,15 @@ export default function MyCat() {
               id="search-dropdown"
               name="searchBy"
               class="
-                  block
-                  rounded-l-md
-                  border-gray-300
-                  shadow-sm
-                  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                  text-gray-500 
-                  font-normal
-              "
+                w-[8rem] 
+                block
+                rounded-l-md
+                border-gray-300
+                shadow-sm
+                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                text-gray-500 
+                font-normal
+            "
             >
               <option value="" selected disabled hidden>โปรดเลือก</option>
               <option value="status">สถานะ</option>

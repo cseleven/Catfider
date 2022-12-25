@@ -9,12 +9,12 @@ import Router from 'next/router';
 import { supabase } from '../../api/supabase'
 import { getCookie } from 'cookies-next';
 
-const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place, query_id }) => {
+const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place, queue_id, uid }) => {
 
     const delQueue = async() => {
       var raw = JSON.stringify({
-        "queue_id":query_id,
-        "login_id": id
+        "queue_id":queue_id,
+        "login_id": uid
       });
 
       var myheader = {
@@ -50,7 +50,7 @@ const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place, qu
           <h5>เวลา : {time}</h5>
           <h5>สถานที่ : {place}</h5>
           <button type="button" class="rounded-[4px] bg-gray-400 text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">จองคิวดูแมว</button>
-          <button type="button" onClick={delQueue} class="text-[18px] text-error underline font-normal text-center py-0 px-5 mt-2 mr-7">ยกเลิกคิว</button>
+          <button type="button" onClick={()=>delQueue()} class="text-[18px] text-error underline font-normal text-center py-0 px-5 mt-2 mr-7">ยกเลิกคิว</button>
         </div>
     )
 };
@@ -61,6 +61,7 @@ export default function CatProfile() {
   const user = useUser()
   const session = useSession()
   const [cat, setCat] = useState(null)
+  const [uid, setUid] = useState(null);
   
   const mock = { 
     name:"มะลิ", pic:"https://images.unsplash.com/photo-1615789591457-74a63395c990", vaccine:true, sterile:true,bank:["กสิกร 999-999-9999","กรุงไทย 888-888-888"],
@@ -81,6 +82,7 @@ export default function CatProfile() {
     var cookie = getCookie("supabase-auth-token")
     var token = cookie.split('"')[1]
     var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+    setUid(id)
 
     var raw = JSON.stringify({
       "cat_id": router.query.id,
@@ -158,7 +160,7 @@ export default function CatProfile() {
           />
           <div class="md:basis-2/5 lg:border-l-2 lg:px-6">
             {!cat[0].status?(<></>):(
-                <ConditionalWrapper condition={cat[0].queue[0]} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue[0]?.queue_date} time={cat[0].queue[0]?.queue_time} place={cat[0].shelter_profile?.address} queue_id={mock.queue_id}/>
+                <ConditionalWrapper condition={cat[0].queue[0]} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue[0]?.queue_date} time={cat[0].queue[0]?.queue_time} place={cat[0].shelter_profile?.address} queue_id={cat[0].queue[0]?.queue_id} uid={uid}/>
             )}
           </div>
         </div>
