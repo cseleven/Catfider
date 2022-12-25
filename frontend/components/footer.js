@@ -13,7 +13,7 @@ export default function Footer() {
                         <a href="https://github.com/cseleven/Catfider-Front.git" class="mr-4 hover:underline md:mr-6">Frontend</a>
                     </li>
                     <li>
-                        <a href="https://github.com/cseleven/Catfinder-Back.git" class="mr-4 hover:underline md:mr-6">Backend</a>
+                        <a href="https://github.com/cseleven/Catfider-Front/tree/main/frontend/pages/api" class="mr-4 hover:underline md:mr-6">Backend</a>
                     </li>
                     <li>
                         <a href="https://github.com/cseleven" class="hover:underline">Contact</a>

@@ -44,7 +44,7 @@ const LogIn = () => {
   const router = useRouter();
   
   const signin = async(e) => {
-    setColor("h-[87vh] bg-green-600")
+    // setColor("h-[87vh] bg-green-600")
     // var email = "63050146@kmitl.ac.th"
     // var password = "pill146"
     var email = e.target.email.value
@@ -65,13 +65,13 @@ const LogIn = () => {
       console.log("data:"+JSON.stringify(data))
       setCookie('supabase-auth-token', data.session);
       setCookie('ok-supabase-auth-token', data);
-      setColor("h-[87vh] bg-yellow-600")
+      // setColor("h-[87vh] bg-yellow-600")
     }
 
     if(error){
       console.log("error:"+JSON.stringify(error))
       setCookie('err-supabase-auth-token', error);
-      setColor("h-[87vh] bg-error")
+      // setColor("h-[87vh] bg-error")
     }
 
   }
