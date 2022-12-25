@@ -21,10 +21,10 @@ export default function AddCat() {
         getUid()
     }, [])
 
-    const getUid = async() => {
+    const getUid = async () => {
         var cookie = getCookie("supabase-auth-token")
         var token = cookie.split('"')[1]
-        var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+        var { data: { user: { id } }, } = await supabase.auth.getUser(token)
         setUid(id)
     }
 
@@ -46,32 +46,17 @@ export default function AddCat() {
         if (data) {
             console.log("upload" + JSON.stringify(data));
             setCatpicture(data.path)
-            return true
         } else if (error) {
             console.log(error);
-            return false
         }
-
-        return false
     }
 
     const handleSubmit = async (e) => {
-        var submit = handleUpload2(e)
-        var submit2 = catExample(e)
-
-        console.log("eeeeeeeeee " + e)
-        console.log("type " + typeof e)
-        console.log("type e" + e != null)
-        console.log("type e3" + e != undefined)
-
-        if (submit && submit2) {
-
-            console.log("EEEEEEE " + e)
-            Router.push({
-                pathname: "/shelter/add-cat-success",
-            })
-
-        }
+        handleUpload2(e)
+        catExample(e)
+        Router.push({
+            pathname: "/shelter/add-cat-success",
+        })
     }
 
     const catExample = async (e) => {
@@ -108,9 +93,6 @@ export default function AddCat() {
         let response = await fetch("/api/cat/shelterview/addCat", requestOptions);
         let dataCat = await response.json();
         console.log("response : " + JSON.stringify(dataCat));
-        if (dataCat) { return true }
-
-        return false
 
     };
 
@@ -467,7 +449,7 @@ export default function AddCat() {
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
                             <div class="h-[30rem] py-3">
                                 <button type="submit" class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]"
-                                    onClick={(a) => { handleSubmit(a) }}
+                                    onClick={(e) => { handleSubmit(e) }}
                                 >
                                     ยืนยัน
                                 </button>
