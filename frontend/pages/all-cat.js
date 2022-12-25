@@ -111,12 +111,12 @@ export default function AllCat() {
   };
 
   return (
-    <div class="container mx-auto">
+    <div class="container min-h-[87vh] h-auto mx-auto max-w-6xl px-5 xl:px-0">
       {loading ? (
         <Loading />
       ) : (
         <div>
-          <nav class="flex mx-28 mt-9" aria-label="Breadcrumb">
+          <nav class="flex my-8" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
               <li class="inline-flex items-center">
                 <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
@@ -134,7 +134,7 @@ export default function AllCat() {
           </nav>
           <p class="py-7 text-[36px] text-center text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon">น้องแมวหาบ้าน</p>
           <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28" />
-            <form onSubmit={searchCat} method="POST" class="lg:mx-28 lg:max-w-10/12">
+            <form onSubmit={searchCat} method="POST" class="lg:mx-28 lg:max-w-[10/12]">
               <div class="flex mt-9">
                 <label class="block ml-44">
                   <select
@@ -143,6 +143,7 @@ export default function AllCat() {
                     name="searchBy"
                     class="
                         block
+                        w-[8rem]
                         rounded-l-md
                         border-gray-300
                         shadow-sm

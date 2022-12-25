@@ -89,7 +89,7 @@ async function getdataPerDate( shelter_id, result ) {
   const date = new Date()
   const currentDate = getDate(date)
 
-  const { data, count } = await supabase.from('adopt').select('adopt_id, create_date, adopt_status, update_date, queue_id, cat_id, user_id, user_profile(email), adopt_date,  shelter_id, shelter_profile(shelter_name)', { count: 'exact' }).eq('shelter_id', shelter_id).gte('adopt_date', currentDate)
+  const { data, count } = await supabase.from('adopt').select('adopt_id, cat_id, cat_profile(cat_name, breed, sex, create_date), user_id, user_profile(email), adopt_date,  shelter_id, shelter_profile(shelter_name)', { count: 'exact' }).eq('shelter_id', shelter_id).gte('adopt_date', currentDate).lte('adopt_date', currentDate)
   result = {
     data,
     count
@@ -104,9 +104,10 @@ async function getdataPerMonth( shelter_id, result ) {
   const date = new Date()
   const currentDate = getDate(date)
   const currentMonth = getMonth(currentDate)
+  const inCurrentMonth = getCurrentMonth(currentDate)
   
   //query data
-  const { data, count } = await supabase.from('adopt').select('adopt_id, create_date, adopt_status, update_date, queue_id, cat_id, user_id, user_profile(email), adopt_date,  shelter_id, shelter_profile(shelter_name)', { count: 'exact'}).eq('shelter_id', shelter_id).gte( 'adopt_date', currentMonth)
+  const { data, count } = await supabase.from('adopt').select('adopt_id, cat_id, cat_profile(cat_name, breed, sex, create_date), user_id, user_profile(email), adopt_date,  shelter_id, shelter_profile(shelter_name)', { count: 'exact'}).eq('shelter_id', shelter_id).gte( 'adopt_date', currentMonth).lte('adopt_date', inCurrentMonth)
   result = {
     data,
     count
@@ -124,9 +125,10 @@ async function getdataPerMonth( shelter_id, result ) {
 async function getdataPerYear(shelter_id, result) {
   const date = new Date()
   const currentYear = getYear(date)
+  const inCurrentYear = getCurrentYear(date)
 
   //query data
-  const { data, count } = await supabase.from('adopt').select('adopt_id, create_date, adopt_status, update_date, queue_id, cat_id, user_id, user_profile(email), adopt_date,  shelter_id, shelter_profile(shelter_name)', { count: 'exact' }).eq('shelter_id', shelter_id).gte('adopt_date', currentYear)
+  const { data, count } = await supabase.from('adopt').select('adopt_id, cat_id, cat_profile(cat_name, breed, sex, create_date), user_id, user_profile(email), adopt_date,  shelter_id, shelter_profile(shelter_name)', { count: 'exact' }).eq('shelter_id', shelter_id).gte('adopt_date', currentYear).lte('adopt_date', inCurrentYear)
   result = {
     data,
     count
@@ -183,6 +185,17 @@ function getMonth(date){
   return [year, month, 1].join('-')
 }
 
+function getCurrentMonth(date){
+  var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      year = d.getFullYear()
+
+  if (month.length < 2) 
+      month = '0' + month;
+
+  return [year, month, 31].join('-')
+}
+
 
 function getYear(date) {
   var d = new Date(date),
@@ -200,4 +213,22 @@ function getYear(date) {
     year = '0' + year;
 
   return [year, 1, 1].join('-')
+}
+
+function getCurrentYear(date) {
+  var d = new Date(date),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear()
+  
+  if (day.length < 2)
+    day = '0' + day;
+  
+  if (month.length < 2)
+    month = '0' + month;
+  
+  if (year.length < 4)
+    year = '0' + year;
+
+  return [year, 12, 31].join('-')
 }

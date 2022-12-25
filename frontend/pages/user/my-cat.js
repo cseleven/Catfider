@@ -20,8 +20,9 @@ const ConditionalWrapper = ({ condition }) => {
   )
 }
 
+
 export default function MyCat() {
-  
+
   const session = useSession()
   const [loading, setLoading] = useState(true)
   const [cat, setCat] = useState(null)
@@ -41,8 +42,10 @@ export default function MyCat() {
     setUid(id)
 
     var raw = JSON.stringify({
-      //"login_id": "113ccce3-1b58-4ce8-a5fd-cdd0426242a9",
-      "login_id": id ,
+
+
+      "login_id": id,
+
     });
 
     var myheader = {
@@ -95,7 +98,7 @@ export default function MyCat() {
       setLoading(false);
     }
   };
-  
+
   return (
     <div class="container mx-auto">
       {loading ? (

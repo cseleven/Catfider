@@ -19,10 +19,19 @@ export default function AddCat() {
     useEffect(() => {
     }, [])
 
+    const updateInput = e => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        })
+        console.log(JSON.stringify(input));
+
+    }
+
     const handleUpload = async (e) => {
         let file;
         file = e.target.files[0];
-        setCatpicture("public" + file?.name)
+        setCatpicture("" + file?.name)
 
         console.log("set path Name");
     }
@@ -33,7 +42,7 @@ export default function AddCat() {
 
         console.log("upload");
 
-        const { data, error } = await supabase.storage.from("add-cat-images").upload("public" + file?.name, file, { cacheControl: '3600', upsert: false });
+        const { data, error } = await supabase.storage.from("add-cat-images").upload("" + file?.name, file, { cacheControl: '3600', upsert: false });
         if (data) {
             console.log("upload" + JSON.stringify(data));
             setCatpicture(data.path)
@@ -42,19 +51,35 @@ export default function AddCat() {
         }
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e, a) => {
+        a = false
         handleUpload2(e)
         catExample(e)
-        Router.push({
-            pathname: "/shelter/add-cat-success",
-        })
+        console.log("eeeeeeeeee " + e)
+        console.log("aaaaaaaaaa " + a)
+        console.log("type " + typeof Object(e))
+        console.log("type e" + Object(e) != null)
+        console.log("type e2" + Object(e) == null)
+        console.log("type e3" + Object(e) != undefined)
+        console.log("type e4" + Object(e) == undefined)
+
+        if (catExample(e) != 'undefined') {
+            a = true
+            if (a == true) {
+                console.log("AAAAAAA " + a)
+                console.log("EEEEEEE " + e)
+                Router.push({
+                    pathname: "/shelter/add-cat-success",
+                })
+            }
+        }
     }
 
     const catExample = async (e) => {
-    
+
         var cookie = getCookie("supabase-auth-token")
         var token = cookie.split('"')[1]
-        var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+        var { data: { user: { id } }, } = await supabase.auth.getUser(token)
 
         var raw = JSON.stringify({
             "login_id": id,
@@ -88,56 +113,55 @@ export default function AddCat() {
         let response = await fetch("/api/cat/shelterview/addCat", requestOptions);
         let dataCat = await response.json();
         console.log("response : " + JSON.stringify(dataCat));
-
     };
 
 
 
 
     return (
-        <div class="container mx-auto">
+        <div class="container min-h-[87vh] h-auto mx-auto max-w-6xl px-5 xl:px-0 ">
             <Head>
                 <title>Cat Finder</title>
                 <meta name="description" content="create by eleven" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            {/*section 1*/}
-            <div class="h-[171px]">
-                <div class="flex my-8 mx-28">
-                    <nav class="flex" aria-label="Breadcrumb">
-                        <ol class="inline-flex items-center space-x-1 md:space-x-3">
-                            <li class="inline-flex items-center">
-                                <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-                                    หน้าแรก
-                                </a>
-                            </li>
-                            <li aria-label="Breadcrumb">
-                                <div class="flex items-center">
-                                    <a href="/shelter/my-cat" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                                        แมวของฉัน
-                                    </a>
-                                </div>
-                            </li>
-                            <li aria-current="page">
-                                <div class="flex items-center">
-                                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                                    <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">ลงทะเบียนแมว</span>
-                                </div>
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
-                <p class="text-4xl text-black font-normal mt-8 mx-28">ลงทะเบียนแมว</p>
-                <div class="w-10/12 h-0.5 bg-gray-200 mt-8 mx-28" />
+            <nav class="flex my-8 breadcrumb" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                            หน้าแรก
+                        </a>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <a href="/shelter/my-cat" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 ">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                <span class="ml-1 text-sm font-medium text-gray-700 md:ml-2 ">แมวของฉัน</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <a class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 ">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 ">ลงทะเบียนแมว</span>
+                            </a>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+
+            <div class="button-hidden flex mt-8">
+                <p class="text-4xl text-black font-normal mb-8">ลงทะเบียนแมว</p>
             </div>
 
+            <hr class="button-hidden border-1 border-gray-200 mb-8" />
 
             {/*section 2*/}
 
-            <div class="h-auto bg-light-salmon py-6">
+            <div class="bg-light-salmon py-6">
                 <div class="flex">
                     <div class="ml-28">
                         <div class="text-2xl font-normal text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon">ข้อมูลแมว</div>
@@ -152,6 +176,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <input
+                                    onChange={updateInput}
                                     id="cat_name"
                                     name="cat_name"
                                     type="text"
@@ -217,6 +242,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                    onChange={updateInput}
                                     id="sex"
                                     name="sex"
                                     class="
@@ -242,6 +268,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                    onChange={updateInput}
                                     id="breed"
                                     name="breed"
                                     class="
@@ -277,6 +304,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                onChange={updateInput}
                                     id="color"
                                     name="color"
                                     class="
@@ -317,6 +345,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                onChange={updateInput}
                                     id="vaccine"
                                     name="vaccine"
                                     class="
@@ -333,7 +362,7 @@ export default function AddCat() {
                                     required
                                 >
                                     <option value="" selected disabled hidden>เลือกประวัติ</option>
-                                    <option value={true}>ซีดวัคซีนแล้ว</option>
+                                    <option value={true}>ฉีดวัคซีนแล้ว</option>
                                     <option value={false}>ยังไม่ซีดวัคซีน</option>
                                 </select>
                             </label>
@@ -342,6 +371,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                onChange={updateInput}
                                     id="sterile"
                                     name="sterile"
                                     class="
@@ -367,6 +397,7 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
+                                onChange={updateInput}
                                     id="congenital_disease"
                                     name="congenital_disease"
                                     class="
@@ -420,14 +451,12 @@ export default function AddCat() {
                             </span>
                             <div class="flex w-full">
                                 <Image class="pt-1 pb-1" src={changeProfile} placeholder="blur" />
-                                <label for="cat_picture" class="bg-white font-normal border border-gray-300 text-gray-700 text-center rounded-md h-[36px] text-sm py-2 px-5 mx-6 my-2">
-                                    <div class="flex flex-col items-center justify-center pb-6">
-                                        Change
-                                    </div>
-                                    <input id="cat_picture" name="cat_picture" type="file" accept="image/*" class="hidden"
-                                        onChange={(e) => { handleUpload(e) }} />
-                                </label>
-                                {catpicture ? (<span class="font-normal text-sm text-gray-900 my-auto">{catpicture}</span>) : (<></>)}
+                                <div class="flex flex-col items-center justify-center bg-white font-normal border border-gray-300 text-gray-700 text-center rounded-md h-[36px] text-sm py-2 px-5 mx-6 my-2">
+                                    Change
+                                </div>
+                                {/* <input id="cat_picture" name="cat_picture" type="file" accept="image/*" class="hidden"
+                                        onChange={(e) => { handleUpload(e) }} /> */}
+                                {/* {catpicture ? (<span class="font-normal text-sm text-gray-900 my-auto">{catpicture}</span>) : (<></>)}  */}
                             </div>
                             <div class="flex items-center justify-center w-full">
                                 <label for="cat_picture" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -435,16 +464,19 @@ export default function AddCat() {
                                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="text-indigo-600">Upload a file</span> or drag and drop</p>
                                         <span class="text-gray-500 text-xs font-light">PNG, JPG, GIF up to 10MB</span>
-
                                     </div>
-                                    {/*<input id="cat_picture" name="cat_picture" type="file" accept="image/*" class="hidden"
-                                        onChange={(e) => { handleUpload(e) }} />*/}
+                                    <input id="cat_picture" name="cat_picture" type="file" accept="image/*" class="hidden"
+                                        onChange={(e) => { handleUpload(e) }}
+                                    />
+                                    {catpicture ? (<span class="font-normal text-sm text-gray-900 my-auto">{catpicture}</span>) : (<></>)}
                                 </label>
                             </div>
                         </div>
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
                             <div class="h-[30rem] py-3">
-                                <button type="submit" class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]">
+                                <button type="submit" class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]"
+                                    onClick={(a) => { handleSubmit(a) }}
+                                >
                                     ยืนยัน
                                 </button>
                             </div>
@@ -458,6 +490,5 @@ export default function AddCat() {
         </div >
     )
 }
-
 
 
