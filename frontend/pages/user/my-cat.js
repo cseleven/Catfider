@@ -15,6 +15,7 @@ import { getCookie } from 'cookies-next';
 
 
 
+
 export default function MyCat() {
 
   const session = useSession()
@@ -25,7 +26,6 @@ export default function MyCat() {
     catExample()
   }, [session])
 
-
   const catExample = async () => {
 
     //fix user_id not stable
@@ -34,8 +34,10 @@ export default function MyCat() {
     var { data: { user: { id } }, } = await supabase.auth.getUser(token)
 
     var raw = JSON.stringify({
-      //"login_id": "113ccce3-1b58-4ce8-a5fd-cdd0426242a9",
+
+
       "login_id": id,
+
     });
 
     var myheader = {

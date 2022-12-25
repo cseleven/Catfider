@@ -23,10 +23,11 @@ import Router from 'next/router';
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
-  const [cat, setCat] = useState([1,2,3])
+  const [cat, setCat] = useState([1, 2, 3])
   useEffect(() => {
     catExample()
-    setLoading(false)}, [])
+    setLoading(false)
+  }, [])
 
   const catExample = async () => {
     var raw = JSON.stringify({
@@ -117,20 +118,19 @@ export default function Home() {
               <Homecard img={group2} topic="จองคิว" detail="จองคิวเพื่อนัดดูน้องแมวของคุณกับทางมูลนิธิหรือสงเคราะห์" />
               <Homecard img={group3} topic="รับเลี้ยง" detail="กรอกแบบฟอร์มเพื่อขอรับอุปการะโดยไม่มีค่าใช้จ่ายใดๆ" />
             </div>
-            <p class="text[20px] text-salmon text-center font-normal pt-[22px]">ดูเพิ่มเติม</p>
           </div>
 
           {/*section 3*/}
           <div class="w-screen h-[43rem]">
             <div class="flex front-normal justify-evenly">
               <p class="text-[36px] text-gray-600 pt-[24px]">น้องแมวหาบ้าน</p>
-              <p class="text-[24px] text-black mt-3 ml-[940px]">ค้นหาแมว</p>
-              <Image class="w-[16px] h-[9.99px] mt-7 ml-[12px]" src={vectorArrow} placeholder="blur" />
+              <a href="/all-cat" class="text-[24px] text-black mt-3 ml-[940px]">ค้นหาแมว</a>
+              <a href="/all-cat"><Image class="w-[16px] h-[9.99px] mt-7 ml-[12px]" src={vectorArrow} placeholder="blur" /></a>
             </div>
             <div class="w-[1325px] h-[0.5px] bg-gray-200 opacity-75 mx-[100px] mt-[24px]" />
             <div class="w-[20px] h-[24px] opacity-75 mt-[24px]" />
             <div class="flex space-x-40 place-content-center ">
-              {cat.map((item)=>(
+              {cat.map((item) => (
                 <HomecardCatprofile item={item} />
               ))}
             </div>

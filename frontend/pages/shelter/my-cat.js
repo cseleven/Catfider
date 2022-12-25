@@ -23,11 +23,12 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+
 export default function MyCat() {
   const [cat, setCat] = useState(null)
-  const [currentpage, setCurrentpage] = useState([0,1,2]);
-  const [searchBy,setSearchBy] = useState(null);
-  const [searchBar,setSearchBar] = useState(null);
+  const [currentpage, setCurrentpage] = useState([0, 1, 2]);
+  const [searchBy, setSearchBy] = useState(null);
+  const [searchBar, setSearchBar] = useState(null);
 
   useEffect(() => {
     catExample()
@@ -67,10 +68,10 @@ export default function MyCat() {
   const searchCat = async (e) => {
     setSearchBy(e.target.searchBy.value)
     setSearchBar(e.target.searchBar.value)
-    setCurrentpage([0,1,2])
-    var raw = JSON.stringify({ 
-      "page_number" : 1,
-      [e.target.searchBy.value] : e.target.searchBar.value,
+    setCurrentpage([0, 1, 2])
+    var raw = JSON.stringify({
+      "page_number": 1,
+      [e.target.searchBy.value]: e.target.searchBar.value,
     });
 
     var myheader = {
@@ -91,17 +92,17 @@ export default function MyCat() {
   };
 
   const searchPage = async (nextPage) => {
-    if(nextPage==0){
-      nextPage=1;
+    if (nextPage == 0) {
+      nextPage = 1;
     }
 
-    setCurrentpage([nextPage-1,nextPage,nextPage+1])
+    setCurrentpage([nextPage - 1, nextPage, nextPage + 1])
 
-    var raw = JSON.stringify({ 
-      "page_number" : nextPage,
-      [searchBy] : searchBar,
+    var raw = JSON.stringify({
+      "page_number": nextPage,
+      [searchBy]: searchBar,
     });
-    
+
     var myheader = {
       'Content-Type': 'application/json'
     };
@@ -114,7 +115,7 @@ export default function MyCat() {
       redirect: 'follow'
     };
 
-    
+
     let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
     let data = await response.json();
     console.log("response : " + JSON.stringify(data));
@@ -254,7 +255,7 @@ export default function MyCat() {
       </div>
 
       <hr class="button-hidden border-1 border-gray-200 mb-8" />
-      
+
 
       <form onSubmit={searchCat} method="POST">
         <div class="flex mt-9">
@@ -273,6 +274,7 @@ export default function MyCat() {
                 font-normal
             "
             >
+              <option>ประเภท</option>
               <option value="สถานะ">สถานะ</option>
               <option value="สายพันธุ์">สายพันธุ์</option>
               <option value="สี หรือ ลาย"> สี หรือ ลาย</option>
@@ -304,19 +306,20 @@ export default function MyCat() {
         <div class="h-auto rounded-lg drop-shadow-md bg-gray-50 ml-28 mr-28 mt-5 border-2 border-gray-200 ">
           {/*<div class="flex text-gray-500 font-normal pt-3 pl-7 space-x-[28rem]">*/}
           <div class="flex text-gray-500 text-sm font-normal pt-2 pb-1">
-            <div class="w-[30rem] pl-7">
+            <div class="w-[25rem] pl-7">
               <p class=" ">ชื่อ</p>
             </div>
-            <div class="w-[28rem]">
+            <div class="w-[15em]">
               <p>สายพันธุ์</p>
             </div>
-            <div class="w-[3rem]">
+            <div class="w-[5rem] ml-7">
               <p>สถานะ</p>
             </div>
-            <div class="w-[10rem]"></div>
+            <div class="w-[13rem]"></div>
           </div>
 
-          {cat?.map((item) => (
+
+          {/* {cat?.map((item) => (
             <div class="flex h-auto">
               <div class="flex w-[30rem] bg-white border-b border-gray-200 font-normal text-sm">
                 <div class="mt-auto mb-auto ml-4 w-10 h-10 bg-center bg-cover rounded-full" style={{ "background-image": "url(" + item.cat_picture + ")" }} />
@@ -341,98 +344,47 @@ export default function MyCat() {
                 <button type="button" onClick={() => Router.push({ pathname: "/shelter/cat/" + item.cat_id, })} class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
               </div>
             </div>
+          ))} */}
+
+          {cat?.map((item) => (
+            <div class="flex h-auto">
+              <div class="flex w-[25rem] bg-white border-b border-gray-200 font-normal text-sm">
+                <div class="mt-auto mb-auto ml-4 w-10 h-10 bg-center bg-cover rounded-full" style={{ "background-image": "url(" + item.cat_picture + ")" }} />
+                <div class="py-3 pl-2">
+                  <p class="text-gray-900 text-base">{item.cat_name} <>(#</>{item.cat_id}<>)</></p>
+                  <p class="text-gray-500 text-xs">วันเข้าระบบ : {item.create_date}</p>
+                </div>
+              </div>
+              <div class="flex w-[15rem] bg-white border-gray-200 border-b font-normal text-sm">
+                <div class="">
+                  <p class="text-gray-900 text-base">{item.breed}</p>
+                  <p class="text-gray-500 text-xs">{item.sex}</p>
+                </div>
+              </div>
+              <div class="flex w-[5rem] bg-white border-gray-200 border-b">
+                {
+                  item.status ? (<p class="w-9 h-7 bg-green-200 rounded-[32px] my-auto text-sm text-green-600 font-medium text-center pt-1">ว่าง</p>) :
+                    (<p class="w-9 h-7 bg-red-200 rounded-[32px] my-auto text-sm text-red-600 font-medium text-center pt-1">มีบ้าน</p>)
+                }
+              </div>
+              <div class="flex w-[13rem] bg-white border-b border-gray-200 ">
+                <button type="button" onClick={() => Router.push({ pathname: "/shelter/cat/" + item.cat_id, })} class="text-sm text-indigo-600 font-normal ml-28">Edit</button>
+              </div>
+            </div>
           ))}
-          {/* <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal">
-            <Image class="mx-7 my-4" src={catProfileAdopt1} placeholder="blur" />
-            <div class="py-4">
-              <p class="text-gray-900 text-base">กีต้า (#1255)</p>
-              <p class="text-gray-500 text-xs">วันเข้าระบบ : 12/01/65</p>
-            </div>
-            <div class="py-4 pl-20 ">
-              <p class="text-gray-900 pl-[200px] text-base">ไทย</p>
-              <p class="text-gray-500 pl-[200px] text-xs">เพศผู้</p>
-            </div>
-            <p class="w-9 h-7 bg-green-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-green-600 font-medium text-center pt-1">ว่าง</p>
-            <a href="/shelter/cat/3" className="text-sm text-indigo-600 font-normal ml-48 pt-7">
-              Edit</a>
-          </div>
-          <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal text-sm">
-            <Image class="mx-7 my-4" src={catProfileAdopt2} placeholder="blur" />
-            <div class="py-4">
-              <p class="text-gray-900 text-base">กีต้า (#1255)</p>
-              <p class="text-gray-500 text-xs">วันเข้าระบบ : 12/01/65</p>
-            </div>
-            <div class="py-4 pl-20">
-              <p class="text-gray-900 pl-[200px] text-base">ไทย</p>
-              <p class="text-gray-500 pl-[200px] text-xs">เพศผู้</p>
-            </div>
-            <p class="w-9 h-7 bg-green-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-green-600 font-medium text-center pt-1">ว่าง</p>
-            <button class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
-          </div>
-          <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal text-sm">
-            <Image class="mx-7 my-4" src={catProfileAdopt3} placeholder="blur" />
-            <div class="py-4">
-              <p class="text-gray-900 text-base">กีต้า (#1255)</p>
-              <p class="text-gray-500 text-xs">วันเข้าระบบ : 12/01/65</p>
-            </div>
-            <div class="py-4 pl-20">
-              <p class="text-gray-900 pl-[200px] text-base">ไทย</p>
-              <p class="text-gray-500 pl-[200px] text-xs">เพศผู้</p>
-            </div>
-            <p class="w-9 h-7 bg-green-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-green-600 font-medium text-center pt-1">ว่าง</p>
-            <button class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
-          </div>
-          <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal text-sm">
-            <Image class="mx-7 my-4" src={catProfileAdopt4} placeholder="blur" />
-            <div class="py-4">
-              <p class="text-gray-900 text-base">กีต้า (#1255)</p>
-              <p class="text-gray-500 text-xs">วันเข้าระบบ : 12/01/65</p>
-            </div>
-            <div class="py-4 pl-20">
-              <p class="text-gray-900 pl-[200px] text-base">ไทย</p>
-              <p class="text-gray-500 pl-[200px] text-xs">เพศผู้</p>
-            </div>
-            <p class="w-9 h-7 bg-green-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-green-600 font-medium text-center pt-1">ว่าง</p>
-            <button class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
-          </div>
-          <div class="flex h-auto drop-shadow-md bg-white border-b border-gray-200 font-normal text-sm">
-            <Image class="mx-7 my-4" src={catProfileAdopt5} placeholder="blur" />
-            <div class="py-4">
-              <p class="text-gray-900 text-base">กีต้า (#1255)</p>
-              <p class="text-gray-500 text-xs">วันเข้าระบบ : 12/01/65</p>
-            </div>
-            <div class="py-4 pl-20">
-              <p class="text-gray-900 pl-[200px] text-base">ไทย</p>
-              <p class="text-gray-500 pl-[200px] text-xs">เพศผู้</p>
-            </div>
-            <p class="w-9 h-7 bg-red-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-red-600 font-medium text-center pt-1">มีบ้าน</p>
-            <button class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
-          </div>
-          <div class="flex h-auto drop-shadow-md rounded-b-lg bg-white border-b border-gray-200 font-normal text-sm">
-            <Image class="mx-7 my-4" src={catProfileAdopt6} placeholder="blur" />
-            <div class="py-4">
-              <p class="text-gray-900 text-base">กีต้า (#1255)</p>
-              <p class="text-gray-500 text-xs">วันเข้าระบบ : 12/01/65</p>
-            </div>
-            <div class="py-4 pl-20">
-              <p class="text-gray-900 pl-[200px] text-base">ไทย</p>
-              <p class="text-gray-500 pl-[200px] text-xs">เพศผู้</p>
-            </div>
-            <p class="w-9 h-7 bg-red-200 rounded-[32px] ml-[29rem] mt-6 text-[12px] text-red-600 font-medium text-center pt-1">มีบ้าน</p>
-            <button class="text-sm text-indigo-600 font-normal ml-48">Edit</button>
-          </div> */}
+
         </div>
       </div>
 
       <div class="flex w-[20rem] h-12 my-24 rounded-lg border-2 border-paw font-normal text-base text-paw mx-auto px-4 space-x-5">
-        <button type="button" class="flex" onClick={()=>searchPage(currentpage[0])}>
+        <button type="button" class="flex" onClick={() => searchPage(currentpage[0])}>
           <Image class="pt-3" src={previousIcon} placeholder="blur"></Image>
           <p class="pl-3 pt-3"> Previous   </p>
         </button>
-        <p class="pt-3"> {(currentpage[0]!=0)?(<>{currentpage[0]}</>):(<></>)} </p>
+        <p class="pt-3"> {(currentpage[0] != 0) ? (<>{currentpage[0]}</>) : (<></>)} </p>
         <p class="pt-3 text-salmon"> {currentpage[1]} </p>
         <p class="pt-3"> {currentpage[2]} </p>
-        <button type="button" class="flex" onClick={()=>searchPage(currentpage[2])}>
+        <button type="button" class="flex" onClick={() => searchPage(currentpage[2])}>
           <p class="pr-3 pt-3">   Next </p>
           <Image class="pt-4" src={nextIcon} placeholder="blur"></Image>
         </button>
@@ -440,7 +392,6 @@ export default function MyCat() {
     </div >
   )
 }
-
 
 
 
