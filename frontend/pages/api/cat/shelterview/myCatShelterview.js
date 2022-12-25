@@ -31,9 +31,21 @@ import { useEffect, useState } from 'react'
 *        login_id:
 *          type: string
 *          example: fadadb65-080e-4be8-a3dc-163df80e0918
-*        page_number:
+*        cat_id:
 *          type: integer
 *          example: 0
+*        sex:
+*          type: string
+*          example: เมีย
+*        breed:
+*          type: string
+*          example: ผสม
+*        color:
+*          type: string
+*          example: ขาว
+*        page_number:
+*          type: integer
+*          example: 1
 *    MyCatShelterviewResponse:
 *      type: object
 *      properties:
@@ -68,7 +80,7 @@ export default async function handler(req, res) {
     //get profile cat in shelter view per cat id
     //select by shelter_id
 
-    const { login_id , page_number} = req.body
+    const { login_id, cat_id, sex, breed, color, status, page_number} = req.body
 
     var shelter_id = await getShelterID(login_id)
 
@@ -77,22 +89,43 @@ export default async function handler(req, res) {
         .select('*', { count: 'exact', head: true })
         .match({ shelter_id: shelter_id })
         
-    let query = supabase
+    if (!shelter_id) {
+        console.log("Shelter ID not found!")
+        res.status(200).json("Shelter ID not found!")
+    } else {
+        console.log("Shelter ID Found!")
+        let query = supabase
         .from('cat_profile')
         .select('cat_id, cat_name, sex, breed, color, cat_picture, status, create_date')
         .eq('shelter_id', shelter_id)
         .range(6*(page_number-1), (6*page_number)-1)
+    
+        if (cat_id) { query = query.eq('cat_id', cat_id) }
+        if (sex) { query = query.eq('sex', sex) }
+        if (breed) { query = query.eq('breed', breed) }
+        if (color) { query = query.eq('color', color) }
+        if (status) {
+            if (status == "ว่าง") {
+                query = query.eq('status', true)
+            } else if (status == "มีบ้าน") {
+                query = query.eq('status', false)
+            }
+            else {
+                query = query.eq('status', status)
+            }
+        }
         
-    const { data, error } = await query
+        const { data, error } = await query
 
-    if (error) {
-        throw error
+        if (error) {
+            throw error
+        }
+
+        console.log(count)
+        console.log(data)
+        console.log("Show My Cat SUCCESS!")
+        res.status(200).json(data)
     }
-
-    console.log(count)
-    console.log(data)
-    console.log("Show My Cat SUCCESS!")
-    res.status(200).json(data)
 
 }
 

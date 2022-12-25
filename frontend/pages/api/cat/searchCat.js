@@ -107,7 +107,16 @@ export default async function handler(req, res) {
             if (sex) { query = query.eq('sex', sex) }
             if (breed) { query = query.eq('breed', breed) }
             if (color) { query = query.eq('color', color) } 
-            if (status) { query = query.eq('status', status) }
+            if (status) { 
+                if(status == "ว่าง"){
+                    query = query.eq('status', true)
+                } else if(status == "มีบ้าน"){
+                    query = query.eq('status', false) 
+                }
+                else {
+                    query = query.eq('status', status) 
+                }
+            }
             if (shelter_name) { query = query.eq('shelter_name', shelter_name) }
             
             const { data, error } = await query

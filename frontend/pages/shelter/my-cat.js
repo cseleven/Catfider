@@ -24,10 +24,10 @@ function classNames(...classes) {
 }
 
 export default function MyCat() {
-  const session = useSession()
-  const [loading, setLoading] = useState(true)
   const [cat, setCat] = useState(null)
-  // const [id, setId] = useState(0)
+  const [currentpage, setCurrentpage] = useState([0,1,2]);
+  const [searchBy,setSearchBy] = useState(null);
+  const [searchBar,setSearchBar] = useState(null);
 
   useEffect(() => {
     catExample()
@@ -58,60 +58,50 @@ export default function MyCat() {
       redirect: 'follow'
     };
 
-    try {
-      setLoading(true);
-      let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
-      let data = await response.json();
-      console.log("response : " + JSON.stringify(data));
-      setCat(data)
-    } finally {
-      setLoading(false);
-    }
+    let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
+    let data = await response.json();
+    console.log("response : " + JSON.stringify(data));
+    setCat(data)
   };
 
   const searchCat = async (e) => {
-    var cookie = getCookie("supabase-auth-token")
-    var token = cookie.split('"')[1]
-    var { data: { user: { id } }, } = await supabase.auth.getUser(token)
+    setSearchBy(e.target.searchBy.value)
+    setSearchBar(e.target.searchBar.value)
+    setCurrentpage([0,1,2])
+    var raw = JSON.stringify({ 
+      "page_number" : 1,
+      [e.target.searchBy.value] : e.target.searchBar.value,
+    });
 
-    var sby = e.target.searchBy.value;
-    var sbar = e.target.searchBar.value;
-    var bef = {
-      "login_id": id,
-      "page_number": 1,
+    var myheader = {
+      'Content-Type': 'application/json'
     };
 
-    if (sby == "status") {
-      bef = {
-        ...bef,
-        "status": sbar,
-      }
+    var requestOptions = {
+      method: 'POST',
+      headers: myheader,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
+    let data = await response.json();
+    console.log("response : " + JSON.stringify(data));
+    setCat(data);
+  };
+
+  const searchPage = async (nextPage) => {
+    if(nextPage==0){
+      nextPage=1;
     }
 
-    if (sby == "breed") {
-      bef = {
-        ...bef,
-        "breed": sbar,
-      }
-    }
+    setCurrentpage([nextPage-1,nextPage,nextPage+1])
 
-    if (sby == "color") {
-      bef = {
-        ...bef,
-        "color": sbar,
-      }
-    }
-
-    if (sby == "cat_id") {
-      bef = {
-        ...bef,
-        "cat_id": sbar,
-      }
-    }
-
-    var raw = JSON.stringify(bef);
-
-
+    var raw = JSON.stringify({ 
+      "page_number" : nextPage,
+      [searchBy] : searchBar,
+    });
+    
     var myheader = {
       'Content-Type': 'application/json'
     };
@@ -124,15 +114,11 @@ export default function MyCat() {
       redirect: 'follow'
     };
 
-    try {
-      setLoading(true);
-      let response = await fetch("/api/cat/searchCat", requestOptions);
-      let data = await response.json();
-      console.log("response : " + JSON.stringify(data));
-      setCat(data);
-    } finally {
-      setLoading(false);
-    }
+    
+    let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
+    let data = await response.json();
+    console.log("response : " + JSON.stringify(data));
+    setCat(data);
   };
 
   return (
@@ -438,29 +424,21 @@ export default function MyCat() {
         </div>
       </div>
 
-      <div class="flex w-[20rem] h-12 rounded-lg border-2 border-paw font-normal text-base text-paw mx-auto px-4 space-x-5">
-        <button type="button "
-          class="flex">
+      <div class="flex w-[20rem] h-12 my-24 rounded-lg border-2 border-paw font-normal text-base text-paw mx-auto px-4 space-x-5">
+        <button type="button" class="flex" onClick={()=>searchPage(currentpage[0])}>
           <Image class="pt-3" src={previousIcon} placeholder="blur"></Image>
           <p class="pl-3 pt-3"> Previous   </p>
         </button>
-        <p class="pt-3"> 1 </p>
-        <p class="pt-3"> 2 </p>
-        <p class="pt-3"> 3 </p>
-        <button type="button "
-          class="flex">
+        <p class="pt-3"> {(currentpage[0]!=0)?(<>{currentpage[0]}</>):(<></>)} </p>
+        <p class="pt-3 text-salmon"> {currentpage[1]} </p>
+        <p class="pt-3"> {currentpage[2]} </p>
+        <button type="button" class="flex" onClick={()=>searchPage(currentpage[2])}>
           <p class="pr-3 pt-3">   Next </p>
           <Image class="pt-4" src={nextIcon} placeholder="blur"></Image>
         </button>
       </div>
-
-
-
-
     </div >
-
   )
-
 }
 
 
