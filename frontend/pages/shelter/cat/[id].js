@@ -93,6 +93,7 @@ export default function CatProfile() {
     } finally {
       setLoading(false);
     }
+    return true
   }
 
   const changeAdopt = async () => {
@@ -121,11 +122,15 @@ export default function CatProfile() {
     } finally {
       setLoading(false);
     }
+    return true
   }
 
   const change = async () => {
-    changeAdopt()
-    changeStatus()
+    var next1 = changeAdopt()
+    var next2 = changeStatus()
+    if(next1&&next2){
+      router.push("/shelter/cat/"+cat[0].cat_id)
+    }
   }
 
   return (
