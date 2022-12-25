@@ -22,6 +22,7 @@ export default function MyCat() {
   const [currentpage, setCurrentpage] = useState([0,1,2]);
   const [searchBy,setSearchBy] = useState(null);
   const [searchBar,setSearchBar] = useState(null);
+  const [uid,setUid] = useState(null)
 
   useEffect(() => {
     catExample()
@@ -33,12 +34,12 @@ export default function MyCat() {
     var cookie = getCookie("supabase-auth-token")
     var token = cookie.split('"')[1]
     var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+    setUid(id)
 
     var raw = JSON.stringify({
       // "login_id": "fadadb65-080e-4be8-a3dc-163df80e0918",
       "login_id": id,
       "page_number": 1
-
     });
 
     var myheader = {
@@ -64,6 +65,7 @@ export default function MyCat() {
     setSearchBar(e.target.searchBar.value)
     setCurrentpage([0,1,2])
     var raw = JSON.stringify({ 
+      "login_id": uid,
       "page_number" : 1,
       [e.target.searchBy.value] : e.target.searchBar.value,
     });
@@ -93,6 +95,7 @@ export default function MyCat() {
     setCurrentpage([nextPage-1,nextPage,nextPage+1])
 
     var raw = JSON.stringify({ 
+      "login_id": uid,
       "page_number" : nextPage,
       [searchBy] : searchBar,
     });
@@ -101,15 +104,13 @@ export default function MyCat() {
       'Content-Type': 'application/json'
     };
 
-
     var requestOptions = {
       method: 'POST',
       headers: myheader,
       body: raw,
       redirect: 'follow'
     };
-
-    
+ 
     let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
     let data = await response.json();
     console.log("response : " + JSON.stringify(data));
@@ -193,7 +194,7 @@ export default function MyCat() {
 
 
 
-      <form onSubmit={searchCat} method="POST">
+      <form onSubmit={searchCat} method="POST" class="lg:mx-28 lg:max-w-10/12">
         <div class="flex mt-9">
           <label class="block ml-44">
             <select
@@ -201,19 +202,20 @@ export default function MyCat() {
               id="search-dropdown"
               name="searchBy"
               class="
-                block
-                rounded-l-md
-                border-gray-300
-                shadow-sm
-                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                text-gray-500 
-                font-normal
-            "
+                  block
+                  rounded-l-md
+                  border-gray-300
+                  shadow-sm
+                  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                  text-gray-500 
+                  font-normal
+              "
             >
-              <option value="สถานะ">สถานะ</option>
-              <option value="สายพันธุ์">สายพันธุ์</option>
-              <option value="สี หรือ ลาย"> สี หรือ ลาย</option>
-              <option value="รหัสแมว">รหัสแมว</option>
+              <option value="" selected disabled hidden>โปรดเลือก</option>
+              <option value="status">สถานะ</option>
+              <option value="breed">สายพันธุ์</option>
+              <option value="color"> สี หรือ ลาย</option>
+              <option value="cat_id">รหัสแมว</option>
             </select>
           </label>
           <div class="relative w-full mr-28">
@@ -222,7 +224,7 @@ export default function MyCat() {
               id="search-dropdown"
               name="searchBar"
               class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 
-              focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               placeholder="พิมพ์ค้นหาที่นี่"
               required
             />
@@ -232,7 +234,7 @@ export default function MyCat() {
               </svg>
             </button>
           </div>
-        </div>
+        </div>  
       </form>
 
 
