@@ -21,6 +21,20 @@ const ConditionalWrapper = ({ condition }) => {
 }
 
 
+<<<<<<< HEAD
+
+
+export default function MyCat() {
+  
+  const session = useSession()
+  const [loading, setLoading] = useState(true)
+  const [cat, setCat] = useState(null)
+  
+  useEffect(() => {
+    catExample()
+  }, [session])
+  
+=======
 export default function MyCat() {
 
   const session = useSession()
@@ -32,6 +46,7 @@ export default function MyCat() {
     catExample()
   }, [])
   
+>>>>>>> origin/main
 
   const catExample = async () => {
 
@@ -42,10 +57,15 @@ export default function MyCat() {
     setUid(id)
 
     var raw = JSON.stringify({
+<<<<<<< HEAD
+      //"login_id": "113ccce3-1b58-4ce8-a5fd-cdd0426242a9",
+      "login_id": id ,
+=======
 
 
       "login_id": id,
 
+>>>>>>> origin/main
     });
 
     var myheader = {
@@ -129,6 +149,50 @@ export default function MyCat() {
           </div>
           <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28" />
 
+<<<<<<< HEAD
+          <form class="lg:mx-28 lg:max-w-10/12" onSubmit={searchCat} method="POST">
+            <div class="flex mt-9">
+              <label class="block ml-44">
+                <select
+                  type="search"
+                  id="search-dropdown"
+                  name="searchBy"
+                  class="
+                      w-[8rem]
+                      block
+                      rounded-l-md
+                      border-gray-300
+                      shadow-sm
+                      focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                      text-gray-500 
+                      font-normal
+                  "
+                >
+                  <option value="status">สถานะ</option>
+                  <option value="breed">สายพันธุ์</option>
+                  <option value="color"> สี หรือ ลาย</option>
+                  <option value="cat_id">รหัสแมว</option>
+                </select>
+              </label>
+              <div class="relative w-full mr-28">
+                <input
+                  type="search"
+                  id="search-dropdown"
+                  name="searchBar"
+                  class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 
+                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  placeholder="พิมพ์ค้นหาที่นี่"
+                  required
+                />
+                <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-salmon rounded-r-lg border focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                  <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
+                  </path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </form>
+=======
           <form onSubmit={searchCat} method="POST" class="lg:mx-28 lg:max-w-10/12">
               <div class="flex mt-9">
                 <label class="block ml-44">
@@ -171,6 +235,7 @@ export default function MyCat() {
                 </div>
               </div>  
             </form>
+>>>>>>> origin/main
 
           <div className="grid grid-cols-3 justify-items-center gap-6 ml-24 mr-7 mt-9  lg:mx-auto lg:max-w-7xl">
             
