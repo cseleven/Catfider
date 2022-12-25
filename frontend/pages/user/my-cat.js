@@ -10,23 +10,19 @@ import Homecat from '../../components/homecat.js'
 import HomecardCatprofile from '../../components/homecardcatprofile'
 import Router from 'next/router';
 
-function MyCat({cat}) {
+export default function MyCat() {
   const user = useUser()
   const session = useSession()
   const [loading, setLoading] = useState(true)
-  //const [cat, setCat] = useState(null)
-  //let [cat, setCat] = useState([{"cat_picture":catProfile1, "status":true, "cat_name":"loading", "item.cat_id":0, "detail":"-", "breed":"-", "color":"-", "sex":"-", "shelter_profile":{"shelter_name":"-"}}])
+  const [cat, setCat] = useState(null)
 
   useEffect(() => {
-    // if(session){
-    //   console.log()
-    //   catExample()
-    // }
-  }, [session])
+    catExample()
+  }, [])
 
   const catExample = async () => {
     var raw = JSON.stringify({
-      'login_id' : session.user.id
+      "login_id": user?.id
     });
 
     var myheader = {
@@ -43,16 +39,11 @@ function MyCat({cat}) {
 
     try {
       setLoading(true);
-      console.log("raw: "+JSON.stringify(raw))
       let response = await fetch("/api/cat/userview/showmyCat", requestOptions);
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
-      console.log("data : " + JSON.stringify(data[0].queue));
-      setCat(data[0].queue);
-      // if(data[0].queue!=null){
-      //   console.log("data : " + data[0].queue);
-      //   setCat(data[0].queue);
-      // } 
+      console.log("response data.queue.cat_profile : " + JSON.stringify(data.queue.cat_profile));
+      setCat(data.queue.cat_profile);
       console.log("response cat : " + JSON.stringify(cat));
     } finally {
       setLoading(false);
@@ -61,8 +52,8 @@ function MyCat({cat}) {
 
   
   return (
-    <div class="container mx-auto">
-      {!loading ? (<Loading />) : (
+    <div>
+      {/*{!loading ? (<Loading />) : (*/}
       <div>
         <nav class="flex mx-28 mt-9" aria-label="Breadcrumb">
           <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -88,7 +79,7 @@ function MyCat({cat}) {
         </div>
         <div class="w-10/12 h-0.5 bg-gray-200 mt-3 mx-28" />
 
-        <form class="lg:mx-28 lg:max-w-10/12">
+        <form>
           <div class="flex mt-9">
             <label class="block ml-44">
               <select
@@ -104,10 +95,11 @@ function MyCat({cat}) {
                     font-normal
                 "
               >
-                <option value="status">สถานะ</option>
-                <option value="breed">สายพันธุ์</option>
-                <option value="color"> สี หรือ ลาย</option>
-                <option value="cat_id">รหัสแมว</option>
+                <option>ประเภท</option>
+                <option value="สถานะ">สถานะ</option>
+                <option value="สายพันธุ์">สายพันธุ์</option>
+                <option value="สี หรือ ลาย"> สี หรือ ลาย</option>
+                <option value="รหัสแมว">รหัสแมว</option>
               </select>
             </label>
             <div class="relative w-full mr-28">
@@ -130,62 +122,19 @@ function MyCat({cat}) {
           </div>
         </form>
 
-        <div className="grid grid-cols-3 justify-items-center gap-6 ml-24 mr-7 mt-9  lg:mx-auto lg:max-w-7xl">
-          
-          {cat.map((item)=>(
+        <div className="grid grid-cols-3 justify-items-center gap-6 ml-24 mr-7 mt-9">
+          {cat?.map((item)=>(
             <>
               {console.log(JSON.stringify(item))}
-                <HomecardCatprofile item={item.cat_profile} />
+                <HomecardCatprofile item={item} />
               </>
           ))}
+          <Homecat imgcat={catProfile1} placeholder="blur" statuscat="จองคิว" namecat="มะลิ (#1210)" detail="แม่มะลิ แมวจรพันธุ์ไทย สีขาวดำ นิสัยเป็นมิตร ใจดีกับแมวเด็ก..." tagbreed="พันธุ์ไทย" tagcolor="ขาวดำ" tagsex="เพศเมีย" fund="มูลนิธิบ้านรักแมว" />
+          <Homecat imgcat={catProfile2} placeholder="blur" statuscat="มีบ้าน" namecat="มะระ (#1211)" detail="แมวพันธุ์วิเชียรมาศ ตาสวย น้องกำพร้าแม่ เป็นแมวหลงทาง ขาซ้ายบาดเจ็บ..." tagbreed="วิเชียรมาศ" tagcolor="ลายแต้ม" tagsex="เพศเมีย" fund="มูลนิธิแมวหลง" />
+          <Homecat imgcat={catProfile3} placeholder="blur" statuscat="มีบ้าน" namecat="มะไฟ (#1212)" detail="มะไฟ แมวขี้เล่น ปัจจุบันกำพร้าเจ้าของ เหมาะกับคนมีเวลา..." tagbreed="พันธุ์ผสม" tagcolor="เทา" tagsex="เพศผู้" fund="มูลนิธิบ้านพักเหมียว" /> 
         </div>
       </div>
-      
-  )}
-  </div>
+      <div class="h-[12rem]"/>
+    </div>
   )
 }
-
-
-export async function getStaticProps() {
-
-// const {useSession} = await import('@supabase/auth-helpers-react');
-//  const session = useSession()
-
-//  const {
-//     data: { session },
-//   } = await supabase.auth.getSession()
-
-  var raw = JSON.stringify({
-      'login_id' : "113ccce3-1b58-4ce8-a5fd-cdd0426242a9"
-    });
-
-    var myheader = {
-      'Content-Type': 'application/json'
-    };
-
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myheader,
-      body: raw,
-      redirect: 'follow'
-    };
-
-  let response = await fetch("http://localhost:3000/api/cat/userview/showmyCat", requestOptions);
-      let data = await response.json();
-      console.log("response : " + JSON.stringify(data));
-      console.log("data : " + JSON.stringify(data[0].queue));
-    let cat = data[0].queue;
-     console.log("cat : " + JSON.stringify(data[0].queue));
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      cat,
-    },
-  }
-
-}
-
-export default MyCat;

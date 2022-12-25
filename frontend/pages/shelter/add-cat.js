@@ -417,14 +417,12 @@ export default function AddCat() {
                             </span>
                             <div class="flex w-full">
                                 <Image class="pt-1 pb-1" src={changeProfile} placeholder="blur" />
-                                <label for="cat_picture" class="bg-white font-normal border border-gray-300 text-gray-700 text-center rounded-md h-[36px] text-sm py-2 px-5 mx-6 my-2">
-                                    <div class="flex flex-col items-center justify-center pb-6">
-                                        Change
-                                    </div>
-                                    <input id="cat_picture" name="cat_picture" type="file" accept="image/*" class="hidden"
-                                        onChange={(e) => { handleUpload(e) }} />
-                                </label>
-                                {catpicture ? (<span class="font-normal text-sm text-gray-900 my-auto">{catpicture}</span>) : (<></>)}
+                                <div class="flex flex-col items-center justify-center bg-white font-normal border border-gray-300 text-gray-700 text-center rounded-md h-[36px] text-sm py-2 px-5 mx-6 my-2">
+                                    Change
+                                </div>
+                                {/* <input id="cat_picture" name="cat_picture" type="file" accept="image/*" class="hidden"
+                                        onChange={(e) => { handleUpload(e) }} /> */}
+                                {/* {catpicture ? (<span class="font-normal text-sm text-gray-900 my-auto">{catpicture}</span>) : (<></>)}  */}
                             </div>
                             <div class="flex items-center justify-center w-full">
                                 <label for="cat_picture" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -432,10 +430,10 @@ export default function AddCat() {
                                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="text-indigo-600">Upload a file</span> or drag and drop</p>
                                         <span class="text-gray-500 text-xs font-light">PNG, JPG, GIF up to 10MB</span>
-
                                     </div>
-                                    {/*<input id="cat_picture" name="cat_picture" type="file" accept="image/*" class="hidden"
-                                        onChange={(e) => { handleUpload(e) }} />*/}
+                                    <input id="cat_picture" name="cat_picture" type="file" accept="image/*" class="hidden"
+                                        onChange={(e) => { handleUpload(e) }} />
+                                    {catpicture ? (<span class="font-normal text-sm text-gray-900 my-auto">{catpicture}</span>) : (<></>)}
                                 </label>
                             </div>
                         </div>
@@ -455,6 +453,5 @@ export default function AddCat() {
         </div >
     )
 }
-
 
 
