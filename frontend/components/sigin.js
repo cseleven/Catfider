@@ -1,13 +1,14 @@
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useState } from 'react';
 import Router from 'next/router';
+import { supabase } from '../pages/api/supabase'
+import { create } from 'domain';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Signin({ role }) {
-    const supabase = useSupabaseClient()
+    const [color,setColor]=useState("h-auto bg-white")
     const [input,setInput] = useState({email:"",password:0,confirmPassword:1});
 
 
@@ -18,32 +19,99 @@ export default function Signin({ role }) {
         })
     }
 
-    //func call Auth Signin Supabase
-    const signup = async (e) => {
-        console.log(e.target.email.value + e.target.password.value + role)
-        if(role==1){
-            let { data, error } = supabase.auth.updateUser({
-                email: e.target.email.value,
-                password: e.target.password.value,
-                data:{
-                    role: role
-                }
-            }).then(console)
-        } 
-        
-        if(role==1) {
-            let { data, error } = supabase.auth.signUp({
-                email: e.target.email.value,
-                password: e.target.password.value
-            }).then(()=>Router.push({
-              pathname: '/shelter/shelter-form'
-            }))
+    const handleSignup = async(e) =>{
+        signup(e);
+        setRole(e);
+        if(role==2){
+            createProfile();
+            ()=>Router.push({
+                pathname: '/shelter/shelter-form'
+            })
+        }else{
+            ()=>Router.push({
+                pathname: '/'
+            }) 
         }
     }
 
+    //func call Auth Signin Supabase
+    const signup = async (e) => {
+        let { data, error } = supabase.auth.signUp({
+            email: e.target.email.value,
+            password: e.target.password.value
+        })
+
+        if(data){
+            console.log("data:"+JSON.stringify(data))
+            setCookie('supabase-auth-token', data.session);
+            // setCookie('ok-supabase-auth-token', data);
+        }
+
+        if(error){
+            console.log("error:"+JSON.stringify(error))
+            // setCookie('err-supabase-auth-token', error);
+        }
+        return 0;
+    }
+
+    const setRole = async(e) => {
+        // setColor("h-auto bg-green-600")
+        console.log(e.target.email.value + e.target.password.value + role)
+        let { data, error } = supabase.auth.updateUser({
+            email: e.target.email.value,
+            password: e.target.password.value,
+            data:{
+                role: role
+            }
+        })
+
+        if(data){
+            console.log("data:"+JSON.stringify(data))
+            setCookie('supabase-auth-token', data.session);
+            // setCookie('ok-supabase-auth-token', data);
+            // setColor("h-auto bg-yellow-600")
+        }
+
+        if(error){
+            console.log("error:"+JSON.stringify(error))
+            // setCookie('err-supabase-auth-token', error);
+            // setColor("h-auto bg-red-600")
+        }
+
+        return 0;
+    }
+
+    const createProfile = async() =>{
+        //fix user_id not stable
+        var cookie = getCookie("supabase-auth-token")
+        var token = cookie.split('"')[1]
+        var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+
+        var raw = JSON.stringify({
+            "login_id": id ,
+        });
+
+        var myheader = {
+            'Content-Type': 'application/json'
+        };
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myheader,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        let response = await fetch("/api/shelter/createShelter", requestOptions);
+        let data = await response.json();
+        console.log("response : " + JSON.stringify(data));
+
+        return 0;
+    }
+
     return (
-        <div class="h-auto">
-            <form onSubmit={signup} method="POST">
+        <div class={color}>
+            <form onSubmit={handleSignup} method="POST">
                 <div class="bg-gray-200">
                     <div class="container mx-auto flex justify-around">
                         <div class="w-1/3 pt-9">

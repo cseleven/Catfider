@@ -17,7 +17,7 @@ export default function HomecardCatprofile({ item }) {
     const tagcolor=item.color
     const tagsex=item.sex 
     const fund=item.shelter_profile?.shelter_name
-    const [path,setPath]=useState("/signin/cat/")
+    const [path,setPath]=useState("/cat/")
 
     useEffect(() => {
         checkPath()
@@ -28,10 +28,7 @@ export default function HomecardCatprofile({ item }) {
         if(cookie){
             var token = cookie.split('"')[1]
             var{ data: { user },}= await supabase.auth.getUser(token)
-
-            if(user?.user_metadata?.role == 2){
-                setPath("/shelter/cat/")
-            }
+            
             if(user?.user_metadata?.role == 1){
                 setPath("/user/cat/")
             }
