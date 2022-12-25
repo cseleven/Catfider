@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Router from 'next/router';
 import { supabase } from '../api/supabase'
 import { getCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next';
 
 export default function Queue() {
     //setup
@@ -14,7 +15,10 @@ export default function Queue() {
     const session = useSession()
     const [loading, setLoading] = useState(true)
     const [cat, setCat] = useState(null)
-    const [input, setInput] = useState(null)
+    const [date, setDate] = useState(null);
+    const [time, setTime] = useState(null);
+    const [uid, setUid] = useState(null);
+
 
     var router = useRouter();
     const id = router.query.id
@@ -22,20 +26,22 @@ export default function Queue() {
     const shelter = router.query.shelter
 
     useEffect(() => {
+        getUid()
+    }, [])
 
-    }, [session])
 
-    //fetch data
-    const postQueueCat = async (e) => {
-
+    const getUid = async() => {
         var cookie = getCookie("supabase-auth-token")
         var token = cookie.split('"')[1]
-        var{ data: { user },}= await supabase.auth.getUser(token)
+        var{ data: { user:{id} },}= await supabase.auth.getUser(token)
+        setUid(id)
+    }
 
+    //fetch data
+    const postQueueCat = async(e) => {
         var raw = JSON.stringify({
             "cat_id": id,
-            "login_id": user.id,
-            //"login_id": "0fb8be3d-e566-4c87-8f1b-553d6dcf2ca3",
+            "login_id": uid,
             "queue_date": e.target.queue_date.value,
             "queue_time": e.target.queue_time.value
         });
@@ -54,17 +60,11 @@ export default function Queue() {
 
         try {
             setLoading(true);
-            console.log("req : " + JSON.stringify(raw));
             let response = await fetch("/api/queue/createQueue", requestOptions);
             let data = await response.json();
             console.log("response : " + JSON.stringify(data));
         } finally {
             setLoading(false);
-            if(data){
-                Router.push({
-                    pathname: "/user/queue-success",
-                })
-            }
         }
 
 

@@ -12,6 +12,8 @@ import nextIcon from '../../public/my-cat/next-icon.png'
 import vectorprinter from '../../public/my-cat/printer.png'
 import line1 from '../../public/my-cat/line.png'
 import Router from 'next/router';
+import { supabase } from '../api/supabase'
+import { getCookie } from 'cookies-next';
 
 function getFormattedDate(options) {
   const today = new Date();
@@ -23,6 +25,7 @@ export default function MyCat() {
   const session = useSession()
   const [loading, setLoading] = useState(true)
   const [cat, setCat] = useState(null)
+  const [month, setMonth] = useState(null)
   // const [id, setId] = useState(0)
 
   const formatTimestamp = (timestamp) => {
@@ -40,8 +43,12 @@ export default function MyCat() {
 
 
   const catExample = async () => {
+    var cookie = getCookie("supabase-auth-token")
+    var token = cookie.split('"')[1]
+    var { data: { user: { id } }, } = await supabase.auth.getUser(token)
+
     var raw = JSON.stringify({
-      "login_id": "fadadb65-080e-4be8-a3dc-163df80e0918",
+      "login_id": id,
       "page_number": 1
 
     });
@@ -60,10 +67,12 @@ export default function MyCat() {
 
     try {
       setLoading(true);
-      let response = await fetch("/api/cat/shelterview/myCatShelterview", requestOptions);
+      let response = await fetch("/api/adopt/getReport", requestOptions);
       let data = await response.json();
       console.log("response : " + JSON.stringify(data));
       setCat(data)
+      setMonth(data.perMonth?.data)
+      console.log("response : " + JSON.stringify(data.perMonth));
     } finally {
       setLoading(false);
     }
@@ -131,7 +140,7 @@ export default function MyCat() {
 
       <div clss="flex">
         <div><p class="flex justify-between text-base text-black font-normal">รายงานยอดการอุปการะแมวผ่านแพลตฟอร์ม Cat finder</p></div>
-        <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ :</p></div>
+        <div><p class="flex justify-end text-sm text-black font-normal">ชื่อมูลนิธิ : {cat?.perMonth?.data[0].shelter_profile?.shelter_name}</p></div>
         <div><p class="flex justify-end text-sm text-black font-normal">วันที่ออกรายงาน : {date}</p></div>
         <p class="flex text-3xl text-iris font-normal">ยอดรายเดือน</p>
       </div>
@@ -141,10 +150,10 @@ export default function MyCat() {
 
 
 
-
-
       <div class="overflow-x-hidden w-full mt-5 rounded md:rounded-lg shadow-md  md:w-auto">
-        {cat && Array.isArray(cat) && (
+        {month && Array.isArray(month) && (
+
+
           <table class=" w-full text-sm text-left font-light text-black ">
             <thead class="text-base text-gray-500 bg-gray-300">
               <tr>
@@ -175,7 +184,7 @@ export default function MyCat() {
               </tr>
             </thead>
 
-            {cat?.map((item, index) => (
+            {month?.map((item, index) => (
 
               <tbody>
                 <tr class="bg-gray-100 border-g border-gray-200">
@@ -186,22 +195,22 @@ export default function MyCat() {
                     <>#</>{item.cat_id}<></>
                   </td>
                   <td class="py-4 px-6">
-                    {item.cat_name}
+                    {item.cat_profile.cat_name}
                   </td>
                   <td class="py-4 px-6">
-                    {item.breed}
+                    {item.cat_profile.breed}
                   </td>
                   <td class="py-4 px-6">
-                    {item.sex}
+                    {item.cat_profile.sex}
                   </td>
                   <td class="py-4 px-6">
-                    {formatTimestamp(item.create_date)}
+                    {formatTimestamp(item.cat_profile.create_date)}
                   </td>
                   <td class="py-4 px-6">
-                    timestamp-out
+                    {item.adopt_date}
                   </td>
                   <td class="py-4 px-6">
-                    user@email.com
+                    {item.user_profile.email}
                   </td>
                 </tr>
               </tbody>
@@ -219,7 +228,7 @@ export default function MyCat() {
                 <td class="py-4 px-6"> </td>
                 <td class="py-4 px-6"> </td>
                 <td class="py-4 px-6">จำนวนทั้งหมด</td>
-                <td class="py-4 px-6"> {cat.length} </td>
+                <td class="py-4 px-6"> {cat.perMonth?.count} </td>
                 <td class="py-4 px-6">ตัว</td>
               </tr>
             </tfoot>
