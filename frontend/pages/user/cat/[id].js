@@ -158,7 +158,7 @@ export default function CatProfile() {
           />
           <div class="md:basis-2/5 lg:border-l-2 lg:px-6">
             {!cat[0].status?(<></>):(
-                <ConditionalWrapper condition={cat[0].queue[0]} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue[0]?.queue_date} time={cat[0].queue[0]?.queue_time} place={cat[0].shelter_profile?.address} queue_id={mock.queue_id}/>
+                <ConditionalWrapper condition={cat[0].queue[0]} id={cat[0].cat_id} name={cat[0].cat_name} shelter={cat[0].shelter_profile?.shelter_name} day={cat[0].queue[0]?.queue_date} time={cat[0].queue[0]?.queue_time} place={cat[0].shelter_profile?.address} queue_id={cat[0].queue[0]?.queue_id}/>
             )}
           </div>
         </div>
