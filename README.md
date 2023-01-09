@@ -25,14 +25,14 @@ npm install pdfmake  --save
 - ติดตั้งฟอนต์ไทย
 
 ```bash
-เอาโฟลเดอร์ examples/fonts ไปวาง ที่ Catfider-Front/frontend/node_modules/pdfmake/
+เอาโฟลเดอร์ examples/fonts ไปวาง ที่ Catfider/frontend/node_modules/pdfmake/
 ```
 
 - build font ใหม่
 
 ```bash
-npm install ที่ Catfider-Front/frontend/node_modules/pdfmake/
-เอาโฟลเดอร์ build ไปวางทับ ที่ Catfider-Front/frontend/node_modules/pdfmake/
+npm install ที่ Catfider/frontend/node_modules/pdfmake/
+เอาโฟลเดอร์ build ไปวางทับ ที่ Catfider/frontend/node_modules/pdfmake/
 ```
 
 ## Learn
@@ -41,7 +41,7 @@ npm install ที่ Catfider-Front/frontend/node_modules/pdfmake/
 
 ## run 1st
 
-- ใส่ .env.local ใน Catfider-Front/frontend
+- ใส่ .env.local ใน Catfider/frontend
 
 ```bash
 cd frontend
