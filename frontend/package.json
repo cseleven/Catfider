@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.5",
     "@heroicons/react": "^2.0.13",
+    "@netlify/plugin-nextjs": "^4.36.1",
     "@stitches/react": "^1.2.8",
     "@supabase/auth-helpers-nextjs": "^0.5.2",
     "@supabase/auth-helpers-react": "^0.3.1",
