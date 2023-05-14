@@ -15,17 +15,17 @@ export default function AddCat() {
     const [loading, setLoading] = useState(true)
     const [cat, setCat] = useState(null)
     const [catpicture, setCatpicture] = useState(null)
+    const [uid, setUid] = useState(null);
 
     useEffect(() => {
+        getUid()
     }, [])
 
-    const updateInput = e => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        })
-        console.log(JSON.stringify(input));
-
+    const getUid = async () => {
+        var cookie = getCookie("supabase-auth-token")
+        var token = cookie.split('"')[1]
+        var { data: { user: { id } }, } = await supabase.auth.getUser(token)
+        setUid(id)
     }
 
     const handleUpload = async (e) => {
@@ -51,38 +51,18 @@ export default function AddCat() {
         }
     }
 
-    const handleSubmit = async (e, a) => {
-        a = false
+    const handleSubmit = async (e) => {
         handleUpload2(e)
         catExample(e)
-        console.log("eeeeeeeeee " + e)
-        console.log("aaaaaaaaaa " + a)
-        console.log("type " + typeof Object(e))
-        console.log("type e" + Object(e) != null)
-        console.log("type e2" + Object(e) == null)
-        console.log("type e3" + Object(e) != undefined)
-        console.log("type e4" + Object(e) == undefined)
-
-        if (catExample(e) != 'undefined') {
-            a = true
-            if (a == true) {
-                console.log("AAAAAAA " + a)
-                console.log("EEEEEEE " + e)
-                Router.push({
-                    pathname: "/shelter/add-cat-success",
-                })
-            }
-        }
+        Router.push({
+            pathname: "/shelter/add-cat-success",
+        })
     }
 
     const catExample = async (e) => {
 
-        var cookie = getCookie("supabase-auth-token")
-        var token = cookie.split('"')[1]
-        var { data: { user: { id } }, } = await supabase.auth.getUser(token)
-
         var raw = JSON.stringify({
-            "login_id": id,
+            "login_id": uid,
             "cat_name": e.target.cat_name.value,
             "sex": e.target.sex.value,
             "breed": e.target.breed.value,
@@ -113,55 +93,56 @@ export default function AddCat() {
         let response = await fetch("/api/cat/shelterview/addCat", requestOptions);
         let dataCat = await response.json();
         console.log("response : " + JSON.stringify(dataCat));
+
     };
 
 
 
 
     return (
-        <div class="container mx-auto">
+        <div class="container min-h-[87vh] h-auto mx-auto max-w-6xl px-5 xl:px-0 ">
             <Head>
                 <title>Cat Finder</title>
                 <meta name="description" content="create by eleven" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            {/*section 1*/}
-            <div class="h-[171px]">
-                <div class="flex my-8 mx-28">
-                    <nav class="flex" aria-label="Breadcrumb">
-                        <ol class="inline-flex items-center space-x-1 md:space-x-3">
-                            <li class="inline-flex items-center">
-                                <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-                                    หน้าแรก
-                                </a>
-                            </li>
-                            <li aria-label="Breadcrumb">
-                                <div class="flex items-center">
-                                    <a href="/shelter/my-cat" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                                        แมวของฉัน
-                                    </a>
-                                </div>
-                            </li>
-                            <li aria-current="page">
-                                <div class="flex items-center">
-                                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                                    <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">ลงทะเบียนแมว</span>
-                                </div>
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
-                <p class="text-4xl text-black font-normal mt-8 mx-28">ลงทะเบียนแมว</p>
-                <div class="w-10/12 h-0.5 bg-gray-200 mt-8 mx-28" />
+            <nav class="flex my-8 breadcrumb" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                            หน้าแรก
+                        </a>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <a href="/shelter/my-cat" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 ">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                <span class="ml-1 text-sm font-medium text-gray-700 md:ml-2 ">แมวของฉัน</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <a class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 ">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 ">ลงทะเบียนแมว</span>
+                            </a>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+
+            <div class="button-hidden flex mt-8">
+                <p class="text-4xl text-black font-normal mb-8">ลงทะเบียนแมว</p>
             </div>
 
+            <hr class="button-hidden border-1 border-gray-200 mb-8" />
 
             {/*section 2*/}
 
-            <div class="h-auto bg-light-salmon py-6">
+            <div class="bg-light-salmon py-6">
                 <div class="flex">
                     <div class="ml-28">
                         <div class="text-2xl font-normal text-transparent bg-clip-text bg-gradient-to-b from-bright-salmon to-salmon">ข้อมูลแมว</div>
@@ -176,7 +157,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <input
-                                    onChange={updateInput}
                                     id="cat_name"
                                     name="cat_name"
                                     type="text"
@@ -242,7 +222,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                    onChange={updateInput}
                                     id="sex"
                                     name="sex"
                                     class="
@@ -268,7 +247,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                    onChange={updateInput}
                                     id="breed"
                                     name="breed"
                                     class="
@@ -304,7 +282,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                onChange={updateInput}
                                     id="color"
                                     name="color"
                                     class="
@@ -345,7 +322,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                onChange={updateInput}
                                     id="vaccine"
                                     name="vaccine"
                                     class="
@@ -371,7 +347,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                onChange={updateInput}
                                     id="sterile"
                                     name="sterile"
                                     class="
@@ -397,7 +372,6 @@ export default function AddCat() {
                                     <span class="text-error font-light">*</span>
                                 </span>
                                 <select
-                                onChange={updateInput}
                                     id="congenital_disease"
                                     name="congenital_disease"
                                     class="
@@ -475,7 +449,7 @@ export default function AddCat() {
                         <div class="w-[803px] h-[56px] bg-gray-50 rounded-b shadow-md ml-28">
                             <div class="h-[30rem] py-3">
                                 <button type="submit" class="flex rounded-lg bg-salmon text-white text-xs font-normal px-6 py-2.5 ml-[700px]"
-                                    onClick={(a) => { handleSubmit(a) }}
+                                    onClick={(e) => { handleSubmit(e) }}
                                 >
                                     ยืนยัน
                                 </button>

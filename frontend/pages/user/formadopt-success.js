@@ -21,7 +21,7 @@ export default function PrintFormAdopt() {
             <div class="w-screen h-[45rem] bg-light-salmon">
                 <Image class="mx-auto pt-20" src={printer} placeholder="blur" />
                 <p class="text-gray-500 text-normal text-2xl text-center pt-9">สร้างเอกสารสำเร็จ</p>
-                <a href="/user/my-cat" className="flex rounded-full bg-salmon text-white font-normal text-lg mt-9 ml-[44rem] pt-2 pl-5 ml-1 w-36 h-12">
+                <a href="/user/my-cat" className="flex rounded-full bg-salmon text-white font-normal text-lg mt-9 mx-auto pt-2 pl-5 w-36 h-12">
                     ออกจากหน้านี้</a>
             </div>
             <div class="w-screen h-[15rem]"></div>

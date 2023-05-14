@@ -10,20 +10,20 @@ export async function middleware(req) {
     data: { session },
   } = await supabase.auth.getSession()
 
-  if ( session && req.nextUrl.pathname.startsWith('/signin')) {
-      console.log("please logout before new signin")
-      res = NextResponse.redirect(new URL('/', req.url))
+  if (session && req.nextUrl.pathname.startsWith('/signin')) {
+    console.log("please logout before new signin")
+    res = NextResponse.redirect(new URL('/', req.url))
   }
 
-  if (!session && req.nextUrl.pathname.startsWith('/user')) {
-    if (session.user.user_metadata.role != 1) {
+  if (req.nextUrl.pathname.startsWith('/user')) {
+    if (!session || session.user.user_metadata.role != 1) {
       console.log("you not user")
       res = NextResponse.redirect(new URL('/', req.url))
     }
   }
 
-  if (!session && req.nextUrl.pathname.startsWith('/shelter')) {
-    if (session.user.user_metadata.role != 2) {
+  if (req.nextUrl.pathname.startsWith('/shelter')) {
+    if (!session || session.user.user_metadata.role != 2) {
       console.log("you not shelter")
       res = NextResponse.redirect(new URL('/', req.url))
     }
