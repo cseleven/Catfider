@@ -50,7 +50,7 @@ const ConditionalWrapper = ({ condition, id, name, shelter, day, time, place, qu
           <h5>เวลา : {time}</h5>
           <h5>สถานที่ : {place}</h5>
           <button type="button" class="rounded-[4px] bg-gray-400 text-[18px] text-white font-normal text-center py-2.5 px-5 mt-8 mr-7">จองคิวดูแมว</button>
-          <button type="button" onClick={()=>delQueue()} class="text-[18px] text-error underline font-normal text-center py-0 px-5 mt-2 mr-7">ยกเลิกคิว</button>
+          <button type="button" onClick={()=>{delQueue()}} class="text-[18px] text-error underline font-normal text-center py-0 px-5 mt-2 mr-7">ยกเลิกคิว</button>
         </div>
     )
 };
