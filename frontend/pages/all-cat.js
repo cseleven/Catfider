@@ -4,6 +4,7 @@ import Loading from '../components/loading'
 import HomecardCatprofile from '../components/homecardcatprofile.js'
 import previousIcon from '../public/my-cat/previous-icon.png'
 import nextIcon from '../public/my-cat/next-icon.png'
+import Link from 'next/link';
 
 export default function AllCat() {
   const [loading, setLoading] = useState(true)
@@ -119,10 +120,10 @@ export default function AllCat() {
           <nav class="flex my-8" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
               <li class="inline-flex items-center">
-                <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                   <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
                   หน้าแรก
-                </a>
+                </Link>
               </li>
               <li aria-current="page">
                 <div class="flex items-center">
@@ -179,13 +180,15 @@ export default function AllCat() {
             </form>
           <div className="grid grid-cols-3 justify-items-center gap-6 ml-24 mr-7 mt-9  lg:mx-auto lg:max-w-7xl">
             { cat.map((item)=>(
-              <HomecardCatprofile item={item}  />
+              <div key={item}>
+                <HomecardCatprofile item={item}  />
+              </div>
             ))}
           </div>
 
           <div class="flex w-[20rem] h-12 my-24 rounded-lg border-2 border-paw font-normal text-base text-paw mx-auto px-4 space-x-5">
             <button type="button" class="flex" onClick={()=>searchPage(currentpage[0])}>
-              <Image class="pt-3" src={previousIcon} placeholder="blur"></Image>
+              <Image class="pt-3" src={previousIcon} placeholder="blur" alt='previousIcon'></Image>
               <p class="pl-3 pt-3"> Previous   </p>
             </button>
             <p class="pt-3"> {(currentpage[0]!=0)?(<>{currentpage[0]}</>):(<></>)} </p>
@@ -193,7 +196,7 @@ export default function AllCat() {
             <p class="pt-3"> {currentpage[2]} </p>
             <button type="button" class="flex" onClick={()=>searchPage(currentpage[2])}>
               <p class="pr-3 pt-3">   Next </p>
-              <Image class="pt-4" src={nextIcon} placeholder="blur"></Image>
+              <Image class="pt-4" src={nextIcon} placeholder="blur" alt='nextIcon'></Image>
             </button>
           </div>
         </div>
